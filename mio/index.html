@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `mio` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, mio">
+
+    <title>mio - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'></p>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>mio</a><wbr><a class='stability Unstable' title=''>Unstable</a></span><span class='out-of-band'><a href='stability.html'>[stability]</a> <span id='render-detail'>
+            <a id="collapse-all" href="#">[-]
+            </a>&nbsp;<a id="expand-all" href="#">[+]</a>
+        </span><a id='src-0' href='../src/mio/lib.rs.html#1-151'>[src]</a></span></h1>
+<div class='docblock'><p>A fast, low-level IO library for Rust focusing on non-blocking APIs, event
+notification, and other useful utilities for building high performance IO
+apps.</p>
+
+<h1 id="goals" class='section-header'><a
+                           href="#goals">Goals</a></h1>
+<ul>
+<li>Fast - minimal overhead over the equivalent OS facilities (epoll, kqueue, etc...)</li>
+<li>Zero allocations</li>
+<li>A scalable readiness-based API, similar to epoll on Linux</li>
+<li>Design to allow for stack allocated buffers when possible (avoid double buffering).</li>
+<li>Provide utilities such as a timers, a notification channel, buffer abstractions, and a slab.</li>
+</ul>
+
+<h1 id="usage" class='section-header'><a
+                           href="#usage">Usage</a></h1>
+<p>Using mio starts by creating an <a href="struct.EventLoop.html">EventLoop</a>, which
+handles receiving events from the OS and dispatching them to a supplied
+<a href="handler/trait.Handler.html">Handler</a>.</p>
+
+<h1 id="example" class='section-header'><a
+                           href="#example">Example</a></h1><pre class='rust '>
+<span class='kw'>use</span> <span class='ident'>mio</span>::{<span class='ident'>event</span>, <span class='ident'>EventLoop</span>, <span class='ident'>IoAcceptor</span>, <span class='ident'>Handler</span>, <span class='ident'>Token</span>};
+<span class='kw'>use</span> <span class='ident'>mio</span>::<span class='ident'>net</span>::{<span class='ident'>SockAddr</span>};
+<span class='kw'>use</span> <span class='ident'>mio</span>::<span class='ident'>net</span>::<span class='ident'>tcp</span>::{<span class='ident'>TcpSocket</span>, <span class='ident'>TcpAcceptor</span>};
+
+<span class='comment'>// Setup some tokens to allow us to identify which event is</span>
+<span class='comment'>// for which socket.</span>
+<span class='kw'>const</span> <span class='ident'>SERVER</span>: <span class='ident'>Token</span> <span class='op'>=</span> <span class='ident'>Token</span>(<span class='number'>0</span>);
+<span class='kw'>const</span> <span class='ident'>CLIENT</span>: <span class='ident'>Token</span> <span class='op'>=</span> <span class='ident'>Token</span>(<span class='number'>1</span>);
+
+<span class='kw'>let</span> <span class='ident'>addr</span> <span class='op'>=</span> <span class='ident'>SockAddr</span>::<span class='ident'>parse</span>(<span class='string'>&quot;127.0.0.1:13265&quot;</span>)
+    .<span class='ident'>expect</span>(<span class='string'>&quot;could not parse InetAddr&quot;</span>);
+
+<span class='comment'>// Setup the server socket</span>
+<span class='kw'>let</span> <span class='ident'>server</span> <span class='op'>=</span> <span class='ident'>TcpSocket</span>::<span class='ident'>v4</span>().<span class='ident'>unwrap</span>()
+    .<span class='ident'>bind</span>(<span class='kw-2'>&amp;</span><span class='ident'>addr</span>).<span class='ident'>unwrap</span>()
+    .<span class='ident'>listen</span>(<span class='number'>256u</span>).<span class='ident'>unwrap</span>();
+
+<span class='comment'>// Create an event loop</span>
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>event_loop</span> <span class='op'>=</span> <span class='ident'>EventLoop</span>::<span class='op'>&lt;</span>(), ()<span class='op'>&gt;</span>::<span class='ident'>new</span>().<span class='ident'>unwrap</span>();
+
+<span class='comment'>// Start listening for incoming connections</span>
+<span class='ident'>event_loop</span>.<span class='ident'>register</span>(<span class='kw-2'>&amp;</span><span class='ident'>server</span>, <span class='ident'>SERVER</span>).<span class='ident'>unwrap</span>();
+
+<span class='comment'>// Setup the client socket</span>
+<span class='kw'>let</span> <span class='ident'>sock</span> <span class='op'>=</span> <span class='ident'>TcpSocket</span>::<span class='ident'>v4</span>().<span class='ident'>unwrap</span>();
+
+<span class='comment'>// Connect to the server</span>
+<span class='ident'>sock</span>.<span class='ident'>connect</span>(<span class='kw-2'>&amp;</span><span class='ident'>addr</span>).<span class='ident'>unwrap</span>();
+
+<span class='comment'>// Register the socket</span>
+<span class='ident'>event_loop</span>.<span class='ident'>register</span>(<span class='kw-2'>&amp;</span><span class='ident'>sock</span>, <span class='ident'>CLIENT</span>).<span class='ident'>unwrap</span>();
+
+<span class='comment'>// Define a handler to process the events</span>
+<span class='kw'>struct</span> <span class='ident'>MyHandler</span>(<span class='ident'>TcpAcceptor</span>);
+
+<span class='kw'>impl</span> <span class='ident'>Handler</span><span class='op'>&lt;</span>(), ()<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>MyHandler</span> {
+    <span class='kw'>fn</span> <span class='ident'>readable</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>event_loop</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>EventLoop</span><span class='op'>&lt;</span>(), ()<span class='op'>&gt;</span>, <span class='ident'>token</span>: <span class='ident'>Token</span>, _: <span class='ident'>event</span>::<span class='ident'>ReadHint</span>) {
+        <span class='kw'>match</span> <span class='ident'>token</span> {
+            <span class='ident'>SERVER</span> <span class='op'>=&gt;</span> {
+                <span class='kw'>let</span> <span class='ident'>MyHandler</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>server</span>) <span class='op'>=</span> <span class='op'>*</span><span class='self'>self</span>;
+                <span class='comment'>// Accept and drop the socket immediately, this will close</span>
+                <span class='comment'>// the socket and notify the client of the EOF.</span>
+                <span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>server</span>.<span class='ident'>accept</span>();
+            }
+            <span class='ident'>CLIENT</span> <span class='op'>=&gt;</span> {
+                <span class='comment'>// The server just shuts down the socket, let&#39;s just</span>
+                <span class='comment'>// shutdown the event loop</span>
+                <span class='ident'>event_loop</span>.<span class='ident'>shutdown</span>();
+            }
+            _ <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;unexpected token&quot;</span>),
+        }
+    }
+}
+
+<span class='comment'>// Start handling events</span>
+<span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>event_loop</span>.<span class='ident'>run</span>(<span class='ident'>MyHandler</span>(<span class='ident'>server</span>));
+</pre>
+</div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
+<table><tr><td><code>pub use buf::{<a class='trait' href='../mio/buf/trait.Buf.html' title='mio::buf::Buf'>Buf</a>, <a class='trait' href='../mio/buf/trait.MutBuf.html' title='mio::buf::MutBuf'>MutBuf</a>};</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unstable' title='Unstable'></a><a class='mod' href='buf/index.html'
+                               title='mio::buf'>buf</a></td>
+                        <td class='docblock short'><p>Various strategies for non-blocking sequential byte access</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unstable' title='Unstable'></a><a class='mod' href='event/index.html'
+                               title='mio::event'>event</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unstable' title='Unstable'></a><a class='mod' href='net/index.html'
+                               title='mio::net'>net</a></td>
+                        <td class='docblock short'><p>Networking primitives</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unstable' title='Unstable'></a><a class='mod' href='util/index.html'
+                               title='mio::util'>util</a></td>
+                        <td class='docblock short'><p>Utilities for non-blocking IO programs</p>
+</td>
+                    </tr>
+                </table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unstable' title='Unstable'></a><a class='struct' href='struct.EventLoop.html'
+                               title='mio::EventLoop'>EventLoop</a></td>
+                        <td class='docblock short'><p>Single threaded IO event loop.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unstable' title='Unstable'></a><a class='struct' href='struct.EventLoopConfig.html'
+                               title='mio::EventLoopConfig'>EventLoopConfig</a></td>
+                        <td class='docblock short'><p>Configure EventLoop runtime details</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unstable' title='Unstable'></a><a class='struct' href='struct.EventLoopSender.html'
+                               title='mio::EventLoopSender'>EventLoopSender</a></td>
+                        <td class='docblock short'><p>Sends messages to the EventLoop from other threads.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unstable' title='Unstable'></a><a class='struct' href='struct.MioError.html'
+                               title='mio::MioError'>MioError</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unstable' title='Unstable'></a><a class='struct' href='struct.PipeReader.html'
+                               title='mio::PipeReader'>PipeReader</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unstable' title='Unstable'></a><a class='struct' href='struct.PipeWriter.html'
+                               title='mio::PipeWriter'>PipeWriter</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unstable' title='Unstable'></a><a class='struct' href='struct.Poll.html'
+                               title='mio::Poll'>Poll</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unstable' title='Unstable'></a><a class='struct' href='struct.Timeout.html'
+                               title='mio::Timeout'>Timeout</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unstable' title='Unstable'></a><a class='struct' href='struct.Token.html'
+                               title='mio::Token'>Token</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unstable' title='Unstable'></a><a class='enum' href='enum.MioErrorKind.html'
+                               title='mio::MioErrorKind'>MioErrorKind</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unstable' title='Unstable'></a><a class='enum' href='enum.NonBlock.html'
+                               title='mio::NonBlock'>NonBlock</a></td>
+                        <td class='docblock short'><p>The result of a non-blocking operation.</p>
+</td>
+                    </tr>
+                </table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unstable' title='Unstable'></a><a class='trait' href='trait.Handler.html'
+                               title='mio::Handler'>Handler</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unstable' title='Unstable'></a><a class='trait' href='trait.IoAcceptor.html'
+                               title='mio::IoAcceptor'>IoAcceptor</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unstable' title='Unstable'></a><a class='trait' href='trait.IoReader.html'
+                               title='mio::IoReader'>IoReader</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unstable' title='Unstable'></a><a class='trait' href='trait.IoWriter.html'
+                               title='mio::IoWriter'>IoWriter</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                </table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unstable' title='Unstable'></a><a class='fn' href='fn.pipe.html'
+                               title='mio::pipe'>pipe</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                </table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unstable' title='Unstable'></a><a class='type' href='type.EventLoopResult.html'
+                               title='mio::EventLoopResult'>EventLoopResult</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unstable' title='Unstable'></a><a class='type' href='type.MioResult.html'
+                               title='mio::MioResult'>MioResult</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                </table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "mio";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script async src="../search-index.js"></script>
+</body>
+</html>
