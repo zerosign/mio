@@ -335,7 +335,7 @@
 
 <span class='kw'>impl</span> <span class='ident'>Not</span><span class='op'>&lt;</span><span class='ident'>PollOpt</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>PollOpt</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>not</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>PollOpt</span> {
+    <span class='kw'>fn</span> <span class='ident'>not</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>PollOpt</span> {
         <span class='ident'>PollOpt</span>(<span class='op'>!</span><span class='self'>self</span>.<span class='ident'>bits</span>() <span class='kw-2'>&amp;</span> <span class='ident'>PollOpt</span>::<span class='ident'>all</span>().<span class='ident'>bits</span>())
     }
 }
@@ -370,7 +370,7 @@
         <span class='kw'>const</span> <span class='ident'>HINTED</span>   <span class='op'>=</span> <span class='number'>0x010</span>,
         <span class='kw'>const</span> <span class='ident'>ALL</span>      <span class='op'>=</span> <span class='number'>0x001</span> <span class='op'>|</span> <span class='number'>0x002</span> <span class='op'>|</span> <span class='number'>0x008</span>  <span class='comment'>//epoll checks for ERROR no matter what</span>
     }
-)
+);
 
 
 <span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Show</span> <span class='kw'>for</span> <span class='ident'>Interest</span> {
@@ -402,7 +402,7 @@
         <span class='kw'>const</span> <span class='ident'>HUPHINT</span>     <span class='op'>=</span> <span class='number'>0x002</span>,
         <span class='kw'>const</span> <span class='ident'>ERRORHINT</span>   <span class='op'>=</span> <span class='number'>0x004</span>
     }
-)
+);
 
 <span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Show</span> <span class='kw'>for</span> <span class='ident'>ReadHint</span> {
     <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>fmt</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {

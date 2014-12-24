@@ -191,7 +191,7 @@
         <span class='kw'>const</span> <span class='ident'>MS_MGC_VAL</span>     <span class='op'>=</span> <span class='number'>0xC0ED0000</span>,
         <span class='kw'>const</span> <span class='ident'>MS_MGC_MSK</span>     <span class='op'>=</span> <span class='number'>0xffff0000</span>
     }
-)
+);
 
 <span class='macro'>bitflags</span><span class='macro'>!</span>(
     <span class='ident'>flags</span> <span class='ident'>MntFlags</span>: <span class='ident'>c_int</span> {
@@ -199,7 +199,7 @@
         <span class='kw'>const</span> <span class='ident'>MNT_DETATCH</span> <span class='op'>=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='number'>1</span>,
         <span class='kw'>const</span> <span class='ident'>MNT_EXPIRE</span>  <span class='op'>=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='number'>2</span>
     }
-)
+);
 
 <span class='kw'>mod</span> <span class='ident'>ffi</span> {
     <span class='kw'>use</span> <span class='ident'>libc</span>::{<span class='ident'>c_char</span>, <span class='ident'>c_int</span>, <span class='ident'>c_void</span>, <span class='ident'>c_ulong</span>};

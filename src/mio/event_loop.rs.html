@@ -464,6 +464,7 @@
 <span id='422'>422</span>
 <span id='423'>423</span>
 <span id='424'>424</span>
+<span id='425'>425</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>default</span>::<span class='ident'>Default</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>time</span>::<span class='ident'>duration</span>::<span class='ident'>Duration</span>;
@@ -558,6 +559,7 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// # Example</span>
     <span class='doccomment'>/// ```</span>
+    <span class='doccomment'>/// use std::thread::Thread;</span>
     <span class='doccomment'>/// use mio::{EventLoop, Handler};</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// struct MyHandler;</span>
@@ -573,9 +575,9 @@
     <span class='doccomment'>/// let sender = event_loop.channel();</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// // Send the notification from another thread</span>
-    <span class='doccomment'>/// spawn(move || {</span>
+    <span class='doccomment'>/// Thread::spawn(move || {</span>
     <span class='doccomment'>///     let _ = sender.send(123);</span>
-    <span class='doccomment'>/// });</span>
+    <span class='doccomment'>/// }).detach();</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// let _ = event_loop.run(MyHandler);</span>
     <span class='doccomment'>/// ```</span>

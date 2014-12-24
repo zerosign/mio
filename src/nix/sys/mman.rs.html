@@ -304,7 +304,8 @@
     <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MAP_FAILED</span>: <span class='ident'>int</span>               <span class='op'>=</span> <span class='op'>-</span><span class='number'>1</span>;
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;macos&quot;</span>)]</span>
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;macos&quot;</span>,
+          <span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;ios&quot;</span>))]</span>
 <span class='kw'>mod</span> <span class='ident'>consts</span> {
     <span class='kw'>use</span> <span class='ident'>libc</span>::<span class='ident'>c_int</span>;
 
@@ -430,7 +431,6 @@
         <span class='prelude-val'>Ok</span>(())
     }
 }
-
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

@@ -191,6 +191,8 @@
 <span id='149'>149</span>
 <span id='150'>150</span>
 <span id='151'>151</span>
+<span id='152'>152</span>
+<span id='153'>153</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! A fast, low-level IO library for Rust focusing on non-blocking APIs, event</span>
 <span class='doccomment'>//! notification, and other useful utilities for building high performance IO</span>
@@ -310,6 +312,7 @@
     <span class='ident'>IoReader</span>,
     <span class='ident'>IoWriter</span>,
     <span class='ident'>IoAcceptor</span>,
+    <span class='ident'>IoHandle</span>,
     <span class='ident'>PipeReader</span>,
     <span class='ident'>PipeWriter</span>,
 };
@@ -321,6 +324,7 @@
     <span class='ident'>EventLoopConfig</span>,
     <span class='ident'>EventLoopResult</span>,
     <span class='ident'>EventLoopSender</span>,
+    <span class='ident'>EventLoopError</span>
 };
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>timer</span>::{
     <span class='ident'>Timeout</span>,

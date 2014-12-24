@@ -88,7 +88,7 @@
         <span class='kw'>const</span> <span class='ident'>EFD_NONBLOCK</span>  <span class='op'>=</span> <span class='number'>0o0004000</span>, <span class='comment'>// Since Linux 2.6.27</span>
         <span class='kw'>const</span> <span class='ident'>EFD_SEMAPHORE</span> <span class='op'>=</span> <span class='number'>0o0000001</span>, <span class='comment'>// Since Linux 2.6.30</span>
     }
-)
+);
 
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>eventfd</span>(<span class='ident'>initval</span>: <span class='ident'>uint</span>, <span class='ident'>flags</span>: <span class='ident'>EventFdFlag</span>) <span class='op'>-&gt;</span> <span class='ident'>SysResult</span><span class='op'>&lt;</span><span class='ident'>Fd</span><span class='op'>&gt;</span> {
     <span class='kw'>type</span> <span class='ident'>F</span> <span class='op'>=</span> <span class='kw'>unsafe</span> <span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> <span class='kw'>fn</span>(<span class='ident'>initval</span>: <span class='ident'>c_uint</span>, <span class='ident'>flags</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;

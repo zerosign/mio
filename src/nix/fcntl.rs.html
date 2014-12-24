@@ -380,13 +380,13 @@
             <span class='kw'>const</span> <span class='ident'>O_TMPFILE</span>   <span class='op'>=</span> <span class='number'>0o20000000</span>,
             <span class='kw'>const</span> <span class='ident'>O_NDELAY</span>    <span class='op'>=</span> <span class='ident'>O_NONBLOCK</span>.<span class='ident'>bits</span>
         }
-    )
+    );
 
     <span class='macro'>bitflags</span><span class='macro'>!</span>(
         <span class='ident'>flags</span> <span class='ident'>FdFlag</span>: <span class='ident'>c_int</span> {
             <span class='kw'>const</span> <span class='ident'>FD_CLOEXEC</span> <span class='op'>=</span> <span class='number'>1</span>
         }
-    )
+    );
 }
 
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;macos&quot;</span>, <span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;ios&quot;</span>))]</span>
@@ -413,13 +413,13 @@
             <span class='kw'>const</span> <span class='ident'>O_NDELAY</span>    <span class='op'>=</span> <span class='ident'>O_NONBLOCK</span>.<span class='ident'>bits</span>,
             <span class='kw'>const</span> <span class='ident'>O_FSYNC</span>     <span class='op'>=</span> <span class='ident'>O_SYNC</span>.<span class='ident'>bits</span>
         }
-    )
+    );
 
     <span class='macro'>bitflags</span><span class='macro'>!</span>(
         <span class='ident'>flags</span> <span class='ident'>FdFlag</span>: <span class='ident'>c_int</span> {
             <span class='kw'>const</span> <span class='ident'>FD_CLOEXEC</span> <span class='op'>=</span> <span class='number'>1</span>
         }
-    )
+    );
 }
 </pre>
 </section>
