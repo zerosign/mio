@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-0.1.4/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-0.1.5/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -455,9 +455,6 @@
 <span id='413'>413</span>
 <span id='414'>414</span>
 <span id='415'>415</span>
-<span id='416'>416</span>
-<span id='417'>417</span>
-<span id='418'>418</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2014 The Rust Project Developers. See the COPYRIGHT</span>
 <span class='comment'>// file at the top-level directory of this distribution and at</span>
@@ -861,21 +858,18 @@
     <span class='comment'>//</span>
     <span class='comment'>// On the bright side, `rustdoc` lets us hide this from the public API</span>
     <span class='comment'>// documentation.</span>
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>compile</span>::{
-        <span class='ident'>Program</span>,
-        <span class='ident'>OneChar</span>, <span class='ident'>CharClass</span>, <span class='ident'>Any</span>, <span class='ident'>Save</span>, <span class='ident'>Jump</span>, <span class='ident'>Split</span>,
-        <span class='ident'>Match</span>, <span class='ident'>EmptyBegin</span>, <span class='ident'>EmptyEnd</span>, <span class='ident'>EmptyWordBoundary</span>,
-    };
+    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>compile</span>::<span class='ident'>Program</span>;
+    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>compile</span>::<span class='ident'>Inst</span>::{<span class='ident'>Match</span>, <span class='ident'>OneChar</span>, <span class='ident'>CharClass</span>, <span class='ident'>Any</span>, <span class='ident'>EmptyBegin</span>, <span class='ident'>EmptyEnd</span>,
+                            <span class='ident'>EmptyWordBoundary</span>, <span class='ident'>Save</span>, <span class='ident'>Jump</span>, <span class='ident'>Split</span>};
     <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>parse</span>::{
         <span class='ident'>FLAG_EMPTY</span>, <span class='ident'>FLAG_NOCASE</span>, <span class='ident'>FLAG_MULTI</span>, <span class='ident'>FLAG_DOTNL</span>,
         <span class='ident'>FLAG_SWAP_GREED</span>, <span class='ident'>FLAG_NEGATED</span>,
     };
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>re</span>::{<span class='ident'>Dynamic</span>, <span class='ident'>ExDynamic</span>, <span class='ident'>Native</span>, <span class='ident'>ExNative</span>};
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>vm</span>::{
-        <span class='ident'>MatchKind</span>, <span class='ident'>Exists</span>, <span class='ident'>Location</span>, <span class='ident'>Submatches</span>,
-        <span class='ident'>StepState</span>, <span class='ident'>StepMatchEarlyReturn</span>, <span class='ident'>StepMatch</span>, <span class='ident'>StepContinue</span>,
-        <span class='ident'>CharReader</span>, <span class='ident'>find_prefix</span>,
-    };
+    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>re</span>::{<span class='ident'>ExDynamic</span>, <span class='ident'>ExNative</span>};
+    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>re</span>::<span class='ident'>Regex</span>::{<span class='ident'>Dynamic</span>, <span class='ident'>Native</span>};
+    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>vm</span>::{<span class='ident'>CharReader</span>, <span class='ident'>find_prefix</span>};
+    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>vm</span>::<span class='ident'>MatchKind</span>::{<span class='kw'>mod</span>, <span class='ident'>Exists</span>, <span class='ident'>Location</span>, <span class='ident'>Submatches</span>};
+    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>vm</span>::<span class='ident'>StepState</span>::{<span class='kw'>mod</span>, <span class='ident'>StepMatchEarlyReturn</span>, <span class='ident'>StepMatch</span>, <span class='ident'>StepContinue</span>};
 }
 </pre>
 </section>

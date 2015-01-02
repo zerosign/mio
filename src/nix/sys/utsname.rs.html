@@ -126,14 +126,14 @@
 <span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
 <span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>UtsName</span> {
-    <span class='ident'>sysname</span>: [<span class='ident'>c_char</span>, ..<span class='ident'>UTSNAME_LEN</span>],
-    <span class='ident'>nodename</span>: [<span class='ident'>c_char</span>, ..<span class='ident'>UTSNAME_LEN</span>],
-    <span class='ident'>release</span>: [<span class='ident'>c_char</span>, ..<span class='ident'>UTSNAME_LEN</span>],
-    <span class='ident'>version</span>: [<span class='ident'>c_char</span>, ..<span class='ident'>UTSNAME_LEN</span>],
-    <span class='ident'>machine</span>: [<span class='ident'>c_char</span>, ..<span class='ident'>UTSNAME_LEN</span>],
+    <span class='ident'>sysname</span>: [<span class='ident'>c_char</span>; <span class='ident'>UTSNAME_LEN</span>],
+    <span class='ident'>nodename</span>: [<span class='ident'>c_char</span>; <span class='ident'>UTSNAME_LEN</span>],
+    <span class='ident'>release</span>: [<span class='ident'>c_char</span>; <span class='ident'>UTSNAME_LEN</span>],
+    <span class='ident'>version</span>: [<span class='ident'>c_char</span>; <span class='ident'>UTSNAME_LEN</span>],
+    <span class='ident'>machine</span>: [<span class='ident'>c_char</span>; <span class='ident'>UTSNAME_LEN</span>],
     <span class='comment'>// ifdef _GNU_SOURCE</span>
     <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
-    <span class='ident'>domainname</span>: [<span class='ident'>c_char</span>, ..<span class='ident'>UTSNAME_LEN</span>]
+    <span class='ident'>domainname</span>: [<span class='ident'>c_char</span>; <span class='ident'>UTSNAME_LEN</span>]
 }
 
 <span class='kw'>impl</span> <span class='ident'>UtsName</span> {

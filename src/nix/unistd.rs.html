@@ -785,7 +785,7 @@
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>pipe</span>() <span class='op'>-&gt;</span> <span class='ident'>SysResult</span><span class='op'>&lt;</span>(<span class='ident'>Fd</span>, <span class='ident'>Fd</span>)<span class='op'>&gt;</span> {
     <span class='kw'>unsafe</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>fds</span>: [<span class='ident'>c_int</span>, ..<span class='number'>2</span>] <span class='op'>=</span> <span class='ident'>mem</span>::<span class='ident'>uninitialized</span>();
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>fds</span>: [<span class='ident'>c_int</span>; <span class='number'>2</span>] <span class='op'>=</span> <span class='ident'>mem</span>::<span class='ident'>uninitialized</span>();
 
         <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>ffi</span>::<span class='ident'>pipe</span>(<span class='ident'>fds</span>.<span class='ident'>as_mut_ptr</span>());
 
@@ -810,7 +810,7 @@
 
     <span class='kw'>unsafe</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>fds</span>: [<span class='ident'>c_int</span>, ..<span class='number'>2</span>] <span class='op'>=</span> <span class='ident'>mem</span>::<span class='ident'>uninitialized</span>();
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>fds</span>: [<span class='ident'>c_int</span>; <span class='number'>2</span>] <span class='op'>=</span> <span class='ident'>mem</span>::<span class='ident'>uninitialized</span>();
 
         <span class='kw'>if</span> <span class='ident'>feat_atomic</span> {
             <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>mem</span>::<span class='ident'>transmute</span>::<span class='op'>&lt;</span><span class='op'>*</span><span class='kw'>const</span> (), <span class='ident'>F</span><span class='op'>&gt;</span>(<span class='ident'>pipe2</span>)(
@@ -835,7 +835,7 @@
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>pipe2</span>(<span class='ident'>flags</span>: <span class='ident'>OFlag</span>) <span class='op'>-&gt;</span> <span class='ident'>SysResult</span><span class='op'>&lt;</span>(<span class='ident'>Fd</span>, <span class='ident'>Fd</span>)<span class='op'>&gt;</span> {
     <span class='kw'>unsafe</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>fds</span>: [<span class='ident'>c_int</span>, ..<span class='number'>2</span>] <span class='op'>=</span> <span class='ident'>mem</span>::<span class='ident'>uninitialized</span>();
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>fds</span>: [<span class='ident'>c_int</span>; <span class='number'>2</span>] <span class='op'>=</span> <span class='ident'>mem</span>::<span class='ident'>uninitialized</span>();
 
         <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>ffi</span>::<span class='ident'>pipe</span>(<span class='ident'>fds</span>.<span class='ident'>as_mut_ptr</span>());
 

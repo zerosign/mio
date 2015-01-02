@@ -535,14 +535,14 @@
     <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>target_word_size</span> <span class='op'>=</span> <span class='string'>&quot;32&quot;</span>)]</span>
     <span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>sigset_t</span> {
-        <span class='ident'>__val</span>: [<span class='ident'>libc</span>::<span class='ident'>c_ulong</span>, ..<span class='number'>32</span>],
+        <span class='ident'>__val</span>: [<span class='ident'>libc</span>::<span class='ident'>c_ulong</span>; <span class='number'>32</span>],
     }
 
     <span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
     <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>target_word_size</span> <span class='op'>=</span> <span class='string'>&quot;64&quot;</span>)]</span>
     <span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>sigset_t</span> {
-        <span class='ident'>__val</span>: [<span class='ident'>libc</span>::<span class='ident'>c_ulong</span>, ..<span class='number'>16</span>],
+        <span class='ident'>__val</span>: [<span class='ident'>libc</span>::<span class='ident'>c_ulong</span>; <span class='number'>16</span>],
     }
 }
 
@@ -605,12 +605,12 @@
         <span class='kw'>pub</span> <span class='ident'>sa_handler</span>: <span class='kw'>extern</span> <span class='kw'>fn</span>(<span class='ident'>libc</span>::<span class='ident'>c_int</span>),
         <span class='kw'>pub</span> <span class='ident'>sa_mask</span>: <span class='ident'>sigset_t</span>,
         <span class='ident'>sa_restorer</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>libc</span>::<span class='ident'>c_void</span>,
-        <span class='ident'>sa_resv</span>: [<span class='ident'>libc</span>::<span class='ident'>c_int</span>, ..<span class='number'>1</span>],
+        <span class='ident'>sa_resv</span>: [<span class='ident'>libc</span>::<span class='ident'>c_int</span>; <span class='number'>1</span>],
     }
 
     <span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>sigset_t</span> {
-        <span class='ident'>__val</span>: [<span class='ident'>libc</span>::<span class='ident'>c_ulong</span>, ..<span class='number'>32</span>],
+        <span class='ident'>__val</span>: [<span class='ident'>libc</span>::<span class='ident'>c_ulong</span>; <span class='number'>32</span>],
     }
 }
 
@@ -659,7 +659,7 @@
     <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;freebsd&quot;</span>, <span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;dragonfly&quot;</span>))]</span>
     <span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>sigset_t</span> {
-        <span class='ident'>bits</span>: [<span class='ident'>u32</span>, ..<span class='number'>4</span>],
+        <span class='ident'>bits</span>: [<span class='ident'>u32</span>; <span class='number'>4</span>],
     }
 
     <span class='comment'>// This structure has more fields, but we&#39;re not all that interested in</span>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-0.1.4/src/compile.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-0.1.5/src/compile.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>compile.rs.html -- source</title>
@@ -328,63 +328,63 @@
 <span class='comment'>// Enable this to squash warnings due to exporting pieces of the representation</span>
 <span class='comment'>// for use with the regex! macro. See lib.rs for explanation.</span>
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>Inst</span>::<span class='op'>*</span>;
+<span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>Inst</span>::<span class='op'>*</span>;
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>iter</span>::<span class='ident'>repeat</span>;
 <span class='kw'>use</span> <span class='ident'>parse</span>;
-<span class='kw'>use</span> <span class='ident'>parse</span>::{
-    <span class='ident'>Flags</span>, <span class='ident'>FLAG_EMPTY</span>,
-    <span class='ident'>Nothing</span>, <span class='ident'>Literal</span>, <span class='ident'>Dot</span>, <span class='ident'>AstClass</span>, <span class='ident'>Begin</span>, <span class='ident'>End</span>, <span class='ident'>WordBoundary</span>, <span class='ident'>Capture</span>, <span class='ident'>Cat</span>, <span class='ident'>Alt</span>,
-    <span class='ident'>Rep</span>,
-    <span class='ident'>ZeroOne</span>, <span class='ident'>ZeroMore</span>, <span class='ident'>OneMore</span>,
-};
+<span class='kw'>use</span> <span class='ident'>parse</span>::{<span class='ident'>Flags</span>, <span class='ident'>FLAG_EMPTY</span>};
+<span class='kw'>use</span> <span class='ident'>parse</span>::<span class='ident'>Ast</span>::{<span class='ident'>Nothing</span>, <span class='ident'>Literal</span>, <span class='ident'>Dot</span>, <span class='ident'>AstClass</span>, <span class='ident'>Begin</span>, <span class='ident'>End</span>, <span class='ident'>WordBoundary</span>, <span class='ident'>Capture</span>, <span class='ident'>Cat</span>, <span class='ident'>Alt</span>,
+                 <span class='ident'>Rep</span>};
+<span class='kw'>use</span> <span class='ident'>parse</span>::<span class='ident'>Repeater</span>::{<span class='ident'>ZeroOne</span>, <span class='ident'>ZeroMore</span>, <span class='ident'>OneMore</span>};
 
-<span class='kw'>type</span> <span class='ident'>InstIdx</span> <span class='op'>=</span> <span class='ident'>uint</span>;
+<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>InstIdx</span> <span class='op'>=</span> <span class='ident'>uint</span>;
 
+<span class='doccomment'>/// An instruction, the underlying unit of a compiled regular expression</span>
 <span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Show</span>, <span class='ident'>Clone</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Inst</span> {
-    <span class='comment'>// When a Match instruction is executed, the current thread is successful.</span>
+    <span class='doccomment'>/// When a Match instruction is executed, the current thread is successful.</span>
     <span class='ident'>Match</span>,
 
-    <span class='comment'>// The OneChar instruction matches a literal character.</span>
-    <span class='comment'>// The flags indicate whether to do a case insensitive match.</span>
+    <span class='doccomment'>/// The OneChar instruction matches a literal character.</span>
+    <span class='doccomment'>/// The flags indicate whether to do a case insensitive match.</span>
     <span class='ident'>OneChar</span>(<span class='ident'>char</span>, <span class='ident'>Flags</span>),
 
-    <span class='comment'>// The CharClass instruction tries to match one input character against</span>
-    <span class='comment'>// the range of characters given.</span>
-    <span class='comment'>// The flags indicate whether to do a case insensitive match and whether</span>
-    <span class='comment'>// the character class is negated or not.</span>
+    <span class='doccomment'>/// The CharClass instruction tries to match one input character against</span>
+    <span class='doccomment'>/// the range of characters given.</span>
+    <span class='doccomment'>/// The flags indicate whether to do a case insensitive match and whether</span>
+    <span class='doccomment'>/// the character class is negated or not.</span>
     <span class='ident'>CharClass</span>(<span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>char</span>, <span class='ident'>char</span>)<span class='op'>&gt;</span>, <span class='ident'>Flags</span>),
 
-    <span class='comment'>// Matches any character except new lines.</span>
-    <span class='comment'>// The flags indicate whether to include the &#39;\n&#39; character.</span>
+    <span class='doccomment'>/// Matches any character except new lines.</span>
+    <span class='doccomment'>/// The flags indicate whether to include the &#39;\n&#39; character.</span>
     <span class='ident'>Any</span>(<span class='ident'>Flags</span>),
 
-    <span class='comment'>// Matches the beginning of the string, consumes no characters.</span>
-    <span class='comment'>// The flags indicate whether it matches if the preceding character</span>
-    <span class='comment'>// is a new line.</span>
+    <span class='doccomment'>/// Matches the beginning of the string, consumes no characters.</span>
+    <span class='doccomment'>/// The flags indicate whether it matches if the preceding character</span>
+    <span class='doccomment'>/// is a new line.</span>
     <span class='ident'>EmptyBegin</span>(<span class='ident'>Flags</span>),
 
-    <span class='comment'>// Matches the end of the string, consumes no characters.</span>
-    <span class='comment'>// The flags indicate whether it matches if the proceeding character</span>
-    <span class='comment'>// is a new line.</span>
+    <span class='doccomment'>/// Matches the end of the string, consumes no characters.</span>
+    <span class='doccomment'>/// The flags indicate whether it matches if the proceeding character</span>
+    <span class='doccomment'>/// is a new line.</span>
     <span class='ident'>EmptyEnd</span>(<span class='ident'>Flags</span>),
 
-    <span class='comment'>// Matches a word boundary (\w on one side and \W \A or \z on the other),</span>
-    <span class='comment'>// and consumes no character.</span>
-    <span class='comment'>// The flags indicate whether this matches a word boundary or something</span>
-    <span class='comment'>// that isn&#39;t a word boundary.</span>
+    <span class='doccomment'>/// Matches a word boundary (\w on one side and \W \A or \z on the other),</span>
+    <span class='doccomment'>/// and consumes no character.</span>
+    <span class='doccomment'>/// The flags indicate whether this matches a word boundary or something</span>
+    <span class='doccomment'>/// that isn&#39;t a word boundary.</span>
     <span class='ident'>EmptyWordBoundary</span>(<span class='ident'>Flags</span>),
 
-    <span class='comment'>// Saves the current position in the input string to the Nth save slot.</span>
+    <span class='doccomment'>/// Saves the current position in the input string to the Nth save slot.</span>
     <span class='ident'>Save</span>(<span class='ident'>uint</span>),
 
-    <span class='comment'>// Jumps to the instruction at the index given.</span>
+    <span class='doccomment'>/// Jumps to the instruction at the index given.</span>
     <span class='ident'>Jump</span>(<span class='ident'>InstIdx</span>),
 
-    <span class='comment'>// Jumps to the instruction at the first index given. If that leads to</span>
-    <span class='comment'>// a panic state, then the instruction at the second index given is</span>
-    <span class='comment'>// tried.</span>
+    <span class='doccomment'>/// Jumps to the instruction at the first index given. If that leads to</span>
+    <span class='doccomment'>/// a panic state, then the instruction at the second index given is</span>
+    <span class='doccomment'>/// tried.</span>
     <span class='ident'>Split</span>(<span class='ident'>InstIdx</span>, <span class='ident'>InstIdx</span>),
 }
 
@@ -474,7 +474,7 @@
             <span class='ident'>Capture</span>(<span class='ident'>cap</span>, <span class='ident'>name</span>, <span class='ident'>x</span>) <span class='op'>=&gt;</span> {
                 <span class='kw'>let</span> <span class='ident'>len</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>names</span>.<span class='ident'>len</span>();
                 <span class='kw'>if</span> <span class='ident'>cap</span> <span class='op'>&gt;=</span> <span class='ident'>len</span> {
-                    <span class='self'>self</span>.<span class='ident'>names</span>.<span class='ident'>grow</span>(<span class='number'>10</span> <span class='op'>+</span> <span class='ident'>cap</span> <span class='op'>-</span> <span class='ident'>len</span>, <span class='prelude-val'>None</span>)
+                    <span class='self'>self</span>.<span class='ident'>names</span>.<span class='ident'>extend</span>(<span class='ident'>repeat</span>(<span class='prelude-val'>None</span>).<span class='ident'>take</span>(<span class='number'>10</span> <span class='op'>+</span> <span class='ident'>cap</span> <span class='op'>-</span> <span class='ident'>len</span>))
                 }
                 <span class='self'>self</span>.<span class='ident'>names</span>[<span class='ident'>cap</span>] <span class='op'>=</span> <span class='ident'>name</span>;
 

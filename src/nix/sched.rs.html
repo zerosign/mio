@@ -280,7 +280,7 @@
 <span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
 <span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>CpuSet</span> {
-    <span class='ident'>cpu_mask</span>: [<span class='ident'>CpuMask</span>, ..<span class='ident'>cpuset_attribs</span>::<span class='ident'>CPU_SETSIZE</span><span class='op'>/</span><span class='ident'>cpuset_attribs</span>::<span class='ident'>CPU_MASK_BITS</span>]
+    <span class='ident'>cpu_mask</span>: [<span class='ident'>CpuMask</span>; <span class='ident'>cpuset_attribs</span>::<span class='ident'>CPU_SETSIZE</span><span class='op'>/</span><span class='ident'>cpuset_attribs</span>::<span class='ident'>CPU_MASK_BITS</span>]
 }
 
 <span class='kw'>impl</span> <span class='ident'>CpuSet</span> {

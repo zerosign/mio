@@ -44,7 +44,7 @@
 <h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>regex</a>::<wbr><a class='trait' href=''>Replacer</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]
             </a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-9463' href='../src/regex/re.rs.html#567-574'>[src]</a></span></h1>
+        </span><a id='src-9312' href='../src/regex/re.rs.html#568-575'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Replacer {
     fn <a href='#tymethod.reg_replace' class='fnname'>reg_replace</a>&lt;'a&gt;(&amp;'a mut self, caps: &amp;<a class='struct' href='../regex/struct.Captures.html' title='regex::Captures'>Captures</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/collections/str/type.CowString.html' title='collections::str::CowString'>CowString</a>&lt;'a&gt;;
 }</pre><div class='docblock'><p>Replacer describes types that can be used to replace matches in a string.</p>
@@ -61,7 +61,7 @@ a new owned string isn&#39;t needed (e.g., for <code>NoExpand</code>).</p>
         <ul class='item-list' id='implementors-list'>
     <li><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'t&gt; <a class='trait' href='../regex/trait.Replacer.html' title='regex::Replacer'>Replacer</a> for <a class='struct' href='../regex/struct.NoExpand.html' title='regex::NoExpand'>NoExpand</a>&lt;'t&gt;</code></li>
 <li><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'t&gt; <a class='trait' href='../regex/trait.Replacer.html' title='regex::Replacer'>Replacer</a> for &amp;'t <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></li>
-<li><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;F&gt; <a class='trait' href='../regex/trait.Replacer.html' title='regex::Replacer'>Replacer</a> for F where F: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.FnMut.html' title='core::ops::FnMut'>FnMut</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(&amp;<a class='struct' href='../regex/struct.Captures.html' title='regex::Captures'>Captures</a>,)</a>, <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></li>
+<li><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;F&gt; <a class='trait' href='../regex/trait.Replacer.html' title='regex::Replacer'>Replacer</a> for F <span class='where'>where F: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.FnMut.html' title='core::ops::FnMut'>FnMut</a>(&amp;<a class='struct' href='../regex/struct.Captures.html' title='regex::Captures'>Captures</a>) -&gt; <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></span></code></li>
 </ul><script type="text/javascript" async
                               src="../implementors/regex/trait.Replacer.js">
                       </script></section>
