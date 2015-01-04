@@ -599,7 +599,7 @@
     }
 );
 
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>SockAddr</span> {
     <span class='ident'>SockIpV4</span>(<span class='ident'>sockaddr_in</span>),
     <span class='ident'>SockIpV6</span>(<span class='ident'>sockaddr_in6</span>),
@@ -1012,7 +1012,7 @@
 }
 
 <span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>linger</span> {
     <span class='kw'>pub</span> <span class='ident'>l_onoff</span>: <span class='ident'>c_int</span>,
     <span class='kw'>pub</span> <span class='ident'>l_linger</span>: <span class='ident'>c_int</span>

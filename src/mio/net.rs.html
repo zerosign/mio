@@ -616,7 +616,7 @@
 }
 
 <span class='comment'>// Types of sockets</span>
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>AddressFamily</span> {
     <span class='ident'>Inet</span>,
     <span class='ident'>Inet6</span>,
@@ -692,7 +692,7 @@
     }
 }
 
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>SocketType</span> {
     <span class='ident'>Dgram</span>,
     <span class='ident'>Stream</span>,
@@ -707,11 +707,11 @@
     <span class='kw'>use</span> <span class='ident'>io</span>;
     <span class='kw'>use</span> <span class='ident'>io</span>::{<span class='ident'>IoHandle</span>, <span class='ident'>IoAcceptor</span>, <span class='ident'>IoReader</span>, <span class='ident'>IoWriter</span>, <span class='ident'>NonBlock</span>};
     <span class='kw'>use</span> <span class='ident'>io</span>::<span class='ident'>NonBlock</span>::{<span class='ident'>Ready</span>, <span class='ident'>WouldBlock</span>};
-    <span class='kw'>use</span> <span class='ident'>net</span>::{<span class='ident'>AddressFamily</span>, <span class='ident'>Socket</span>, <span class='ident'>SockAddr</span>};
+    <span class='kw'>use</span> <span class='ident'>net</span>::{<span class='ident'>Socket</span>, <span class='ident'>SockAddr</span>};
     <span class='kw'>use</span> <span class='ident'>net</span>::<span class='ident'>SocketType</span>::<span class='ident'>Stream</span>;
-    <span class='kw'>use</span> <span class='ident'>net</span>::<span class='ident'>AddressFamily</span>::{<span class='ident'>Inet</span>, <span class='ident'>Inet6</span>};
+    <span class='kw'>use</span> <span class='ident'>net</span>::<span class='ident'>AddressFamily</span>::{<span class='self'>self</span>, <span class='ident'>Inet</span>, <span class='ident'>Inet6</span>};
 
-    <span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Show</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>TcpSocket</span> {
         <span class='ident'>desc</span>: <span class='ident'>os</span>::<span class='ident'>IoDesc</span>
     }
@@ -785,7 +785,7 @@
     <span class='kw'>impl</span> <span class='ident'>Socket</span> <span class='kw'>for</span> <span class='ident'>TcpSocket</span> {
     }
 
-    <span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Show</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>TcpListener</span> {
         <span class='ident'>desc</span>: <span class='ident'>os</span>::<span class='ident'>IoDesc</span>,
     }
@@ -803,7 +803,7 @@
         }
     }
 
-    <span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Show</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>TcpAcceptor</span> {
         <span class='ident'>desc</span>: <span class='ident'>os</span>::<span class='ident'>IoDesc</span>,
     }
@@ -853,7 +853,7 @@
     <span class='kw'>use</span> <span class='ident'>net</span>::<span class='ident'>AddressFamily</span>::<span class='ident'>Inet</span>;
     <span class='kw'>use</span> <span class='ident'>super</span>::<span class='ident'>UnconnectedSocket</span>;
 
-    <span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Show</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>UdpSocket</span> {
         <span class='ident'>desc</span>: <span class='ident'>os</span>::<span class='ident'>IoDesc</span>
     }
@@ -963,7 +963,7 @@
     <span class='kw'>use</span> <span class='ident'>net</span>::<span class='ident'>SocketType</span>::<span class='ident'>Stream</span>;
     <span class='kw'>use</span> <span class='ident'>net</span>::<span class='ident'>AddressFamily</span>::<span class='ident'>Unix</span>;
 
-    <span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Show</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>UnixSocket</span> {
         <span class='ident'>desc</span>: <span class='ident'>os</span>::<span class='ident'>IoDesc</span>
     }
@@ -1026,7 +1026,7 @@
     <span class='kw'>impl</span> <span class='ident'>Socket</span> <span class='kw'>for</span> <span class='ident'>UnixSocket</span> {
     }
 
-    <span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Show</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>UnixListener</span> {
         <span class='ident'>desc</span>: <span class='ident'>os</span>::<span class='ident'>IoDesc</span>,
     }
@@ -1044,7 +1044,7 @@
         }
     }
 
-    <span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Show</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>UnixAcceptor</span> {
         <span class='ident'>desc</span>: <span class='ident'>os</span>::<span class='ident'>IoDesc</span>,
     }

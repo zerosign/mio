@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-0.1.5/src/vm.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-0.1.7/src/vm.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>vm.rs.html -- source</title>
@@ -660,7 +660,7 @@
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>MatchKind</span>::<span class='op'>*</span>;
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>StepState</span>::<span class='op'>*</span>;
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::{<span class='self'>self</span>, <span class='ident'>Ordering</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>iter</span>::<span class='ident'>repeat</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>slice</span>::<span class='ident'>SliceExt</span>;
@@ -1145,11 +1145,11 @@
         <span class='string'>&#39;_&#39;</span> <span class='op'>|</span> <span class='string'>&#39;0&#39;</span> ... <span class='string'>&#39;9&#39;</span> <span class='op'>|</span> <span class='string'>&#39;a&#39;</span> ... <span class='string'>&#39;z&#39;</span> <span class='op'>|</span> <span class='string'>&#39;A&#39;</span> ... <span class='string'>&#39;Z&#39;</span> <span class='op'>=&gt;</span> <span class='boolval'>true</span>,
         _ <span class='op'>=&gt;</span> <span class='ident'>PERLW</span>.<span class='ident'>binary_search_by</span>(<span class='op'>|</span><span class='kw-2'>&amp;</span>(<span class='ident'>start</span>, <span class='ident'>end</span>)<span class='op'>|</span> {
             <span class='kw'>if</span> <span class='ident'>c</span> <span class='op'>&gt;=</span> <span class='ident'>start</span> <span class='op'>&amp;&amp;</span> <span class='ident'>c</span> <span class='op'>&lt;=</span> <span class='ident'>end</span> {
-                <span class='ident'>Equal</span>
+                <span class='ident'>Ordering</span>::<span class='ident'>Equal</span>
             } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>start</span> <span class='op'>&gt;</span> <span class='ident'>c</span> {
-                <span class='ident'>Greater</span>
+                <span class='ident'>Ordering</span>::<span class='ident'>Greater</span>
             } <span class='kw'>else</span> {
-                <span class='ident'>Less</span>
+                <span class='ident'>Ordering</span>::<span class='ident'>Less</span>
             }
         }).<span class='ident'>ok</span>().<span class='ident'>is_some</span>()
     }
@@ -1178,11 +1178,11 @@
         <span class='ident'>end</span> <span class='op'>=</span> <span class='ident'>end</span>.<span class='ident'>to_uppercase</span>();
     }
     <span class='kw'>if</span> <span class='ident'>textc</span> <span class='op'>&gt;=</span> <span class='ident'>start</span> <span class='op'>&amp;&amp;</span> <span class='ident'>textc</span> <span class='op'>&lt;=</span> <span class='ident'>end</span> {
-        <span class='ident'>Equal</span>
+        <span class='ident'>Ordering</span>::<span class='ident'>Equal</span>
     } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>start</span> <span class='op'>&gt;</span> <span class='ident'>textc</span> {
-        <span class='ident'>Greater</span>
+        <span class='ident'>Ordering</span>::<span class='ident'>Greater</span>
     } <span class='kw'>else</span> {
-        <span class='ident'>Less</span>
+        <span class='ident'>Ordering</span>::<span class='ident'>Less</span>
     }
 }
 

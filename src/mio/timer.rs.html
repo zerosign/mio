@@ -518,7 +518,7 @@
 <span id='476'>476</span>
 <span id='477'>477</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>uint</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::{<span class='ident'>uint</span>, <span class='ident'>iter</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>max</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>time</span>::<span class='ident'>duration</span>::<span class='ident'>Duration</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>num</span>::<span class='ident'>UnsignedInt</span>;
@@ -556,7 +556,7 @@
     <span class='ident'>mask</span>: <span class='ident'>u64</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Timeout</span> {
     <span class='comment'>// Reference into the timer entry slab</span>
     <span class='ident'>token</span>: <span class='ident'>Token</span>,
@@ -572,7 +572,7 @@
         <span class='ident'>Timer</span> {
             <span class='ident'>tick_ms</span>: <span class='ident'>tick_ms</span>,
             <span class='ident'>entries</span>: <span class='ident'>Slab</span>::<span class='ident'>new</span>(<span class='ident'>capacity</span>),
-            <span class='ident'>wheel</span>: <span class='ident'>Vec</span>::<span class='ident'>from_fn</span>(<span class='ident'>slots</span>, <span class='op'>|</span>_<span class='op'>|</span> <span class='ident'>EMPTY</span>),
+            <span class='ident'>wheel</span>: <span class='ident'>iter</span>::<span class='ident'>repeat</span>(<span class='ident'>EMPTY</span>).<span class='ident'>take</span>(<span class='ident'>slots</span>).<span class='ident'>collect</span>(),
             <span class='ident'>start</span>: <span class='number'>0</span>,
             <span class='ident'>tick</span>: <span class='number'>0</span>,
             <span class='ident'>next</span>: <span class='ident'>EMPTY</span>,
@@ -795,7 +795,7 @@
     }
 }
 
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>)]</span>
 <span class='kw'>struct</span> <span class='ident'>EntryLinks</span> {
     <span class='ident'>tick</span>: <span class='ident'>u64</span>,
     <span class='ident'>prev</span>: <span class='ident'>Token</span>,
@@ -804,7 +804,7 @@
 
 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>TimerResult</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>TimerError</span><span class='op'>&gt;</span>;
 
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Show</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>TimerError</span> {
     <span class='ident'>kind</span>: <span class='ident'>TimerErrorKind</span>,
     <span class='ident'>desc</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>,
@@ -819,7 +819,7 @@
     }
 }
 
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Show</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>TimerErrorKind</span> {
     <span class='ident'>TimerOverflow</span>,
 }

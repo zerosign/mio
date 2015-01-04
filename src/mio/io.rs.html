@@ -202,7 +202,7 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>os</span>::<span class='ident'>IoDesc</span>;
 
 <span class='doccomment'>/// The result of a non-blocking operation.</span>
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Show</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='ident'>Ready</span>(<span class='ident'>T</span>),
     <span class='ident'>WouldBlock</span>

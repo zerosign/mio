@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-0.1.5/src/parse.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-0.1.7/src/parse.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>parse.rs.html -- source</title>
@@ -1182,7 +1182,7 @@
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// Note that this representation prevents one from reproducing the regex as</span>
 <span class='doccomment'>/// it was typed. (But it could be used to reproduce an equivalent regex.)</span>
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Show</span>, <span class='ident'>Clone</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>, <span class='ident'>Clone</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Ast</span> {
     <span class='ident'>Nothing</span>,
     <span class='ident'>Literal</span>(<span class='ident'>char</span>, <span class='ident'>Flags</span>),
@@ -1199,14 +1199,14 @@
     <span class='ident'>Rep</span>(<span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Ast</span><span class='op'>&gt;</span>, <span class='ident'>Repeater</span>, <span class='ident'>Greed</span>),
 }
 
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Show</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Clone</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Clone</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Repeater</span> {
     <span class='ident'>ZeroOne</span>,
     <span class='ident'>ZeroMore</span>,
     <span class='ident'>OneMore</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Show</span>, <span class='ident'>Clone</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>, <span class='ident'>Clone</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Greed</span> {
     <span class='ident'>Greedy</span>,
     <span class='ident'>Ungreedy</span>,
@@ -1235,7 +1235,7 @@
 <span class='doccomment'>/// constructing an abstract syntax tree. Its central purpose is to facilitate</span>
 <span class='doccomment'>/// parsing groups and alternations while also maintaining a stack of flag</span>
 <span class='doccomment'>/// state.</span>
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Show</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>)]</span>
 <span class='kw'>enum</span> <span class='ident'>BuildAst</span> {
     <span class='ident'>Expr</span>(<span class='ident'>Ast</span>),
     <span class='ident'>Paren</span>(<span class='ident'>Flags</span>, <span class='ident'>uint</span>, <span class='ident'>String</span>), <span class='comment'>// &#39;(&#39;</span>

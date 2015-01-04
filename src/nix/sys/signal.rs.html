@@ -512,7 +512,7 @@
     <span class='comment'>// actually a giant union. Currently we&#39;re only interested in these fields,</span>
     <span class='comment'>// however.</span>
     <span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-    <span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>siginfo</span> {
         <span class='ident'>si_signo</span>: <span class='ident'>libc</span>::<span class='ident'>c_int</span>,
         <span class='ident'>si_errno</span>: <span class='ident'>libc</span>::<span class='ident'>c_int</span>,
@@ -533,14 +533,14 @@
 
     <span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
     <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>target_word_size</span> <span class='op'>=</span> <span class='string'>&quot;32&quot;</span>)]</span>
-    <span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>sigset_t</span> {
         <span class='ident'>__val</span>: [<span class='ident'>libc</span>::<span class='ident'>c_ulong</span>; <span class='number'>32</span>],
     }
 
     <span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
     <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>target_word_size</span> <span class='op'>=</span> <span class='string'>&quot;64&quot;</span>)]</span>
-    <span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>sigset_t</span> {
         <span class='ident'>__val</span>: [<span class='ident'>libc</span>::<span class='ident'>c_ulong</span>; <span class='number'>16</span>],
     }
@@ -665,7 +665,7 @@
     <span class='comment'>// This structure has more fields, but we&#39;re not all that interested in</span>
     <span class='comment'>// them.</span>
     <span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-    <span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>siginfo</span> {
         <span class='kw'>pub</span> <span class='ident'>si_signo</span>: <span class='ident'>libc</span>::<span class='ident'>c_int</span>,
         <span class='kw'>pub</span> <span class='ident'>si_errno</span>: <span class='ident'>libc</span>::<span class='ident'>c_int</span>,
@@ -713,7 +713,7 @@
     }
 }
 
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SigSet</span> {
     <span class='ident'>sigset</span>: <span class='ident'>sigset_t</span>
 }

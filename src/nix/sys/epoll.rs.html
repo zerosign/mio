@@ -227,7 +227,7 @@
     }
 }
 
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>)]</span>
 <span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>EpollOp</span> {
     <span class='ident'>EpollCtlAdd</span> <span class='op'>=</span> <span class='number'>1</span>,
@@ -235,7 +235,7 @@
     <span class='ident'>EpollCtlMod</span> <span class='op'>=</span> <span class='number'>3</span>
 }
 
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>)]</span>
 <span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>, <span class='ident'>packed</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>EpollEvent</span> {
     <span class='kw'>pub</span> <span class='ident'>events</span>: <span class='ident'>EpollEventKind</span>,

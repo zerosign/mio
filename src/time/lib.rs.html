@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/time-0.1.6/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/time-0.1.9/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -1868,6 +1868,18 @@
 <span id='1826'>1826</span>
 <span id='1827'>1827</span>
 <span id='1828'>1828</span>
+<span id='1829'>1829</span>
+<span id='1830'>1830</span>
+<span id='1831'>1831</span>
+<span id='1832'>1832</span>
+<span id='1833'>1833</span>
+<span id='1834'>1834</span>
+<span id='1835'>1835</span>
+<span id='1836'>1836</span>
+<span id='1837'>1837</span>
+<span id='1838'>1838</span>
+<span id='1839'>1839</span>
+<span id='1840'>1840</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2012-2013 The Rust Project Developers. See the COPYRIGHT</span>
 <span class='comment'>// file at the top-level directory of this distribution and at</span>
@@ -1881,7 +1893,7 @@
 
 <span class='doccomment'>//! Simple time handling.</span>
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>phase</span>)]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>associated_types</span>, <span class='ident'>default_type_params</span>, <span class='ident'>phase</span>, <span class='ident'>old_orphan_check</span>)]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>doc</span>(<span class='ident'>html_logo_url</span> <span class='op'>=</span> <span class='string'>&quot;http://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png&quot;</span>,
        <span class='ident'>html_favicon_url</span> <span class='op'>=</span> <span class='string'>&quot;http://www.rust-lang.org/favicon.ico&quot;</span>,
        <span class='ident'>html_root_url</span> <span class='op'>=</span> <span class='string'>&quot;http://doc.rust-lang.org/time/&quot;</span>)]</span>
@@ -1892,10 +1904,12 @@
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;rustc-serialize&quot;</span>)]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='string'>&quot;rustc-serialize&quot;</span> <span class='kw'>as</span> <span class='ident'>rustc_serialize</span>;
 
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>Ordering</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>::<span class='ident'>Show</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>BufReader</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>num</span>::<span class='ident'>SignedInt</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Add</span>, <span class='ident'>Sub</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>string</span>::<span class='ident'>String</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>time</span>::<span class='ident'>Duration</span>;
 
@@ -1947,8 +1961,8 @@
 }
 
 <span class='doccomment'>/// A record specifying a time value in seconds and nanoseconds.</span>
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Ord</span>, <span class='ident'>Show</span>)]</span>
-<span class='attribute'>#[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;rustc-serialize&quot;</span>, <span class='ident'>deriving</span>(<span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>))]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Ord</span>, <span class='ident'>Show</span>)]</span>
+<span class='attribute'>#[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;rustc-serialize&quot;</span>, <span class='ident'>derive</span>(<span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>))]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Timespec</span> { <span class='kw'>pub</span> <span class='ident'>sec</span>: <span class='ident'>i64</span>, <span class='kw'>pub</span> <span class='ident'>nsec</span>: <span class='ident'>i32</span> }
 <span class='comment'>/*
  * Timespec assumes that pre-epoch Timespecs have negative sec and positive
@@ -1965,7 +1979,9 @@
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Add</span><span class='op'>&lt;</span><span class='ident'>Duration</span>, <span class='ident'>Timespec</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Timespec</span> {
+<span class='kw'>impl</span> <span class='ident'>Add</span><span class='op'>&lt;</span><span class='ident'>Duration</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Timespec</span> {
+    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>Timespec</span>;
+
     <span class='kw'>fn</span> <span class='ident'>add</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>Duration</span>) <span class='op'>-&gt;</span> <span class='ident'>Timespec</span> {
         <span class='kw'>let</span> <span class='ident'>d_sec</span> <span class='op'>=</span> <span class='ident'>other</span>.<span class='ident'>num_seconds</span>();
         <span class='comment'>// It is safe to unwrap the nanoseconds, because there cannot be</span>
@@ -1985,7 +2001,9 @@
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Sub</span><span class='op'>&lt;</span><span class='ident'>Duration</span>, <span class='ident'>Timespec</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Timespec</span> {
+<span class='kw'>impl</span> <span class='ident'>Sub</span><span class='op'>&lt;</span><span class='ident'>Duration</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Timespec</span> {
+    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>Timespec</span>;
+
     <span class='kw'>fn</span> <span class='ident'>sub</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>Duration</span>) <span class='op'>-&gt;</span> <span class='ident'>Timespec</span> {
         <span class='kw'>let</span> <span class='ident'>d_sec</span> <span class='op'>=</span> <span class='ident'>other</span>.<span class='ident'>num_seconds</span>();
         <span class='comment'>// It is safe to unwrap the nanoseconds, because there cannot be</span>
@@ -2005,7 +2023,9 @@
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Sub</span><span class='op'>&lt;</span><span class='ident'>Timespec</span>, <span class='ident'>Duration</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Timespec</span> {
+<span class='kw'>impl</span> <span class='ident'>Sub</span><span class='op'>&lt;</span><span class='ident'>Timespec</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Timespec</span> {
+    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>Duration</span>;
+
     <span class='kw'>fn</span> <span class='ident'>sub</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>Timespec</span>) <span class='op'>-&gt;</span> <span class='ident'>Duration</span> {
         <span class='kw'>let</span> <span class='ident'>sec</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>sec</span> <span class='op'>-</span> <span class='ident'>other</span>.<span class='ident'>sec</span>;
         <span class='kw'>let</span> <span class='ident'>nsec</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>nsec</span> <span class='op'>-</span> <span class='ident'>other</span>.<span class='ident'>nsec</span>;
@@ -2036,8 +2056,8 @@
         <span class='comment'>// A FILETIME contains a 64-bit value representing the number of</span>
         <span class='comment'>// hectonanosecond (100-nanosecond) intervals since 1601-01-01T00:00:00Z.</span>
         <span class='comment'>// http://support.microsoft.com/kb/167296/en-us</span>
-        <span class='kw'>let</span> <span class='ident'>ns_since_1601</span> <span class='op'>=</span> ((<span class='ident'>time</span>.<span class='ident'>dwHighDateTime</span> <span class='kw'>as</span> <span class='ident'>u64</span> <span class='op'>&lt;&lt;</span> <span class='number'>32</span>) <span class='op'>|</span>
-                             (<span class='ident'>time</span>.<span class='ident'>dwLowDateTime</span>  <span class='kw'>as</span> <span class='ident'>u64</span> <span class='op'>&lt;&lt;</span>  <span class='number'>0</span>)) <span class='op'>/</span> <span class='number'>10</span>;
+        <span class='kw'>let</span> <span class='ident'>ns_since_1601</span> <span class='op'>=</span> (((<span class='ident'>time</span>.<span class='ident'>dwHighDateTime</span> <span class='kw'>as</span> <span class='ident'>u64</span>) <span class='op'>&lt;&lt;</span> <span class='number'>32</span>) <span class='op'>|</span>
+                             ((<span class='ident'>time</span>.<span class='ident'>dwLowDateTime</span>  <span class='kw'>as</span> <span class='ident'>u64</span>) <span class='op'>&lt;&lt;</span>  <span class='number'>0</span>)) <span class='op'>/</span> <span class='number'>10</span>;
         <span class='kw'>let</span> <span class='ident'>ns_since_1970</span> <span class='op'>=</span> <span class='ident'>ns_since_1601</span> <span class='op'>-</span> <span class='ident'>NANOSECONDS_FROM_1601_TO_1970</span>;
 
         ((<span class='ident'>ns_since_1970</span> <span class='op'>/</span> <span class='number'>1000000</span>) <span class='kw'>as</span> <span class='ident'>i64</span>,
@@ -2126,7 +2146,7 @@
 <span class='doccomment'>/// also called a broken-down time value.</span>
 <span class='comment'>// FIXME: use c_int instead of i32?</span>
 <span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>Show</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>Show</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Tm</span> {
     <span class='doccomment'>/// Seconds after the minute - [0, 60]</span>
     <span class='kw'>pub</span> <span class='ident'>tm_sec</span>: <span class='ident'>i32</span>,
@@ -2167,7 +2187,9 @@
     <span class='kw'>pub</span> <span class='ident'>tm_nsec</span>: <span class='ident'>i32</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>Add</span><span class='op'>&lt;</span><span class='ident'>Duration</span>, <span class='ident'>Tm</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Tm</span> {
+<span class='kw'>impl</span> <span class='ident'>Add</span><span class='op'>&lt;</span><span class='ident'>Duration</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Tm</span> {
+    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>Tm</span>;
+
     <span class='doccomment'>/// The resulting Tm is in UTC.</span>
     <span class='comment'>// FIXME:  The resulting Tm should have the same timezone as `self`; however, we need a</span>
     <span class='comment'>// function such as `at_tm(clock: Timespec, offset: i32)` for this.</span>
@@ -2176,7 +2198,9 @@
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Sub</span><span class='op'>&lt;</span><span class='ident'>Duration</span>, <span class='ident'>Tm</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Tm</span> {
+<span class='kw'>impl</span> <span class='ident'>Sub</span><span class='op'>&lt;</span><span class='ident'>Duration</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Tm</span> {
+    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>Tm</span>;
+
     <span class='doccomment'>/// The resulting Tm is in UTC.</span>
     <span class='comment'>// FIXME:  The resulting Tm should have the same timezone as `self`; however, we need a</span>
     <span class='comment'>// function such as `at_tm(clock: Timespec, offset: i32)` for this.</span>
@@ -2346,7 +2370,7 @@
     }
 }
 
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>, <span class='ident'>PartialEq</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>PartialEq</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>ParseError</span> {
     <span class='ident'>InvalidSecond</span>,
     <span class='ident'>InvalidMinute</span>,

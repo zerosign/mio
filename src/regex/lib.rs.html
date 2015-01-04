@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-0.1.5/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-0.1.7/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -819,7 +819,7 @@
 <span class='doccomment'>//! characters in the search text and `m` is the number of instructions in a</span>
 <span class='doccomment'>//! compiled expression.</span>
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>macro_rules</span>, <span class='ident'>slicing_syntax</span>, <span class='ident'>globs</span>)]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>associated_types</span>, <span class='ident'>macro_rules</span>, <span class='ident'>slicing_syntax</span>, <span class='ident'>globs</span>)]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>missing_docs</span>)]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>test</span>, <span class='ident'>deny</span>(<span class='ident'>warnings</span>))]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>doc</span>(<span class='ident'>html_logo_url</span> <span class='op'>=</span> <span class='string'>&quot;http://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png&quot;</span>,
@@ -868,8 +868,8 @@
     <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>re</span>::{<span class='ident'>ExDynamic</span>, <span class='ident'>ExNative</span>};
     <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>re</span>::<span class='ident'>Regex</span>::{<span class='ident'>Dynamic</span>, <span class='ident'>Native</span>};
     <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>vm</span>::{<span class='ident'>CharReader</span>, <span class='ident'>find_prefix</span>};
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>vm</span>::<span class='ident'>MatchKind</span>::{<span class='kw'>mod</span>, <span class='ident'>Exists</span>, <span class='ident'>Location</span>, <span class='ident'>Submatches</span>};
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>vm</span>::<span class='ident'>StepState</span>::{<span class='kw'>mod</span>, <span class='ident'>StepMatchEarlyReturn</span>, <span class='ident'>StepMatch</span>, <span class='ident'>StepContinue</span>};
+    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>vm</span>::<span class='ident'>MatchKind</span>::{<span class='self'>self</span>, <span class='ident'>Exists</span>, <span class='ident'>Location</span>, <span class='ident'>Submatches</span>};
+    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>vm</span>::<span class='ident'>StepState</span>::{<span class='self'>self</span>, <span class='ident'>StepMatchEarlyReturn</span>, <span class='ident'>StepMatch</span>, <span class='ident'>StepContinue</span>};
 }
 </pre>
 </section>

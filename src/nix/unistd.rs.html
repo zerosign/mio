@@ -471,6 +471,7 @@
 <span id='429'>429</span>
 <span id='430'>430</span>
 <span id='431'>431</span>
+<span id='432'>432</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::{<span class='ident'>mem</span>, <span class='ident'>ptr</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>c_str</span>::{<span class='ident'>CString</span>, <span class='ident'>ToCStr</span>};
@@ -527,7 +528,7 @@
     }
 }
 
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Fork</span> {
     <span class='ident'>Parent</span>(<span class='ident'>pid_t</span>),
     <span class='ident'>Child</span>
@@ -576,9 +577,9 @@
 <span class='kw'>type</span> <span class='ident'>IovecR</span> <span class='op'>=</span> <span class='ident'>Iovec</span><span class='op'>&lt;</span><span class='ident'>ToRead</span><span class='op'>&gt;</span>;
 <span class='kw'>type</span> <span class='ident'>IovecW</span> <span class='op'>=</span> <span class='ident'>Iovec</span><span class='op'>&lt;</span><span class='ident'>ToWrite</span><span class='op'>&gt;</span>;
 
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>ToRead</span>;
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>ToWrite</span>;
 
 <span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
@@ -884,6 +885,7 @@
 
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;linux&quot;</span>)]</span>
 <span class='kw'>mod</span> <span class='ident'>linux</span> {
+    <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>c_str</span>::<span class='ident'>ToCStr</span>;
     <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>Path</span>;
     <span class='kw'>use</span> <span class='ident'>syscall</span>::{<span class='ident'>syscall</span>, <span class='ident'>SYSPIVOTROOT</span>};
     <span class='kw'>use</span> <span class='ident'>errno</span>::{<span class='ident'>SysResult</span>, <span class='ident'>SysError</span>};

@@ -124,7 +124,7 @@
 <span class='kw'>const</span> <span class='ident'>UTSNAME_LEN</span>: <span class='ident'>uint</span> <span class='op'>=</span> <span class='number'>65</span>;
 
 <span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Copy</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>UtsName</span> {
     <span class='ident'>sysname</span>: [<span class='ident'>c_char</span>; <span class='ident'>UTSNAME_LEN</span>],
     <span class='ident'>nodename</span>: [<span class='ident'>c_char</span>; <span class='ident'>UTSNAME_LEN</span>],

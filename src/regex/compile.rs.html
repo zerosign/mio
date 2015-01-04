@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-0.1.5/src/compile.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-0.1.7/src/compile.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>compile.rs.html -- source</title>
@@ -341,7 +341,7 @@
 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>InstIdx</span> <span class='op'>=</span> <span class='ident'>uint</span>;
 
 <span class='doccomment'>/// An instruction, the underlying unit of a compiled regular expression</span>
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Show</span>, <span class='ident'>Clone</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>, <span class='ident'>Clone</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Inst</span> {
     <span class='doccomment'>/// When a Match instruction is executed, the current thread is successful.</span>
     <span class='ident'>Match</span>,
@@ -394,7 +394,7 @@
 <span class='doccomment'>/// All of the data in a compiled expression is wrapped in &quot;MaybeStatic&quot; or</span>
 <span class='doccomment'>/// &quot;MaybeOwned&quot; types so that a `Program` can be represented as static data.</span>
 <span class='doccomment'>/// (This makes it convenient and efficient for use with the `regex!` macro.)</span>
-<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Clone</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Program</span> {
     <span class='doccomment'>/// A sequence of instructions.</span>
     <span class='kw'>pub</span> <span class='ident'>insts</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Inst</span><span class='op'>&gt;</span>,
