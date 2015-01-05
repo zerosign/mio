@@ -560,6 +560,10 @@
 <span id='518'>518</span>
 <span id='519'>519</span>
 <span id='520'>520</span>
+<span id='521'>521</span>
+<span id='522'>522</span>
+<span id='523'>523</span>
+<span id='524'>524</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Networking primitives</span>
 <span class='doccomment'>//!</span>
@@ -753,6 +757,10 @@
         <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>bind</span>(<span class='self'>self</span>, <span class='ident'>addr</span>: <span class='kw-2'>&amp;</span><span class='ident'>SockAddr</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>TcpListener</span><span class='op'>&gt;</span> {
             <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>os</span>::<span class='ident'>bind</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>desc</span>, <span class='ident'>addr</span>));
             <span class='prelude-val'>Ok</span>(<span class='ident'>TcpListener</span> { <span class='ident'>desc</span>: <span class='self'>self</span>.<span class='ident'>desc</span> })
+        }
+        
+        <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>getpeername</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>SockAddr</span><span class='op'>&gt;</span> {
+            <span class='ident'>os</span>::<span class='ident'>getpeername</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>desc</span>)
         }
     }
 

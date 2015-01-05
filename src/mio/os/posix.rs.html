@@ -376,6 +376,15 @@
 <span id='334'>334</span>
 <span id='335'>335</span>
 <span id='336'>336</span>
+<span id='337'>337</span>
+<span id='338'>338</span>
+<span id='339'>339</span>
+<span id='340'>340</span>
+<span id='341'>341</span>
+<span id='342'>342</span>
+<span id='343'>343</span>
+<span id='344'>344</span>
+<span id='345'>345</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>num</span>::<span class='ident'>Int</span>;
@@ -606,6 +615,15 @@
     } <span class='kw'>else</span> {
         <span class='prelude-val'>Ok</span>(<span class='number'>0</span>)
     }
+}
+
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>getpeername</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>SockAddr</span><span class='op'>&gt;</span> {
+    <span class='kw'>let</span> <span class='ident'>sa</span> : <span class='ident'>nix</span>::<span class='ident'>sockaddr_in</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>mem</span>::<span class='ident'>zeroed</span>() };
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>nix</span>::<span class='ident'>SockAddr</span>::<span class='ident'>SockIpV4</span>(<span class='ident'>sa</span>);
+    
+    <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>nix</span>::<span class='ident'>getpeername</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>a</span>).<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>));
+
+    <span class='prelude-val'>Ok</span>(<span class='ident'>to_sockaddr</span>(<span class='kw-2'>&amp;</span><span class='ident'>a</span>))
 }
 
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_linger</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>dur_s</span>: <span class='ident'>uint</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
