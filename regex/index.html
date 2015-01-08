@@ -100,8 +100,8 @@ compiled at runtime with <code>Regex::new</code>.</p>
 <p>To use the <code>regex!</code> macro, you must enable the <code>phase</code> feature and import
 the <code>regex_macros</code> crate as a syntax extension:</p>
 <pre class='rust '>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>phase</span>)]</span>
-<span class='attribute'>#[<span class='ident'>phase</span>(<span class='ident'>plugin</span>)]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>plugin</span>)]</span>
+<span class='attribute'>#[<span class='ident'>plugin</span>]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>regex_macros</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>regex</span>;
 

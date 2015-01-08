@@ -44,13 +44,12 @@
 <h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>log</a><wbr></span><span class='out-of-band'><a href='stability.html'>[stability]</a> <span id='render-detail'>
             <a id="collapse-all" href="#">[-]
             </a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-0' href='../src/log/lib.rs.html#11-506'>[src]</a></span></h1>
+        </span><a id='src-0' href='../src/log/lib.rs.html#11-505'>[src]</a></span></h1>
 <div class='docblock'><p>Utilities for program-wide and customizable logging</p>
 
 <h2 id="example" class='section-header'><a
                            href="#example">Example</a></h2><pre class='rust '>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>phase</span>)]</span>
-<span class='attribute'>#[<span class='ident'>phase</span>(<span class='ident'>plugin</span>, <span class='ident'>link</span>)]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>log</span>;
+<span class='attribute'>#[<span class='ident'>macro_use</span>]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>log</span>;
 
 <span class='kw'>fn</span> <span class='ident'>main</span>() {
     <span class='macro'>debug</span><span class='macro'>!</span>(<span class='string'>&quot;this is a debug {}&quot;</span>, <span class='string'>&quot;message&quot;</span>);
