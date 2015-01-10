@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-0.1.9/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-0.1.10/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -455,6 +455,12 @@
 <span id="413">413</span>
 <span id="414">414</span>
 <span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2014 The Rust Project Developers. See the COPYRIGHT</span>
 <span class='comment'>// file at the top-level directory of this distribution and at</span>
@@ -526,6 +532,7 @@
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! ```rust</span>
 <span class='doccomment'>//! #![feature(plugin)]</span>
+<span class='doccomment'>//! # #![allow(unstable)]</span>
 <span class='doccomment'>//! #[plugin]</span>
 <span class='doccomment'>//! extern crate regex_macros;</span>
 <span class='doccomment'>//! extern crate regex;</span>
@@ -556,6 +563,7 @@
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! ```rust</span>
 <span class='doccomment'>//! # #![feature(plugin)]</span>
+<span class='doccomment'>//! # #![allow(unstable)]</span>
 <span class='doccomment'>//! # extern crate regex; #[plugin] extern crate regex_macros;</span>
 <span class='doccomment'>//! # fn main() {</span>
 <span class='doccomment'>//! let re = regex!(r&quot;(\d{4})-(\d{2})-(\d{2})&quot;);</span>
@@ -584,6 +592,7 @@
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! ```rust</span>
 <span class='doccomment'>//! # #![feature(plugin)]</span>
+<span class='doccomment'>//! # #![allow(unstable)]</span>
 <span class='doccomment'>//! # extern crate regex; #[plugin] extern crate regex_macros;</span>
 <span class='doccomment'>//! # fn main() {</span>
 <span class='doccomment'>//! let re = regex!(r&quot;(?P&lt;y&gt;\d{4})-(?P&lt;m&gt;\d{2})-(?P&lt;d&gt;\d{2})&quot;);</span>
@@ -631,6 +640,7 @@
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! ```rust</span>
 <span class='doccomment'>//! # #![feature(plugin)]</span>
+<span class='doccomment'>//! # #![allow(unstable)]</span>
 <span class='doccomment'>//! # extern crate regex; #[plugin] extern crate regex_macros;</span>
 <span class='doccomment'>//! # fn main() {</span>
 <span class='doccomment'>//! let re = regex!(r&quot;(?i)Δ+&quot;);</span>
@@ -644,6 +654,7 @@
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! ```rust</span>
 <span class='doccomment'>//! # #![feature(plugin)]</span>
+<span class='doccomment'>//! # #![allow(unstable)]</span>
 <span class='doccomment'>//! # extern crate regex; #[plugin] extern crate regex_macros;</span>
 <span class='doccomment'>//! # fn main() {</span>
 <span class='doccomment'>//! let re = regex!(r&quot;[\pN\p{Greek}\p{Cherokee}]+&quot;);</span>
@@ -741,6 +752,7 @@
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! ```rust</span>
 <span class='doccomment'>//! # #![feature(plugin)]</span>
+<span class='doccomment'>//! # #![allow(unstable)]</span>
 <span class='doccomment'>//! # extern crate regex; #[plugin] extern crate regex_macros;</span>
 <span class='doccomment'>//! # fn main() {</span>
 <span class='doccomment'>//! let re = regex!(r&quot;(?i)a+(?-i)b+&quot;);</span>
@@ -819,9 +831,9 @@
 <span class='doccomment'>//! characters in the search text and `m` is the number of instructions in a</span>
 <span class='doccomment'>//! compiled expression.</span>
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>slicing_syntax</span>)]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>missing_docs</span>)]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>test</span>, <span class='ident'>deny</span>(<span class='ident'>warnings</span>))]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>unstable</span>)]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>doc</span>(<span class='ident'>html_logo_url</span> <span class='op'>=</span> <span class='string'>&quot;http://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png&quot;</span>,
        <span class='ident'>html_favicon_url</span> <span class='op'>=</span> <span class='string'>&quot;http://www.rust-lang.org/favicon.ico&quot;</span>,
        <span class='ident'>html_root_url</span> <span class='op'>=</span> <span class='string'>&quot;http://doc.rust-lang.org/regex/&quot;</span>)]</span>

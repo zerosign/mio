@@ -466,6 +466,10 @@
 <span id="424">424</span>
 <span id="425">425</span>
 <span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>default</span>::<span class='ident'>Default</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>time</span>::<span class='ident'>duration</span>::<span class='ident'>Duration</span>;
@@ -560,13 +564,15 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// # Example</span>
     <span class='doccomment'>/// ```</span>
+    <span class='doccomment'>/// #![allow(unstable)]</span>
+    <span class='doccomment'>///</span>
     <span class='doccomment'>/// use std::thread::Thread;</span>
     <span class='doccomment'>/// use mio::{EventLoop, Handler};</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// struct MyHandler;</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>/// impl Handler&lt;(), uint&gt; for MyHandler {</span>
-    <span class='doccomment'>///     fn notify(&amp;mut self, event_loop: &amp;mut EventLoop&lt;(), uint&gt;, msg: uint) {</span>
+    <span class='doccomment'>/// impl Handler&lt;(), u32&gt; for MyHandler {</span>
+    <span class='doccomment'>///     fn notify(&amp;mut self, event_loop: &amp;mut EventLoop&lt;(), u32&gt;, msg: u32) {</span>
     <span class='doccomment'>///         assert_eq!(msg, 123);</span>
     <span class='doccomment'>///         event_loop.shutdown();</span>
     <span class='doccomment'>///     }</span>
@@ -578,7 +584,7 @@
     <span class='doccomment'>/// // Send the notification from another thread</span>
     <span class='doccomment'>/// Thread::spawn(move || {</span>
     <span class='doccomment'>///     let _ = sender.send(123);</span>
-    <span class='doccomment'>/// }).detach();</span>
+    <span class='doccomment'>/// });</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// let _ = event_loop.run(MyHandler);</span>
     <span class='doccomment'>/// ```</span>
@@ -614,13 +620,15 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// # Example</span>
     <span class='doccomment'>/// ```</span>
+    <span class='doccomment'>/// #![allow(unstable)]</span>
+    <span class='doccomment'>///</span>
     <span class='doccomment'>/// use mio::{EventLoop, Handler};</span>
     <span class='doccomment'>/// use std::time::Duration;</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// struct MyHandler;</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>/// impl Handler&lt;uint, ()&gt; for MyHandler {</span>
-    <span class='doccomment'>///     fn timeout(&amp;mut self, event_loop: &amp;mut EventLoop&lt;uint, ()&gt;, timeout: uint) {</span>
+    <span class='doccomment'>/// impl Handler&lt;u32, ()&gt; for MyHandler {</span>
+    <span class='doccomment'>///     fn timeout(&amp;mut self, event_loop: &amp;mut EventLoop&lt;u32, ()&gt;, timeout: u32) {</span>
     <span class='doccomment'>///         assert_eq!(timeout, 123);</span>
     <span class='doccomment'>///         event_loop.shutdown();</span>
     <span class='doccomment'>///     }</span>
@@ -754,7 +762,7 @@
         <span class='kw'>while</span> <span class='ident'>i</span> <span class='op'>&lt;</span> <span class='ident'>cnt</span> {
             <span class='kw'>let</span> <span class='ident'>evt</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>poll</span>.<span class='ident'>event</span>(<span class='ident'>i</span>);
 
-            <span class='macro'>debug</span><span class='macro'>!</span>(<span class='string'>&quot;event={}&quot;</span>, <span class='ident'>evt</span>);
+            <span class='macro'>debug</span><span class='macro'>!</span>(<span class='string'>&quot;event={:?}&quot;</span>, <span class='ident'>evt</span>);
 
             <span class='kw'>match</span> <span class='ident'>evt</span>.<span class='ident'>token</span>() {
                 <span class='ident'>NOTIFY</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>notify</span>.<span class='ident'>cleanup</span>(),

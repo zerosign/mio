@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-0.1.9/src/compile.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-0.1.10/src/compile.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>compile.rs.html -- source</title>
@@ -338,7 +338,7 @@
                  <span class='ident'>Rep</span>};
 <span class='kw'>use</span> <span class='ident'>parse</span>::<span class='ident'>Repeater</span>::{<span class='ident'>ZeroOne</span>, <span class='ident'>ZeroMore</span>, <span class='ident'>OneMore</span>};
 
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>InstIdx</span> <span class='op'>=</span> <span class='ident'>uint</span>;
+<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>InstIdx</span> <span class='op'>=</span> <span class='ident'>usize</span>;
 
 <span class='doccomment'>/// An instruction, the underlying unit of a compiled regular expression</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>, <span class='ident'>Clone</span>)]</span>
@@ -377,7 +377,7 @@
     <span class='ident'>EmptyWordBoundary</span>(<span class='ident'>Flags</span>),
 
     <span class='doccomment'>/// Saves the current position in the input string to the Nth save slot.</span>
-    <span class='ident'>Save</span>(<span class='ident'>uint</span>),
+    <span class='ident'>Save</span>(<span class='ident'>usize</span>),
 
     <span class='doccomment'>/// Jumps to the instruction at the index given.</span>
     <span class='ident'>Jump</span>(<span class='ident'>InstIdx</span>),
@@ -438,7 +438,7 @@
 
     <span class='doccomment'>/// Returns the total number of capture groups in the regular expression.</span>
     <span class='doccomment'>/// This includes the zeroth capture.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>num_captures</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>uint</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>num_captures</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>n</span> <span class='op'>=</span> <span class='number'>0</span>;
         <span class='kw'>for</span> <span class='ident'>inst</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>insts</span>.<span class='ident'>iter</span>() {
             <span class='kw'>match</span> <span class='op'>*</span><span class='ident'>inst</span> {

@@ -44,11 +44,11 @@
 <h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>mio</a>::<wbr><a class='struct' href=''>EventLoop</a><wbr><a class='stability Unstable' title=''>Unstable</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]
             </a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-7650' href='../src/mio/event_loop.rs.html#42-48'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct EventLoop&lt;T, M: <a class='trait' href='http://doc.rust-lang.org/nightly/core/kinds/trait.Send.html' title='core::kinds::Send'>Send</a>&gt; {
+        </span><a id='src-7612' href='../src/mio/event_loop.rs.html#42-48'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct EventLoop&lt;T, M: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>&gt; {
     // some fields omitted
 }</pre><div class='docblock'><p>Single threaded IO event loop.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unstable' title='Unstable'></a><code>impl&lt;T, M: <a class='trait' href='http://doc.rust-lang.org/nightly/core/kinds/trait.Send.html' title='core::kinds::Send'>Send</a>&gt; <a class='struct' href='../mio/struct.EventLoop.html' title='mio::EventLoop'>EventLoop</a>&lt;T, M&gt;</code></h3><div class='impl-items'><h4 id='method.new' class='method'><a class='stability Unstable' title='Unstable'></a><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='type' href='../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a class='struct' href='../mio/struct.EventLoop.html' title='mio::EventLoop'>EventLoop</a>&lt;T, M&gt;&gt;</code></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unstable' title='Unstable'></a><code>impl&lt;T, M: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>&gt; <a class='struct' href='../mio/struct.EventLoop.html' title='mio::EventLoop'>EventLoop</a>&lt;T, M&gt;</code></h3><div class='impl-items'><h4 id='method.new' class='method'><a class='stability Unstable' title='Unstable'></a><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='type' href='../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a class='struct' href='../mio/struct.EventLoop.html' title='mio::EventLoop'>EventLoop</a>&lt;T, M&gt;&gt;</code></h4>
 <div class='docblock'><p>Initializes a new event loop using default configuration settings. The
 event loop will not be running yet.</p>
 </div><h4 id='method.configured' class='method'><a class='stability Unstable' title='Unstable'></a><code>fn <a href='#method.configured' class='fnname'>configured</a>(config: <a class='struct' href='../mio/struct.EventLoopConfig.html' title='mio::EventLoopConfig'>EventLoopConfig</a>) -&gt; <a class='type' href='../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a class='struct' href='../mio/struct.EventLoop.html' title='mio::EventLoop'>EventLoop</a>&lt;T, M&gt;&gt;</code></h4>
@@ -58,13 +58,15 @@ thread-safe way, waking up the event loop if needed.</p>
 
 <h1 id="example" class='section-header'><a
                            href="#example">Example</a></h1><pre class='rust '>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>unstable</span>)]</span>
+
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>thread</span>::<span class='ident'>Thread</span>;
 <span class='kw'>use</span> <span class='ident'>mio</span>::{<span class='ident'>EventLoop</span>, <span class='ident'>Handler</span>};
 
 <span class='kw'>struct</span> <span class='ident'>MyHandler</span>;
 
-<span class='kw'>impl</span> <span class='ident'>Handler</span><span class='op'>&lt;</span>(), <span class='ident'>uint</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>MyHandler</span> {
-    <span class='kw'>fn</span> <span class='ident'>notify</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>event_loop</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>EventLoop</span><span class='op'>&lt;</span>(), <span class='ident'>uint</span><span class='op'>&gt;</span>, <span class='ident'>msg</span>: <span class='ident'>uint</span>) {
+<span class='kw'>impl</span> <span class='ident'>Handler</span><span class='op'>&lt;</span>(), <span class='ident'>u32</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>MyHandler</span> {
+    <span class='kw'>fn</span> <span class='ident'>notify</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>event_loop</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>EventLoop</span><span class='op'>&lt;</span>(), <span class='ident'>u32</span><span class='op'>&gt;</span>, <span class='ident'>msg</span>: <span class='ident'>u32</span>) {
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>msg</span>, <span class='number'>123</span>);
         <span class='ident'>event_loop</span>.<span class='ident'>shutdown</span>();
     }
@@ -76,7 +78,7 @@ thread-safe way, waking up the event loop if needed.</p>
 <span class='comment'>// Send the notification from another thread</span>
 <span class='ident'>Thread</span>::<span class='ident'>spawn</span>(<span class='kw'>move</span> <span class='op'>||</span> {
     <span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>sender</span>.<span class='ident'>send</span>(<span class='number'>123</span>);
-}).<span class='ident'>detach</span>();
+});
 
 <span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>event_loop</span>.<span class='ident'>run</span>(<span class='ident'>MyHandler</span>);
 </pre>
@@ -109,13 +111,15 @@ using <a href="#method.clear_timeout">#clear_timeout</a>.</p>
 
 <h1 id="example" class='section-header'><a
                            href="#example">Example</a></h1><pre class='rust '>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>unstable</span>)]</span>
+
 <span class='kw'>use</span> <span class='ident'>mio</span>::{<span class='ident'>EventLoop</span>, <span class='ident'>Handler</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>time</span>::<span class='ident'>Duration</span>;
 
 <span class='kw'>struct</span> <span class='ident'>MyHandler</span>;
 
-<span class='kw'>impl</span> <span class='ident'>Handler</span><span class='op'>&lt;</span><span class='ident'>uint</span>, ()<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>MyHandler</span> {
-    <span class='kw'>fn</span> <span class='ident'>timeout</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>event_loop</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>EventLoop</span><span class='op'>&lt;</span><span class='ident'>uint</span>, ()<span class='op'>&gt;</span>, <span class='ident'>timeout</span>: <span class='ident'>uint</span>) {
+<span class='kw'>impl</span> <span class='ident'>Handler</span><span class='op'>&lt;</span><span class='ident'>u32</span>, ()<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>MyHandler</span> {
+    <span class='kw'>fn</span> <span class='ident'>timeout</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>event_loop</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>EventLoop</span><span class='op'>&lt;</span><span class='ident'>u32</span>, ()<span class='op'>&gt;</span>, <span class='ident'>timeout</span>: <span class='ident'>u32</span>) {
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>timeout</span>, <span class='number'>123</span>);
         <span class='ident'>event_loop</span>.<span class='ident'>shutdown</span>();
     }
