@@ -141,7 +141,7 @@
         <span class='macro'>debug</span><span class='macro'>!</span>(<span class='string'>&quot;registering  with poller&quot;</span>);
 
         <span class='comment'>// Register interests for this socket</span>
-        <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>selector</span>.<span class='ident'>register</span>(<span class='ident'>io</span>.<span class='ident'>desc</span>(), <span class='ident'>token</span>.<span class='ident'>as_uint</span>(), <span class='ident'>interest</span>, <span class='ident'>opts</span>));
+        <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>selector</span>.<span class='ident'>register</span>(<span class='ident'>io</span>.<span class='ident'>desc</span>(), <span class='ident'>token</span>.<span class='ident'>as_usize</span>(), <span class='ident'>interest</span>, <span class='ident'>opts</span>));
 
         <span class='prelude-val'>Ok</span>(())
     }
@@ -150,7 +150,7 @@
         <span class='macro'>debug</span><span class='macro'>!</span>(<span class='string'>&quot;registering  with poller&quot;</span>);
 
         <span class='comment'>// Register interests for this socket</span>
-        <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>selector</span>.<span class='ident'>reregister</span>(<span class='ident'>io</span>.<span class='ident'>desc</span>(), <span class='ident'>token</span>.<span class='ident'>as_uint</span>(), <span class='ident'>interest</span>, <span class='ident'>opts</span>));
+        <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>selector</span>.<span class='ident'>reregister</span>(<span class='ident'>io</span>.<span class='ident'>desc</span>(), <span class='ident'>token</span>.<span class='ident'>as_usize</span>(), <span class='ident'>interest</span>, <span class='ident'>opts</span>));
 
         <span class='prelude-val'>Ok</span>(())
     }
@@ -164,12 +164,12 @@
         <span class='prelude-val'>Ok</span>(())
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>poll</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>timeout_ms</span>: <span class='ident'>uint</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>uint</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>poll</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>timeout_ms</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
         <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>selector</span>.<span class='ident'>select</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>events</span>, <span class='ident'>timeout_ms</span>));
         <span class='prelude-val'>Ok</span>(<span class='self'>self</span>.<span class='ident'>events</span>.<span class='ident'>len</span>())
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>event</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>idx</span>: <span class='ident'>uint</span>) <span class='op'>-&gt;</span> <span class='ident'>event</span>::<span class='ident'>IoEvent</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>event</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>idx</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>event</span>::<span class='ident'>IoEvent</span> {
         <span class='self'>self</span>.<span class='ident'>events</span>.<span class='ident'>get</span>(<span class='ident'>idx</span>)
     }
 
@@ -180,7 +180,7 @@
 
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>EventsIterator</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='ident'>events</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>os</span>::<span class='ident'>Events</span>,
-    <span class='ident'>index</span>: <span class='ident'>uint</span>
+    <span class='ident'>index</span>: <span class='ident'>usize</span>
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>EventsIterator</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {

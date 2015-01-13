@@ -283,7 +283,7 @@
 <span class='kw'>use</span> <span class='ident'>os</span>::<span class='ident'>token</span>::<span class='ident'>Token</span>;
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>Clone</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Ord</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>PollOpt</span>(<span class='ident'>uint</span>);
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>PollOpt</span>(<span class='ident'>usize</span>);
 
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>EDGE</span>: <span class='ident'>PollOpt</span>    <span class='op'>=</span> <span class='ident'>PollOpt</span>(<span class='number'>0x020</span>);
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>LEVEL</span>: <span class='ident'>PollOpt</span>   <span class='op'>=</span> <span class='ident'>PollOpt</span>(<span class='number'>0x040</span>);
@@ -306,7 +306,7 @@
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>bits</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>uint</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>bits</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
         <span class='kw'>let</span> <span class='ident'>PollOpt</span>(<span class='ident'>bits</span>) <span class='op'>=</span> <span class='op'>*</span><span class='self'>self</span>;
         <span class='ident'>bits</span>
     }
@@ -384,7 +384,7 @@
 }
 
 <span class='macro'>bitflags</span><span class='macro'>!</span>(
-    <span class='ident'>flags</span> <span class='ident'>Interest</span>: <span class='ident'>uint</span> {
+    <span class='ident'>flags</span> <span class='ident'>Interest</span>: <span class='ident'>usize</span> {
         <span class='kw'>const</span> <span class='ident'>READABLE</span> <span class='op'>=</span> <span class='number'>0x001</span>,
         <span class='kw'>const</span> <span class='ident'>WRITABLE</span> <span class='op'>=</span> <span class='number'>0x002</span>,
         <span class='kw'>const</span> <span class='ident'>ERROR</span>    <span class='op'>=</span> <span class='number'>0x004</span>,
@@ -419,7 +419,7 @@
 }
 
 <span class='macro'>bitflags</span><span class='macro'>!</span>(
-    <span class='ident'>flags</span> <span class='ident'>ReadHint</span>: <span class='ident'>uint</span> {
+    <span class='ident'>flags</span> <span class='ident'>ReadHint</span>: <span class='ident'>usize</span> {
         <span class='kw'>const</span> <span class='ident'>DATAHINT</span>    <span class='op'>=</span> <span class='number'>0x001</span>,
         <span class='kw'>const</span> <span class='ident'>HUPHINT</span>     <span class='op'>=</span> <span class='number'>0x002</span>,
         <span class='kw'>const</span> <span class='ident'>ERRORHINT</span>   <span class='op'>=</span> <span class='number'>0x004</span>
@@ -462,7 +462,7 @@
 <span class='doccomment'>/// Selector when they have events to report.</span>
 <span class='kw'>impl</span> <span class='ident'>IoEvent</span> {
     <span class='doccomment'>/// Create a new IoEvent.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>kind</span>: <span class='ident'>Interest</span>, <span class='ident'>token</span>: <span class='ident'>uint</span>) <span class='op'>-&gt;</span> <span class='ident'>IoEvent</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>kind</span>: <span class='ident'>Interest</span>, <span class='ident'>token</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>IoEvent</span> {
         <span class='ident'>IoEvent</span> {
             <span class='ident'>kind</span>: <span class='ident'>kind</span>,
             <span class='ident'>token</span>: <span class='ident'>Token</span>(<span class='ident'>token</span>)

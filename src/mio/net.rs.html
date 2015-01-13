@@ -587,11 +587,11 @@
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>AddressFamily</span>::{<span class='ident'>Unix</span>,<span class='ident'>Inet</span>,<span class='ident'>Inet6</span>};
 
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Socket</span> : <span class='ident'>IoHandle</span> {
-    <span class='kw'>fn</span> <span class='ident'>linger</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>uint</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>linger</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
         <span class='ident'>os</span>::<span class='ident'>linger</span>(<span class='self'>self</span>.<span class='ident'>desc</span>())
     }
 
-    <span class='kw'>fn</span> <span class='ident'>set_linger</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>dur_s</span>: <span class='ident'>uint</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>set_linger</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>dur_s</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
         <span class='ident'>os</span>::<span class='ident'>set_linger</span>(<span class='self'>self</span>.<span class='ident'>desc</span>(), <span class='ident'>dur_s</span>)
     }
 
@@ -779,21 +779,21 @@
     }
 
     <span class='kw'>impl</span> <span class='ident'>IoReader</span> <span class='kw'>for</span> <span class='ident'>TcpSocket</span> {
-        <span class='kw'>fn</span> <span class='ident'>read</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>MutBuf</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span>(<span class='ident'>uint</span>)<span class='op'>&gt;&gt;</span> {
+        <span class='kw'>fn</span> <span class='ident'>read</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>MutBuf</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span>(<span class='ident'>usize</span>)<span class='op'>&gt;&gt;</span> {
             <span class='ident'>io</span>::<span class='ident'>read</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
         }
 
-        <span class='kw'>fn</span> <span class='ident'>read_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>uint</span><span class='op'>&gt;&gt;</span> {
+        <span class='kw'>fn</span> <span class='ident'>read_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
             <span class='ident'>io</span>::<span class='ident'>read_slice</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
         }
     }
 
     <span class='kw'>impl</span> <span class='ident'>IoWriter</span> <span class='kw'>for</span> <span class='ident'>TcpSocket</span> {
-        <span class='kw'>fn</span> <span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Buf</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span>(<span class='ident'>uint</span>)<span class='op'>&gt;&gt;</span> {
+        <span class='kw'>fn</span> <span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Buf</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span>(<span class='ident'>usize</span>)<span class='op'>&gt;&gt;</span> {
             <span class='ident'>io</span>::<span class='ident'>write</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
         }
 
-        <span class='kw'>fn</span> <span class='ident'>write_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>uint</span><span class='op'>&gt;&gt;</span> {
+        <span class='kw'>fn</span> <span class='ident'>write_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
             <span class='ident'>io</span>::<span class='ident'>write_slice</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
         }
     }
@@ -807,7 +807,7 @@
     }
 
     <span class='kw'>impl</span> <span class='ident'>TcpListener</span> {
-        <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>listen</span>(<span class='self'>self</span>, <span class='ident'>backlog</span>: <span class='ident'>uint</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>TcpAcceptor</span><span class='op'>&gt;</span> {
+        <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>listen</span>(<span class='self'>self</span>, <span class='ident'>backlog</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>TcpAcceptor</span><span class='op'>&gt;</span> {
             <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>os</span>::<span class='ident'>listen</span>(<span class='self'>self</span>.<span class='ident'>desc</span>(), <span class='ident'>backlog</span>));
             <span class='prelude-val'>Ok</span>(<span class='ident'>TcpAcceptor</span> { <span class='ident'>desc</span>: <span class='self'>self</span>.<span class='ident'>desc</span> })
         }
@@ -825,7 +825,7 @@
     }
 
     <span class='kw'>impl</span> <span class='ident'>TcpAcceptor</span> {
-        <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>addr</span>: <span class='kw-2'>&amp;</span><span class='ident'>SockAddr</span>, <span class='ident'>backlog</span>: <span class='ident'>uint</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>TcpAcceptor</span><span class='op'>&gt;</span> {
+        <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>addr</span>: <span class='kw-2'>&amp;</span><span class='ident'>SockAddr</span>, <span class='ident'>backlog</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>TcpAcceptor</span><span class='op'>&gt;</span> {
             <span class='kw'>let</span> <span class='ident'>sock</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>TcpSocket</span>::<span class='ident'>new</span>(<span class='ident'>addr</span>.<span class='ident'>family</span>()));
             <span class='kw'>let</span> <span class='ident'>listener</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>sock</span>.<span class='ident'>bind</span>(<span class='ident'>addr</span>));
             <span class='ident'>listener</span>.<span class='ident'>listen</span>(<span class='ident'>backlog</span>)
@@ -912,21 +912,21 @@
     }
 
     <span class='kw'>impl</span> <span class='ident'>IoReader</span> <span class='kw'>for</span> <span class='ident'>UdpSocket</span> {
-        <span class='kw'>fn</span> <span class='ident'>read</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>MutBuf</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span>(<span class='ident'>uint</span>)<span class='op'>&gt;&gt;</span> {
+        <span class='kw'>fn</span> <span class='ident'>read</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>MutBuf</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span>(<span class='ident'>usize</span>)<span class='op'>&gt;&gt;</span> {
             <span class='ident'>io</span>::<span class='ident'>read</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
         }
 
-        <span class='kw'>fn</span> <span class='ident'>read_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>uint</span><span class='op'>&gt;&gt;</span> {
+        <span class='kw'>fn</span> <span class='ident'>read_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
             <span class='ident'>io</span>::<span class='ident'>read_slice</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
         }
     }
 
     <span class='kw'>impl</span> <span class='ident'>IoWriter</span> <span class='kw'>for</span> <span class='ident'>UdpSocket</span> {
-        <span class='kw'>fn</span> <span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Buf</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span>(<span class='ident'>uint</span>)<span class='op'>&gt;&gt;</span> {
+        <span class='kw'>fn</span> <span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Buf</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span>(<span class='ident'>usize</span>)<span class='op'>&gt;&gt;</span> {
             <span class='ident'>io</span>::<span class='ident'>write</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
         }
 
-        <span class='kw'>fn</span> <span class='ident'>write_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>uint</span><span class='op'>&gt;&gt;</span> {
+        <span class='kw'>fn</span> <span class='ident'>write_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
             <span class='ident'>io</span>::<span class='ident'>write_slice</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
         }
     }
@@ -1020,21 +1020,21 @@
     }
 
     <span class='kw'>impl</span> <span class='ident'>IoReader</span> <span class='kw'>for</span> <span class='ident'>UnixSocket</span> {
-        <span class='kw'>fn</span> <span class='ident'>read</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>MutBuf</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>uint</span><span class='op'>&gt;&gt;</span> {
+        <span class='kw'>fn</span> <span class='ident'>read</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>MutBuf</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
             <span class='ident'>io</span>::<span class='ident'>read</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
         }
 
-        <span class='kw'>fn</span> <span class='ident'>read_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>uint</span><span class='op'>&gt;&gt;</span> {
+        <span class='kw'>fn</span> <span class='ident'>read_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
             <span class='ident'>io</span>::<span class='ident'>read_slice</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
         }
     }
 
     <span class='kw'>impl</span> <span class='ident'>IoWriter</span> <span class='kw'>for</span> <span class='ident'>UnixSocket</span> {
-        <span class='kw'>fn</span> <span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Buf</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>uint</span><span class='op'>&gt;&gt;</span> {
+        <span class='kw'>fn</span> <span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Buf</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
             <span class='ident'>io</span>::<span class='ident'>write</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
         }
 
-        <span class='kw'>fn</span> <span class='ident'>write_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>uint</span><span class='op'>&gt;&gt;</span> {
+        <span class='kw'>fn</span> <span class='ident'>write_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
             <span class='ident'>io</span>::<span class='ident'>write_slice</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
         }
     }
@@ -1048,7 +1048,7 @@
     }
 
     <span class='kw'>impl</span> <span class='ident'>UnixListener</span> {
-        <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>listen</span>(<span class='self'>self</span>, <span class='ident'>backlog</span>: <span class='ident'>uint</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>UnixAcceptor</span><span class='op'>&gt;</span> {
+        <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>listen</span>(<span class='self'>self</span>, <span class='ident'>backlog</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>UnixAcceptor</span><span class='op'>&gt;</span> {
             <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>os</span>::<span class='ident'>listen</span>(<span class='self'>self</span>.<span class='ident'>desc</span>(), <span class='ident'>backlog</span>));
             <span class='prelude-val'>Ok</span>(<span class='ident'>UnixAcceptor</span> { <span class='ident'>desc</span>: <span class='self'>self</span>.<span class='ident'>desc</span> })
         }
@@ -1066,7 +1066,7 @@
     }
 
     <span class='kw'>impl</span> <span class='ident'>UnixAcceptor</span> {
-        <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>addr</span>: <span class='kw-2'>&amp;</span><span class='ident'>SockAddr</span>, <span class='ident'>backlog</span>: <span class='ident'>uint</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>UnixAcceptor</span><span class='op'>&gt;</span> {
+        <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>addr</span>: <span class='kw-2'>&amp;</span><span class='ident'>SockAddr</span>, <span class='ident'>backlog</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>UnixAcceptor</span><span class='op'>&gt;</span> {
             <span class='kw'>let</span> <span class='ident'>sock</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>UnixSocket</span>::<span class='ident'>stream</span>());
             <span class='kw'>let</span> <span class='ident'>listener</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>sock</span>.<span class='ident'>bind</span>(<span class='ident'>addr</span>));
             <span class='ident'>listener</span>.<span class='ident'>listen</span>(<span class='ident'>backlog</span>)

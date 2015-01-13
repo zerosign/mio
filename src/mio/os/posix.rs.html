@@ -521,7 +521,7 @@
         .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>)
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>listen</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>backlog</span>: <span class='ident'>uint</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>listen</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>backlog</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
     <span class='ident'>nix</span>::<span class='ident'>listen</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>backlog</span>)
         .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>)
 }
@@ -534,7 +534,7 @@
 }
 
 <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>recvfrom</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>(<span class='ident'>uint</span>, <span class='ident'>SockAddr</span>)<span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>recvfrom</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>(<span class='ident'>usize</span>, <span class='ident'>SockAddr</span>)<span class='op'>&gt;</span> {
     <span class='kw'>match</span> <span class='ident'>nix</span>::<span class='ident'>recvfrom</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>buf</span>).<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>) {
         <span class='prelude-val'>Ok</span>((<span class='ident'>cnt</span>, <span class='ident'>addr</span>)) <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>((<span class='ident'>cnt</span>, <span class='ident'>to_sockaddr</span>(<span class='kw-2'>&amp;</span><span class='ident'>addr</span>))),
         <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>e</span>)
@@ -542,13 +542,13 @@
 }
 
 <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>sendto</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>], <span class='ident'>tgt</span>: <span class='kw-2'>&amp;</span><span class='ident'>SockAddr</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>uint</span><span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>sendto</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>], <span class='ident'>tgt</span>: <span class='kw-2'>&amp;</span><span class='ident'>SockAddr</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
     <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>nix</span>::<span class='ident'>sendto</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>buf</span>, <span class='kw-2'>&amp;</span><span class='ident'>from_sockaddr</span>(<span class='ident'>tgt</span>), <span class='ident'>nix</span>::<span class='ident'>MSG_DONTWAIT</span>).<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>));
     <span class='prelude-val'>Ok</span>(<span class='ident'>res</span>)
 }
 
 <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>read</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>dst</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>uint</span><span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>read</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>dst</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
     <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>nix</span>::<span class='ident'>read</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>dst</span>).<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>));
 
     <span class='kw'>if</span> <span class='ident'>res</span> <span class='op'>==</span> <span class='number'>0</span> {
@@ -559,13 +559,13 @@
 }
 
 <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>write</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>src</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>uint</span><span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>write</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>src</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
     <span class='ident'>nix</span>::<span class='ident'>write</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>src</span>).<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>)
 }
 
 <span class='comment'>// ===== Socket options =====</span>
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>reuseaddr</span>(<span class='ident'>_io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>uint</span><span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>reuseaddr</span>(<span class='ident'>_io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
     <span class='macro'>unimplemented</span><span class='macro'>!</span>()
 }
 
@@ -611,14 +611,14 @@
         .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>)
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>linger</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>uint</span><span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>linger</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>linger</span>: <span class='ident'>nix</span>::<span class='ident'>linger</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>mem</span>::<span class='ident'>uninitialized</span>() };
 
     <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>nix</span>::<span class='ident'>getsockopt</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>nix</span>::<span class='ident'>SOL_SOCKET</span>, <span class='ident'>nix</span>::<span class='ident'>SO_LINGER</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>linger</span>)
             .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>));
 
     <span class='kw'>if</span> <span class='ident'>linger</span>.<span class='ident'>l_onoff</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
-        <span class='prelude-val'>Ok</span>(<span class='ident'>linger</span>.<span class='ident'>l_linger</span> <span class='kw'>as</span> <span class='ident'>uint</span>)
+        <span class='prelude-val'>Ok</span>(<span class='ident'>linger</span>.<span class='ident'>l_linger</span> <span class='kw'>as</span> <span class='ident'>usize</span>)
     } <span class='kw'>else</span> {
         <span class='prelude-val'>Ok</span>(<span class='number'>0</span>)
     }
@@ -642,9 +642,9 @@
     <span class='prelude-val'>Ok</span>(<span class='ident'>to_sockaddr</span>(<span class='kw-2'>&amp;</span><span class='ident'>a</span>))
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_linger</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>dur_s</span>: <span class='ident'>uint</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_linger</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>dur_s</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
     <span class='kw'>let</span> <span class='ident'>linger</span> <span class='op'>=</span> <span class='ident'>nix</span>::<span class='ident'>linger</span> {
-        <span class='ident'>l_onoff</span>: (<span class='kw'>if</span> <span class='ident'>dur_s</span> <span class='op'>&gt;</span> <span class='number'>0</span> { <span class='number'>1i</span> } <span class='kw'>else</span> { <span class='number'>0i</span> }) <span class='kw'>as</span> <span class='ident'>nix</span>::<span class='ident'>c_int</span>,
+        <span class='ident'>l_onoff</span>: (<span class='kw'>if</span> <span class='ident'>dur_s</span> <span class='op'>&gt;</span> <span class='number'>0</span> { <span class='number'>1is</span> } <span class='kw'>else</span> { <span class='number'>0is</span> }) <span class='kw'>as</span> <span class='ident'>nix</span>::<span class='ident'>c_int</span>,
         <span class='ident'>l_linger</span>: <span class='ident'>dur_s</span> <span class='kw'>as</span> <span class='ident'>nix</span>::<span class='ident'>c_int</span>
     };
 

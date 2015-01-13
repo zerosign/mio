@@ -518,7 +518,7 @@
 <span id="476">476</span>
 <span id="477">477</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::{<span class='ident'>uint</span>, <span class='ident'>iter</span>};
+<span class='kw'>use</span> <span class='ident'>std</span>::{<span class='ident'>usize</span>, <span class='ident'>iter</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>max</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>time</span>::<span class='ident'>duration</span>::<span class='ident'>Duration</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>num</span>::<span class='ident'>UnsignedInt</span>;
@@ -528,7 +528,7 @@
 
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>TimerErrorKind</span>::<span class='ident'>TimerOverflow</span>;
 
-<span class='kw'>const</span> <span class='ident'>EMPTY</span>: <span class='ident'>Token</span> <span class='op'>=</span> <span class='ident'>Token</span>(<span class='ident'>uint</span>::<span class='ident'>MAX</span>);
+<span class='kw'>const</span> <span class='ident'>EMPTY</span>: <span class='ident'>Token</span> <span class='op'>=</span> <span class='ident'>Token</span>(<span class='ident'>usize</span>::<span class='ident'>MAX</span>);
 <span class='kw'>const</span> <span class='ident'>NS_PER_MS</span>: <span class='ident'>u64</span> <span class='op'>=</span> <span class='number'>1_000_000</span>;
 
 <span class='comment'>// Implements coarse-grained timeouts using an algorithm based on hashed timing</span>
@@ -565,7 +565,7 @@
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>Timer</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>tick_ms</span>: <span class='ident'>u64</span>, <span class='kw-2'>mut</span> <span class='ident'>slots</span>: <span class='ident'>uint</span>, <span class='kw-2'>mut</span> <span class='ident'>capacity</span>: <span class='ident'>uint</span>) <span class='op'>-&gt;</span> <span class='ident'>Timer</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>tick_ms</span>: <span class='ident'>u64</span>, <span class='kw-2'>mut</span> <span class='ident'>slots</span>: <span class='ident'>usize</span>, <span class='kw-2'>mut</span> <span class='ident'>capacity</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>Timer</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>slots</span> <span class='op'>=</span> <span class='ident'>UnsignedInt</span>::<span class='ident'>next_power_of_two</span>(<span class='ident'>slots</span>);
         <span class='ident'>capacity</span> <span class='op'>=</span> <span class='ident'>UnsignedInt</span>::<span class='ident'>next_power_of_two</span>(<span class='ident'>capacity</span>);
 
@@ -580,7 +580,7 @@
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>count</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>uint</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>count</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
         <span class='self'>self</span>.<span class='ident'>entries</span>.<span class='ident'>count</span>()
     }
 
@@ -656,7 +656,7 @@
 
     <span class='kw'>fn</span> <span class='ident'>insert</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>token</span>: <span class='ident'>T</span>, <span class='ident'>tick</span>: <span class='ident'>u64</span>) <span class='op'>-&gt;</span> <span class='ident'>TimerResult</span><span class='op'>&lt;</span><span class='ident'>Timeout</span><span class='op'>&gt;</span> {
         <span class='comment'>// Get the slot for the requested tick</span>
-        <span class='kw'>let</span> <span class='ident'>slot</span> <span class='op'>=</span> (<span class='ident'>tick</span> <span class='kw-2'>&amp;</span> <span class='self'>self</span>.<span class='ident'>mask</span>) <span class='kw'>as</span> <span class='ident'>uint</span>;
+        <span class='kw'>let</span> <span class='ident'>slot</span> <span class='op'>=</span> (<span class='ident'>tick</span> <span class='kw-2'>&amp;</span> <span class='self'>self</span>.<span class='ident'>mask</span>) <span class='kw'>as</span> <span class='ident'>usize</span>;
         <span class='kw'>let</span> <span class='ident'>curr</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>wheel</span>[<span class='ident'>slot</span>];
 
         <span class='comment'>// Insert the new entry</span>
@@ -759,8 +759,8 @@
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>slot_for</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>tick</span>: <span class='ident'>u64</span>) <span class='op'>-&gt;</span> <span class='ident'>uint</span> {
-        (<span class='self'>self</span>.<span class='ident'>mask</span> <span class='kw-2'>&amp;</span> <span class='ident'>tick</span>) <span class='kw'>as</span> <span class='ident'>uint</span>
+    <span class='kw'>fn</span> <span class='ident'>slot_for</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>tick</span>: <span class='ident'>u64</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
+        (<span class='self'>self</span>.<span class='ident'>mask</span> <span class='kw-2'>&amp;</span> <span class='ident'>tick</span>) <span class='kw'>as</span> <span class='ident'>usize</span>
     }
 
     <span class='comment'>// Convert a ms duration into a number of ticks, rounds up</span>
@@ -989,7 +989,7 @@
     }
 
     <span class='kw'>const</span> <span class='ident'>TICK</span>: <span class='ident'>u64</span> <span class='op'>=</span> <span class='number'>100</span>;
-    <span class='kw'>const</span> <span class='ident'>SLOTS</span>: <span class='ident'>uint</span> <span class='op'>=</span> <span class='number'>16</span>;
+    <span class='kw'>const</span> <span class='ident'>SLOTS</span>: <span class='ident'>usize</span> <span class='op'>=</span> <span class='number'>16</span>;
 
     <span class='kw'>fn</span> <span class='ident'>timer</span>() <span class='op'>-&gt;</span> <span class='ident'>Timer</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span><span class='op'>&gt;</span> {
         <span class='ident'>Timer</span>::<span class='ident'>new</span>(<span class='ident'>TICK</span>, <span class='ident'>SLOTS</span>, <span class='number'>32</span>)

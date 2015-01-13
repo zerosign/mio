@@ -196,13 +196,13 @@
 
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>ByteBuf</span> {
     <span class='ident'>ptr</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>u8</span>,
-    <span class='ident'>cap</span>: <span class='ident'>uint</span>,
-    <span class='ident'>pos</span>: <span class='ident'>uint</span>,
-    <span class='ident'>lim</span>: <span class='ident'>uint</span>
+    <span class='ident'>cap</span>: <span class='ident'>usize</span>,
+    <span class='ident'>pos</span>: <span class='ident'>usize</span>,
+    <span class='ident'>lim</span>: <span class='ident'>usize</span>
 }
 
 <span class='kw'>impl</span> <span class='ident'>ByteBuf</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='kw-2'>mut</span> <span class='ident'>capacity</span>: <span class='ident'>uint</span>) <span class='op'>-&gt;</span> <span class='ident'>ByteBuf</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='kw-2'>mut</span> <span class='ident'>capacity</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>ByteBuf</span> {
         <span class='comment'>// Handle 0 capacity case</span>
         <span class='kw'>if</span> <span class='ident'>capacity</span> <span class='op'>==</span> <span class='number'>0</span> {
             <span class='kw'>return</span> <span class='ident'>ByteBuf</span> {
@@ -225,7 +225,7 @@
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>capacity</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>uint</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>capacity</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
         <span class='self'>self</span>.<span class='ident'>cap</span>
     }
 
@@ -267,7 +267,7 @@
 }
 
 <span class='kw'>impl</span> <span class='ident'>Buf</span> <span class='kw'>for</span> <span class='ident'>ByteBuf</span> {
-    <span class='kw'>fn</span> <span class='ident'>remaining</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>uint</span> {
+    <span class='kw'>fn</span> <span class='ident'>remaining</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
         <span class='self'>self</span>.<span class='ident'>lim</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>pos</span>
     }
 
@@ -275,7 +275,7 @@
         <span class='self'>self</span>.<span class='ident'>as_slice</span>().<span class='ident'>slice</span>(<span class='self'>self</span>.<span class='ident'>pos</span>, <span class='self'>self</span>.<span class='ident'>lim</span>)
     }
 
-    <span class='kw'>fn</span> <span class='ident'>advance</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>cnt</span>: <span class='ident'>uint</span>) {
+    <span class='kw'>fn</span> <span class='ident'>advance</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>cnt</span>: <span class='ident'>usize</span>) {
         <span class='ident'>cnt</span> <span class='op'>=</span> <span class='ident'>cmp</span>::<span class='ident'>min</span>(<span class='ident'>cnt</span>, <span class='self'>self</span>.<span class='ident'>remaining</span>());
         <span class='self'>self</span>.<span class='ident'>pos</span> <span class='op'>+=</span> <span class='ident'>cnt</span>;
     }
@@ -290,7 +290,7 @@
 }
 
 <span class='kw'>impl</span> <span class='ident'>Reader</span> <span class='kw'>for</span> <span class='ident'>ByteBuf</span> {
-    <span class='kw'>fn</span> <span class='ident'>read</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>IoResult</span><span class='op'>&lt;</span><span class='ident'>uint</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>read</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>IoResult</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
         <span class='ident'>super</span>::<span class='ident'>read</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
     }
 }

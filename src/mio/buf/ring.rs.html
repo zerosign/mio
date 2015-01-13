@@ -326,14 +326,14 @@
 <span class='doccomment'>/// wraps around to the start.</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>RingBuf</span> {
     <span class='ident'>ptr</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>u8</span>,  <span class='comment'>// Pointer to the memory</span>
-    <span class='ident'>cap</span>: <span class='ident'>uint</span>,     <span class='comment'>// Capacity of the buffer</span>
-    <span class='ident'>pos</span>: <span class='ident'>uint</span>,     <span class='comment'>// Offset of read cursor</span>
-    <span class='ident'>len</span>: <span class='ident'>uint</span>      <span class='comment'>// Number of bytes to read</span>
+    <span class='ident'>cap</span>: <span class='ident'>usize</span>,     <span class='comment'>// Capacity of the buffer</span>
+    <span class='ident'>pos</span>: <span class='ident'>usize</span>,     <span class='comment'>// Offset of read cursor</span>
+    <span class='ident'>len</span>: <span class='ident'>usize</span>      <span class='comment'>// Number of bytes to read</span>
 }
 
 <span class='comment'>// TODO: There are most likely many optimizations that can be made</span>
 <span class='kw'>impl</span> <span class='ident'>RingBuf</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='kw-2'>mut</span> <span class='ident'>capacity</span>: <span class='ident'>uint</span>) <span class='op'>-&gt;</span> <span class='ident'>RingBuf</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='kw-2'>mut</span> <span class='ident'>capacity</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>RingBuf</span> {
         <span class='comment'>// Handle the 0 length buffer case</span>
         <span class='kw'>if</span> <span class='ident'>capacity</span> <span class='op'>==</span> <span class='number'>0</span> {
             <span class='kw'>return</span> <span class='ident'>RingBuf</span> {
@@ -367,7 +367,7 @@
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>capacity</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>uint</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>capacity</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
         <span class='self'>self</span>.<span class='ident'>cap</span>
     }
 
@@ -384,16 +384,16 @@
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>read_remaining</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>uint</span> {
+    <span class='kw'>fn</span> <span class='ident'>read_remaining</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
         <span class='self'>self</span>.<span class='ident'>len</span>
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>write_remaining</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>uint</span> {
+    <span class='kw'>fn</span> <span class='ident'>write_remaining</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
         <span class='self'>self</span>.<span class='ident'>cap</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>len</span>
     }
 
-    <span class='kw'>fn</span> <span class='ident'>advance_reader</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>cnt</span>: <span class='ident'>uint</span>) {
+    <span class='kw'>fn</span> <span class='ident'>advance_reader</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>cnt</span>: <span class='ident'>usize</span>) {
         <span class='ident'>cnt</span> <span class='op'>=</span> <span class='ident'>cmp</span>::<span class='ident'>min</span>(<span class='ident'>cnt</span>, <span class='self'>self</span>.<span class='ident'>read_remaining</span>());
 
         <span class='self'>self</span>.<span class='ident'>pos</span> <span class='op'>+=</span> <span class='ident'>cnt</span>;
@@ -402,7 +402,7 @@
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>advance_writer</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>cnt</span>: <span class='ident'>uint</span>) {
+    <span class='kw'>fn</span> <span class='ident'>advance_writer</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>cnt</span>: <span class='ident'>usize</span>) {
         <span class='ident'>cnt</span> <span class='op'>=</span> <span class='ident'>cmp</span>::<span class='ident'>min</span>(<span class='ident'>cnt</span>, <span class='self'>self</span>.<span class='ident'>write_remaining</span>());
         <span class='self'>self</span>.<span class='ident'>len</span> <span class='op'>+=</span> <span class='ident'>cnt</span>;
     }
@@ -441,8 +441,8 @@
             }
 
             <span class='ident'>ptr</span>::<span class='ident'>copy_memory</span>(
-                <span class='ident'>ret</span>.<span class='ident'>ptr</span>.<span class='ident'>offset</span>(<span class='self'>self</span>.<span class='ident'>pos</span> <span class='kw'>as</span> <span class='ident'>int</span>),
-                <span class='self'>self</span>.<span class='ident'>ptr</span>.<span class='ident'>offset</span>(<span class='self'>self</span>.<span class='ident'>pos</span> <span class='kw'>as</span> <span class='ident'>int</span>) <span class='kw'>as</span> <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>u8</span>,
+                <span class='ident'>ret</span>.<span class='ident'>ptr</span>.<span class='ident'>offset</span>(<span class='self'>self</span>.<span class='ident'>pos</span> <span class='kw'>as</span> <span class='ident'>isize</span>),
+                <span class='self'>self</span>.<span class='ident'>ptr</span>.<span class='ident'>offset</span>(<span class='self'>self</span>.<span class='ident'>pos</span> <span class='kw'>as</span> <span class='ident'>isize</span>) <span class='kw'>as</span> <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>u8</span>,
                 <span class='ident'>cmp</span>::<span class='ident'>min</span>(<span class='self'>self</span>.<span class='ident'>len</span>, <span class='self'>self</span>.<span class='ident'>cap</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>pos</span>));
         }
 
@@ -475,7 +475,7 @@
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Buf</span> <span class='kw'>for</span> <span class='ident'>RingBufReader</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>remaining</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>uint</span> {
+    <span class='kw'>fn</span> <span class='ident'>remaining</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
         <span class='self'>self</span>.<span class='ident'>ring</span>.<span class='ident'>read_remaining</span>()
     }
 
@@ -489,13 +489,13 @@
         <span class='self'>self</span>.<span class='ident'>ring</span>.<span class='ident'>as_slice</span>().<span class='ident'>slice</span>(<span class='self'>self</span>.<span class='ident'>ring</span>.<span class='ident'>pos</span>, <span class='ident'>to</span>)
     }
 
-    <span class='kw'>fn</span> <span class='ident'>advance</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cnt</span>: <span class='ident'>uint</span>) {
+    <span class='kw'>fn</span> <span class='ident'>advance</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cnt</span>: <span class='ident'>usize</span>) {
         <span class='self'>self</span>.<span class='ident'>ring</span>.<span class='ident'>advance_reader</span>(<span class='ident'>cnt</span>)
     }
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Reader</span> <span class='kw'>for</span> <span class='ident'>RingBufReader</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>read</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>IoResult</span><span class='op'>&lt;</span><span class='ident'>uint</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>read</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>IoResult</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
         <span class='ident'>super</span>::<span class='ident'>read</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
     }
 }
@@ -506,7 +506,7 @@
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Buf</span> <span class='kw'>for</span> <span class='ident'>RingBufWriter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>remaining</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>uint</span> {
+    <span class='kw'>fn</span> <span class='ident'>remaining</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
         <span class='self'>self</span>.<span class='ident'>ring</span>.<span class='ident'>write_remaining</span>()
     }
 
@@ -526,7 +526,7 @@
         <span class='self'>self</span>.<span class='ident'>ring</span>.<span class='ident'>as_slice</span>().<span class='ident'>slice</span>(<span class='ident'>from</span>, <span class='ident'>to</span>)
     }
 
-    <span class='kw'>fn</span> <span class='ident'>advance</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cnt</span>: <span class='ident'>uint</span>) {
+    <span class='kw'>fn</span> <span class='ident'>advance</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cnt</span>: <span class='ident'>usize</span>) {
         <span class='self'>self</span>.<span class='ident'>ring</span>.<span class='ident'>advance_writer</span>(<span class='ident'>cnt</span>)
     }
 }

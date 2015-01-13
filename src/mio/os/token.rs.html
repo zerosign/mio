@@ -52,11 +52,11 @@
 <span id="10">10</span>
 </pre><pre class='rust '>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>Show</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Token</span>(<span class='kw'>pub</span> <span class='ident'>uint</span>);
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Token</span>(<span class='kw'>pub</span> <span class='ident'>usize</span>);
 
 <span class='kw'>impl</span> <span class='ident'>Token</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_uint</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>uint</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_usize</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
         <span class='kw'>let</span> <span class='ident'>Token</span>(<span class='ident'>inner</span>) <span class='op'>=</span> <span class='self'>self</span>;
         <span class='ident'>inner</span>
     }

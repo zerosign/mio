@@ -162,7 +162,7 @@
 }
 
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;linux&quot;</span>)]</span>
-<span class='kw'>const</span> <span class='ident'>MINORBITS</span>: <span class='ident'>uint</span> <span class='op'>=</span> <span class='number'>20</span>;
+<span class='kw'>const</span> <span class='ident'>MINORBITS</span>: <span class='ident'>usize</span> <span class='op'>=</span> <span class='number'>20</span>;
 
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;linux&quot;</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mkdev</span>(<span class='ident'>major</span>: <span class='ident'>u64</span>, <span class='ident'>minor</span>: <span class='ident'>u64</span>) <span class='op'>-&gt;</span> <span class='ident'>dev_t</span> {

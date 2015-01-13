@@ -473,7 +473,7 @@
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>default</span>::<span class='ident'>Default</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>time</span>::<span class='ident'>duration</span>::<span class='ident'>Duration</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>uint</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>usize</span>;
 <span class='kw'>use</span> <span class='ident'>error</span>::{<span class='ident'>MioResult</span>, <span class='ident'>MioError</span>};
 <span class='kw'>use</span> <span class='ident'>handler</span>::<span class='ident'>Handler</span>;
 <span class='kw'>use</span> <span class='ident'>io</span>::<span class='ident'>IoHandle</span>;
@@ -486,16 +486,16 @@
 <span class='doccomment'>/// Configure EventLoop runtime details</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>Show</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>EventLoopConfig</span> {
-    <span class='kw'>pub</span> <span class='ident'>io_poll_timeout_ms</span>: <span class='ident'>uint</span>,
+    <span class='kw'>pub</span> <span class='ident'>io_poll_timeout_ms</span>: <span class='ident'>usize</span>,
 
     <span class='comment'>// == Notifications ==</span>
-    <span class='kw'>pub</span> <span class='ident'>notify_capacity</span>: <span class='ident'>uint</span>,
-    <span class='kw'>pub</span> <span class='ident'>messages_per_tick</span>: <span class='ident'>uint</span>,
+    <span class='kw'>pub</span> <span class='ident'>notify_capacity</span>: <span class='ident'>usize</span>,
+    <span class='kw'>pub</span> <span class='ident'>messages_per_tick</span>: <span class='ident'>usize</span>,
 
     <span class='comment'>// == Timer ==</span>
     <span class='kw'>pub</span> <span class='ident'>timer_tick_ms</span>: <span class='ident'>u64</span>,
-    <span class='kw'>pub</span> <span class='ident'>timer_wheel_size</span>: <span class='ident'>uint</span>,
-    <span class='kw'>pub</span> <span class='ident'>timer_capacity</span>: <span class='ident'>uint</span>,
+    <span class='kw'>pub</span> <span class='ident'>timer_wheel_size</span>: <span class='ident'>usize</span>,
+    <span class='kw'>pub</span> <span class='ident'>timer_capacity</span>: <span class='ident'>usize</span>,
 }
 
 <span class='kw'>impl</span> <span class='ident'>Default</span> <span class='kw'>for</span> <span class='ident'>EventLoopConfig</span> {
@@ -521,7 +521,7 @@
 }
 
 <span class='comment'>// Token used to represent notifications</span>
-<span class='kw'>const</span> <span class='ident'>NOTIFY</span>: <span class='ident'>Token</span> <span class='op'>=</span> <span class='ident'>Token</span>(<span class='ident'>uint</span>::<span class='ident'>MAX</span>);
+<span class='kw'>const</span> <span class='ident'>NOTIFY</span>: <span class='ident'>Token</span> <span class='op'>=</span> <span class='ident'>Token</span>(<span class='ident'>usize</span>::<span class='ident'>MAX</span>);
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>M</span>: <span class='ident'>Send</span><span class='op'>&gt;</span> <span class='ident'>EventLoop</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
 
@@ -737,11 +737,11 @@
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>io_poll</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>immediate</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>uint</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>io_poll</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>immediate</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
         <span class='kw'>if</span> <span class='ident'>immediate</span> {
             <span class='self'>self</span>.<span class='ident'>poll</span>.<span class='ident'>poll</span>(<span class='number'>0</span>)
         } <span class='kw'>else</span> {
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>sleep</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>timer</span>.<span class='ident'>next_tick_in_ms</span>() <span class='kw'>as</span> <span class='ident'>uint</span>;
+            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>sleep</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>timer</span>.<span class='ident'>next_tick_in_ms</span>() <span class='kw'>as</span> <span class='ident'>usize</span>;
 
             <span class='kw'>if</span> <span class='ident'>sleep</span> <span class='op'>&gt;</span> <span class='self'>self</span>.<span class='ident'>config</span>.<span class='ident'>io_poll_timeout_ms</span> {
                 <span class='ident'>sleep</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>config</span>.<span class='ident'>io_poll_timeout_ms</span>;
@@ -752,8 +752,8 @@
     }
 
     <span class='comment'>// Process IO events that have been previously polled</span>
-    <span class='kw'>fn</span> <span class='ident'>io_process</span><span class='op'>&lt;</span><span class='ident'>H</span>: <span class='ident'>Handler</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>M</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>handler</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>H</span>, <span class='ident'>cnt</span>: <span class='ident'>uint</span>) {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>i</span> <span class='op'>=</span> <span class='number'>0u</span>;
+    <span class='kw'>fn</span> <span class='ident'>io_process</span><span class='op'>&lt;</span><span class='ident'>H</span>: <span class='ident'>Handler</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>M</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>handler</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>H</span>, <span class='ident'>cnt</span>: <span class='ident'>usize</span>) {
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>i</span> <span class='op'>=</span> <span class='number'>0us</span>;
 
         <span class='comment'>// Iterate over the notifications. Each event provides the token</span>
         <span class='comment'>// it was registered with (which usually represents, at least, the</span>
@@ -789,7 +789,7 @@
         }
     }
 
-    <span class='kw'>fn</span> <span class='ident'>notify</span><span class='op'>&lt;</span><span class='ident'>H</span>: <span class='ident'>Handler</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>M</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>handler</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>H</span>, <span class='kw-2'>mut</span> <span class='ident'>cnt</span>: <span class='ident'>uint</span>) {
+    <span class='kw'>fn</span> <span class='ident'>notify</span><span class='op'>&lt;</span><span class='ident'>H</span>: <span class='ident'>Handler</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>M</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>handler</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>H</span>, <span class='kw-2'>mut</span> <span class='ident'>cnt</span>: <span class='ident'>usize</span>) {
         <span class='kw'>while</span> <span class='ident'>cnt</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
             <span class='kw'>let</span> <span class='ident'>msg</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>notify</span>.<span class='ident'>poll</span>()
                 .<span class='ident'>expect</span>(<span class='string'>&quot;[BUG] at this point there should always be a message&quot;</span>);
@@ -854,7 +854,7 @@
     <span class='kw'>use</span> {<span class='ident'>io</span>, <span class='ident'>buf</span>, <span class='ident'>Buf</span>, <span class='ident'>Handler</span>, <span class='ident'>Token</span>};
     <span class='kw'>use</span> <span class='ident'>os</span>::<span class='ident'>event</span>;
 
-    <span class='kw'>type</span> <span class='ident'>TestEventLoop</span> <span class='op'>=</span> <span class='ident'>EventLoop</span><span class='op'>&lt;</span><span class='ident'>uint</span>, ()<span class='op'>&gt;</span>;
+    <span class='kw'>type</span> <span class='ident'>TestEventLoop</span> <span class='op'>=</span> <span class='ident'>EventLoop</span><span class='op'>&lt;</span><span class='ident'>usize</span>, ()<span class='op'>&gt;</span>;
 
     <span class='kw'>struct</span> <span class='ident'>Funtimes</span> {
         <span class='ident'>rcount</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>AtomicInt</span><span class='op'>&gt;</span>,
@@ -870,7 +870,7 @@
         }
     }
 
-    <span class='kw'>impl</span> <span class='ident'>Handler</span><span class='op'>&lt;</span><span class='ident'>uint</span>, ()<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Funtimes</span> {
+    <span class='kw'>impl</span> <span class='ident'>Handler</span><span class='op'>&lt;</span><span class='ident'>usize</span>, ()<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Funtimes</span> {
         <span class='kw'>fn</span> <span class='ident'>readable</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>_event_loop</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>TestEventLoop</span>, <span class='ident'>token</span>: <span class='ident'>Token</span>, <span class='ident'>_hint</span>: <span class='ident'>event</span>::<span class='ident'>ReadHint</span>) {
             (<span class='op'>*</span><span class='self'>self</span>.<span class='ident'>rcount</span>).<span class='ident'>fetch_add</span>(<span class='number'>1</span>, <span class='ident'>SeqCst</span>);
             <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>token</span>, <span class='ident'>Token</span>(<span class='number'>10</span>));
