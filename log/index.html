@@ -48,7 +48,7 @@
 <div class='docblock'><p>Utilities for program-wide and customizable logging</p>
 
 <h2 id="example" class='section-header'><a
-                           href="#example">Example</a></h2><pre class='rust '>
+                           href="#example">Example</a></h2><pre id='rust-example-rendered' class='rust '>
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>log</span>;
 
 <span class='kw'>fn</span> <span class='ident'>main</span>() {
@@ -182,7 +182,7 @@ followed by &#39;scopes&#39;</li>
 <h2 id="performance-and-side-effects" class='section-header'><a
                            href="#performance-and-side-effects">Performance and Side Effects</a></h2>
 <p>Each of these macros will expand to code similar to:</p>
-<pre class='rust '>
+<pre id='rust-example-rendered' class='rust '>
 <span class='kw'>if</span> <span class='ident'>log_level</span> <span class='op'>&lt;=</span> <span class='ident'>my_module_log_level</span>() {
     ::<span class='ident'>log</span>::<span class='ident'>log</span>(<span class='ident'>log_level</span>, <span class='macro'>format</span><span class='macro'>!</span>(...));
 }
