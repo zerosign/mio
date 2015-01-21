@@ -783,7 +783,7 @@
     }
 
     <span class='kw'>impl</span> <span class='ident'>IoReader</span> <span class='kw'>for</span> <span class='ident'>TcpSocket</span> {
-        <span class='kw'>fn</span> <span class='ident'>read</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>MutBuf</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span>(<span class='ident'>usize</span>)<span class='op'>&gt;&gt;</span> {
+        <span class='kw'>fn</span> <span class='ident'>read</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>MutBuf</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span>(<span class='ident'>usize</span>)<span class='op'>&gt;&gt;</span> {
             <span class='ident'>io</span>::<span class='ident'>read</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
         }
 
@@ -793,7 +793,7 @@
     }
 
     <span class='kw'>impl</span> <span class='ident'>IoWriter</span> <span class='kw'>for</span> <span class='ident'>TcpSocket</span> {
-        <span class='kw'>fn</span> <span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Buf</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span>(<span class='ident'>usize</span>)<span class='op'>&gt;&gt;</span> {
+        <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>Buf</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span>(<span class='ident'>usize</span>)<span class='op'>&gt;&gt;</span> {
             <span class='ident'>io</span>::<span class='ident'>write</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
         }
 
@@ -918,7 +918,7 @@
     }
 
     <span class='kw'>impl</span> <span class='ident'>IoReader</span> <span class='kw'>for</span> <span class='ident'>UdpSocket</span> {
-        <span class='kw'>fn</span> <span class='ident'>read</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>MutBuf</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span>(<span class='ident'>usize</span>)<span class='op'>&gt;&gt;</span> {
+        <span class='kw'>fn</span> <span class='ident'>read</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>MutBuf</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span>(<span class='ident'>usize</span>)<span class='op'>&gt;&gt;</span> {
             <span class='ident'>io</span>::<span class='ident'>read</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
         }
 
@@ -928,7 +928,7 @@
     }
 
     <span class='kw'>impl</span> <span class='ident'>IoWriter</span> <span class='kw'>for</span> <span class='ident'>UdpSocket</span> {
-        <span class='kw'>fn</span> <span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Buf</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span>(<span class='ident'>usize</span>)<span class='op'>&gt;&gt;</span> {
+        <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>Buf</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span>(<span class='ident'>usize</span>)<span class='op'>&gt;&gt;</span> {
             <span class='ident'>io</span>::<span class='ident'>write</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
         }
 
@@ -1026,7 +1026,7 @@
     }
 
     <span class='kw'>impl</span> <span class='ident'>IoReader</span> <span class='kw'>for</span> <span class='ident'>UnixSocket</span> {
-        <span class='kw'>fn</span> <span class='ident'>read</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>MutBuf</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
+        <span class='kw'>fn</span> <span class='ident'>read</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>MutBuf</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
             <span class='ident'>io</span>::<span class='ident'>read</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
         }
 
@@ -1036,7 +1036,7 @@
     }
 
     <span class='kw'>impl</span> <span class='ident'>IoWriter</span> <span class='kw'>for</span> <span class='ident'>UnixSocket</span> {
-        <span class='kw'>fn</span> <span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Buf</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
+        <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>Buf</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
             <span class='ident'>io</span>::<span class='ident'>write</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
         }
 
