@@ -124,7 +124,7 @@
 <span id="82">82</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>IoResult</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>old_io</span>::<span class='ident'>IoResult</span>;
 <span class='kw'>use</span> <span class='ident'>super</span>::{<span class='ident'>Buf</span>, <span class='ident'>MutBuf</span>};
 
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SliceBuf</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
@@ -201,7 +201,7 @@
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Writer</span> <span class='kw'>for</span> <span class='ident'>MutSliceBuf</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>IoResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>write_all</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>IoResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
         <span class='ident'>super</span>::<span class='ident'>write</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
     }
 }

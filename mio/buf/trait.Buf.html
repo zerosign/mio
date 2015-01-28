@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../index.html'>mio</a>::<wbr><a href='index.html'>buf</a></p><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.ByteBuf.html'>ByteBuf</a><a class='struct ' href='struct.MutSliceBuf.html'>MutSliceBuf</a><a class='struct ' href='struct.RingBuf.html'>RingBuf</a><a class='struct ' href='struct.RingBufReader.html'>RingBufReader</a><a class='struct ' href='struct.RingBufWriter.html'>RingBufWriter</a><a class='struct ' href='struct.SliceBuf.html'>SliceBuf</a></div><div class='block trait'><h2>Traits</h2><a class='trait current' href='trait.Buf.html'>Buf</a><a class='trait ' href='trait.MutBuf.html'>MutBuf</a></div><div class='block fn'><h2>Functions</h2><a class='fn ' href='fn.wrap.html'>wrap</a><a class='fn ' href='fn.wrap_mut.html'>wrap_mut</a></div>
+        <p class='location'><a href='../index.html'>mio</a>::<wbr><a href='index.html'>buf</a></p><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.ByteBuf.html' title=''>ByteBuf</a><a class='struct ' href='struct.MutSliceBuf.html' title=''>MutSliceBuf</a><a class='struct ' href='struct.RingBuf.html' title='Buf backed by a continous chunk of memory. Maintains a read cursor and a write cursor. When reads and writes reach the end of the allocated buffer, wraps around to the start.'>RingBuf</a><a class='struct ' href='struct.RingBufReader.html' title=''>RingBufReader</a><a class='struct ' href='struct.RingBufWriter.html' title=''>RingBufWriter</a><a class='struct ' href='struct.SliceBuf.html' title=''>SliceBuf</a></div><div class='block trait'><h2>Traits</h2><a class='trait current' href='trait.Buf.html' title=''>Buf</a><a class='trait ' href='trait.MutBuf.html' title=''>MutBuf</a></div><div class='block fn'><h2>Functions</h2><a class='fn ' href='fn.wrap.html' title=''>wrap</a><a class='fn ' href='fn.wrap_mut.html' title=''>wrap_mut</a></div>
     </section>
 
     <nav class="sub">
@@ -44,7 +44,7 @@
 <h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>mio</a>::<wbr><a href='index.html'>buf</a>::<wbr><a class='trait' href=''>Buf</a><wbr><a class='stability Unstable' title=''>Unstable</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]
             </a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-1440' href='../../src/mio/buf/mod.rs.html#18-26'>[src]</a></span></h1>
+        </span><a id='src-1451' href='../../src/mio/buf/mod.rs.html#18-26'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Buf {
     fn <a href='#tymethod.remaining' class='fnname'>remaining</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>;
     fn <a href='#tymethod.bytes' class='fnname'>bytes</a>&lt;'a&gt;(&amp;'a self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [</a><a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>;

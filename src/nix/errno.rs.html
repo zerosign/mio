@@ -1126,7 +1126,7 @@
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Show</span> <span class='kw'>for</span> <span class='ident'>SysError</span> {
+<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Debug</span> <span class='kw'>for</span> <span class='ident'>SysError</span> {
     <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>fmt</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
         <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>fmt</span>, <span class='string'>&quot;{:?} - {:?}&quot;</span>, <span class='self'>self</span>.<span class='ident'>kind</span>, <span class='self'>self</span>.<span class='ident'>desc</span>())
     }
@@ -1144,7 +1144,7 @@
 
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;linux&quot;</span>)]</span>
 <span class='kw'>mod</span> <span class='ident'>consts</span> {
-    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>, <span class='ident'>Clone</span>, <span class='ident'>PartialEq</span>, <span class='ident'>FromPrimitive</span>, <span class='ident'>Copy</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>, <span class='ident'>PartialEq</span>, <span class='ident'>FromPrimitive</span>, <span class='ident'>Copy</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Errno</span> {
         <span class='ident'>UnknownErrno</span>    <span class='op'>=</span> <span class='number'>0</span>,
         <span class='ident'>EPERM</span>           <span class='op'>=</span> <span class='number'>1</span>,
@@ -1286,7 +1286,7 @@
 
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;macos&quot;</span>, <span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;ios&quot;</span>))]</span>
 <span class='kw'>mod</span> <span class='ident'>consts</span> {
-    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Show</span>, <span class='ident'>Clone</span>, <span class='ident'>PartialEq</span>, <span class='ident'>FromPrimitive</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Debug</span>, <span class='ident'>Clone</span>, <span class='ident'>PartialEq</span>, <span class='ident'>FromPrimitive</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Errno</span> {
         <span class='ident'>UnknownErrno</span>    <span class='op'>=</span> <span class='number'>0</span>,
         <span class='ident'>EPERM</span>           <span class='op'>=</span> <span class='number'>1</span>,

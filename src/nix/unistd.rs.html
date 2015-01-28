@@ -473,6 +473,21 @@
 <span id="431">431</span>
 <span id="432">432</span>
 <span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::{<span class='ident'>mem</span>, <span class='ident'>ptr</span>};
 <span class='kw'>use</span> <span class='ident'>libc</span>::{<span class='ident'>c_char</span>, <span class='ident'>c_void</span>, <span class='ident'>c_int</span>, <span class='ident'>size_t</span>, <span class='ident'>pid_t</span>, <span class='ident'>off_t</span>};
@@ -882,6 +897,21 @@
         <span class='prelude-val'>Err</span>(<span class='ident'>SysError</span>::<span class='ident'>last</span>())
     } <span class='kw'>else</span> {
         <span class='prelude-val'>Ok</span>(())
+    }
+}
+
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>isatty</span>(<span class='ident'>fd</span>: <span class='ident'>Fd</span>) <span class='op'>-&gt;</span> <span class='ident'>SysResult</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span> {
+    <span class='kw'>use</span> {<span class='ident'>errno</span>, <span class='ident'>libc</span>};
+
+    <span class='kw'>if</span> <span class='kw'>unsafe</span> { <span class='ident'>libc</span>::<span class='ident'>isatty</span>(<span class='ident'>fd</span>) } <span class='op'>==</span> <span class='number'>1</span> {
+        <span class='prelude-val'>Ok</span>(<span class='boolval'>true</span>)
+    } <span class='kw'>else</span> {
+        <span class='kw'>match</span> <span class='ident'>SysError</span>::<span class='ident'>last</span>() {
+            <span class='comment'>// ENOTTY means `fd` is a valid file descriptor, but not a TTY, so</span>
+            <span class='comment'>// we return `Ok(false)`</span>
+            <span class='ident'>SysError</span> { <span class='ident'>kind</span>: <span class='ident'>errno</span>::<span class='ident'>ENOTTY</span> } <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(<span class='boolval'>false</span>),
+            <span class='ident'>err</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>err</span>)
+        }
     }
 }
 

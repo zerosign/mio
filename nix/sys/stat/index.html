@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../../index.html'>nix</a>::<wbr><a href='../index.html'>sys</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='../epoll/index.html'>epoll</a><a class='mod ' href='../eventfd/index.html'>eventfd</a><a class='mod ' href='../mman/index.html'>mman</a><a class='mod ' href='../signal/index.html'>signal</a><a class='mod ' href='../socket/index.html'>socket</a><a class='mod current' href='../stat/index.html'>stat</a><a class='mod ' href='../termios/index.html'>termios</a><a class='mod ' href='../utsname/index.html'>utsname</a><a class='mod ' href='../wait/index.html'>wait</a></div>
+        <p class='location'><a href='../../index.html'>nix</a>::<wbr><a href='../index.html'>sys</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='../epoll/index.html' title=''>epoll</a><a class='mod ' href='../eventfd/index.html' title=''>eventfd</a><a class='mod ' href='../ioctl/index.html' title=''>ioctl</a><a class='mod ' href='../mman/index.html' title=''>mman</a><a class='mod ' href='../signal/index.html' title=''>signal</a><a class='mod ' href='../socket/index.html' title=''>socket</a><a class='mod current' href='../stat/index.html' title=''>stat</a><a class='mod ' href='../termios/index.html' title=''>termios</a><a class='mod ' href='../utsname/index.html' title=''>utsname</a><a class='mod ' href='../wait/index.html' title=''>wait</a></div>
     </section>
 
     <nav class="sub">
@@ -44,12 +44,18 @@
 <h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>nix</a>::<wbr><a href='../index.html'>sys</a>::<wbr><a class='mod' href=''>stat</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]
             </a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-21165' href='../../../src/nix/sys/stat.rs.html#1-77'>[src]</a></span></h1>
+        </span><a id='src-21341' href='../../../src/nix/sys/stat.rs.html#1-99'>[src]</a></span></h1>
 <h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                     <tr>
                         <td><a class='stability Unstable' title='Unstable'></a><a class='struct' href='struct.FileStat.html'
                                title='nix::sys::stat::FileStat'>FileStat</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Mode.html'
+                               title='nix::sys::stat::Mode'>Mode</a></td>
                         <td class='docblock short'></td>
                     </tr>
                 
@@ -87,6 +93,96 @@
                     <tr>
                         <td><a class='stability Unmarked' title='No stability level'></a><a class='constant' href='constant.S_IFSOCK.html'
                                title='nix::sys::stat::S_IFSOCK'>S_IFSOCK</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='constant' href='constant.S_IRGRP.html'
+                               title='nix::sys::stat::S_IRGRP'>S_IRGRP</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='constant' href='constant.S_IROTH.html'
+                               title='nix::sys::stat::S_IROTH'>S_IROTH</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='constant' href='constant.S_IRUSR.html'
+                               title='nix::sys::stat::S_IRUSR'>S_IRUSR</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='constant' href='constant.S_IRWXG.html'
+                               title='nix::sys::stat::S_IRWXG'>S_IRWXG</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='constant' href='constant.S_IRWXO.html'
+                               title='nix::sys::stat::S_IRWXO'>S_IRWXO</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='constant' href='constant.S_IRWXU.html'
+                               title='nix::sys::stat::S_IRWXU'>S_IRWXU</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='constant' href='constant.S_ISGID.html'
+                               title='nix::sys::stat::S_ISGID'>S_ISGID</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='constant' href='constant.S_ISUID.html'
+                               title='nix::sys::stat::S_ISUID'>S_ISUID</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='constant' href='constant.S_ISVTX.html'
+                               title='nix::sys::stat::S_ISVTX'>S_ISVTX</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='constant' href='constant.S_IWGRP.html'
+                               title='nix::sys::stat::S_IWGRP'>S_IWGRP</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='constant' href='constant.S_IWOTH.html'
+                               title='nix::sys::stat::S_IWOTH'>S_IWOTH</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='constant' href='constant.S_IWUSR.html'
+                               title='nix::sys::stat::S_IWUSR'>S_IWUSR</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='constant' href='constant.S_IXGRP.html'
+                               title='nix::sys::stat::S_IXGRP'>S_IXGRP</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='constant' href='constant.S_IXOTH.html'
+                               title='nix::sys::stat::S_IXOTH'>S_IXOTH</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='constant' href='constant.S_IXUSR.html'
+                               title='nix::sys::stat::S_IXUSR'>S_IXUSR</a></td>
                         <td class='docblock short'></td>
                     </tr>
                 </table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>

@@ -577,15 +577,15 @@
 <span class='doccomment'>//!</span>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>FromStr</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>net</span>::<span class='ident'>ip</span>::<span class='ident'>SocketAddr</span> <span class='kw'>as</span> <span class='ident'>StdSocketAddr</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>old_io</span>::<span class='ident'>net</span>::<span class='ident'>ip</span>::<span class='ident'>SocketAddr</span> <span class='kw'>as</span> <span class='ident'>StdSocketAddr</span>;
 <span class='kw'>use</span> <span class='ident'>io</span>::{<span class='ident'>IoHandle</span>, <span class='ident'>NonBlock</span>};
 <span class='kw'>use</span> <span class='ident'>error</span>::<span class='ident'>MioResult</span>;
 <span class='kw'>use</span> <span class='ident'>buf</span>::{<span class='ident'>Buf</span>, <span class='ident'>MutBuf</span>};
 <span class='kw'>use</span> <span class='ident'>os</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>net</span>::<span class='ident'>ip</span>::{<span class='ident'>IpAddr</span>, <span class='ident'>Port</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>net</span>::<span class='ident'>ip</span>::<span class='ident'>Ipv4Addr</span> <span class='kw'>as</span> <span class='ident'>IPv4Addr</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>net</span>::<span class='ident'>ip</span>::<span class='ident'>Ipv6Addr</span> <span class='kw'>as</span> <span class='ident'>IPv6Addr</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>old_io</span>::<span class='ident'>net</span>::<span class='ident'>ip</span>::{<span class='ident'>IpAddr</span>, <span class='ident'>Port</span>};
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>old_io</span>::<span class='ident'>net</span>::<span class='ident'>ip</span>::<span class='ident'>Ipv4Addr</span> <span class='kw'>as</span> <span class='ident'>IPv4Addr</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>old_io</span>::<span class='ident'>net</span>::<span class='ident'>ip</span>::<span class='ident'>Ipv6Addr</span> <span class='kw'>as</span> <span class='ident'>IPv6Addr</span>;
 
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>SockAddr</span>::{<span class='ident'>InetAddr</span>,<span class='ident'>UnixAddr</span>};
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>AddressFamily</span>::{<span class='ident'>Unix</span>,<span class='ident'>Inet</span>,<span class='ident'>Inet6</span>};

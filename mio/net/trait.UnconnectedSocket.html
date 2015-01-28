@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../index.html'>mio</a>::<wbr><a href='index.html'>net</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='pipe/index.html'>pipe</a><a class='mod ' href='tcp/index.html'>tcp</a><a class='mod ' href='udp/index.html'>udp</a></div><div class='block enum'><h2>Enums</h2><a class='enum ' href='enum.AddressFamily.html'>AddressFamily</a><a class='enum ' href='enum.IpAddr.html'>IpAddr</a><a class='enum ' href='enum.SockAddr.html'>SockAddr</a><a class='enum ' href='enum.SocketType.html'>SocketType</a></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='trait.MulticastSocket.html'>MulticastSocket</a><a class='trait ' href='trait.Socket.html'>Socket</a><a class='trait current' href='trait.UnconnectedSocket.html'>UnconnectedSocket</a></div>
+        <p class='location'><a href='../index.html'>mio</a>::<wbr><a href='index.html'>net</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='pipe/index.html' title='Named pipes'>pipe</a><a class='mod ' href='tcp/index.html' title='TCP networking primitives '>tcp</a><a class='mod ' href='udp/index.html' title=''>udp</a></div><div class='block enum'><h2>Enums</h2><a class='enum ' href='enum.AddressFamily.html' title=''>AddressFamily</a><a class='enum ' href='enum.IpAddr.html' title=''>IpAddr</a><a class='enum ' href='enum.SockAddr.html' title=''>SockAddr</a><a class='enum ' href='enum.SocketType.html' title=''>SocketType</a></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='trait.MulticastSocket.html' title=''>MulticastSocket</a><a class='trait ' href='trait.Socket.html' title=''>Socket</a><a class='trait current' href='trait.UnconnectedSocket.html' title=''>UnconnectedSocket</a></div>
     </section>
 
     <nav class="sub">
@@ -44,7 +44,7 @@
 <h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>mio</a>::<wbr><a href='index.html'>net</a>::<wbr><a class='trait' href=''>UnconnectedSocket</a><wbr><a class='stability Unstable' title=''>Unstable</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]
             </a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-1981' href='../../src/mio/net.rs.html#50-53'>[src]</a></span></h1>
+        </span><a id='src-1975' href='../../src/mio/net.rs.html#50-53'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait UnconnectedSocket {
     fn <a href='#tymethod.send_to' class='fnname'>send_to</a>(&amp;mut self, buf: &amp;mut <a class='trait' href='../../mio/buf/trait.Buf.html' title='mio::buf::Buf'>Buf</a>, tgt: &amp;<a class='enum' href='../../mio/net/enum.SockAddr.html' title='mio::net::SockAddr'>SockAddr</a>) -&gt; <a class='type' href='../../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a class='enum' href='../../mio/enum.NonBlock.html' title='mio::NonBlock'>NonBlock</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;&gt;;
     fn <a href='#tymethod.recv_from' class='fnname'>recv_from</a>(&amp;mut self, buf: &amp;mut <a class='trait' href='../../mio/buf/trait.MutBuf.html' title='mio::buf::MutBuf'>MutBuf</a>) -&gt; <a class='type' href='../../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a class='enum' href='../../mio/enum.NonBlock.html' title='mio::NonBlock'>NonBlock</a>&lt;<a class='enum' href='../../mio/net/enum.SockAddr.html' title='mio::net::SockAddr'>SockAddr</a>&gt;&gt;;

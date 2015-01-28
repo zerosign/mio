@@ -972,7 +972,7 @@
            <span class='ident'>port</span>)
 }
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Show</span> <span class='kw'>for</span> <span class='ident'>SockAddr</span> {
+<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Debug</span> <span class='kw'>for</span> <span class='ident'>SockAddr</span> {
     <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
         <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
             <span class='ident'>SockAddr</span>::<span class='ident'>SockIpV4</span>(<span class='ident'>sin</span>) <span class='op'>=&gt;</span> <span class='ident'>print_ipv4_addr</span>(<span class='kw-2'>&amp;</span><span class='ident'>sin</span>, <span class='ident'>f</span>),
