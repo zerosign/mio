@@ -455,7 +455,7 @@
     <span class='comment'>// re-uses the buffer</span>
 }
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Show</span> <span class='kw'>for</span> <span class='ident'>RingBuf</span> {
+<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Debug</span> <span class='kw'>for</span> <span class='ident'>RingBuf</span> {
     <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>fmt</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
         <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>fmt</span>, <span class='string'>&quot;RingBuf[.. {}]&quot;</span>, <span class='self'>self</span>.<span class='ident'>len</span>)
     }
@@ -488,7 +488,7 @@
             <span class='ident'>to</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>ring</span>.<span class='ident'>cap</span>
         }
 
-        <span class='self'>self</span>.<span class='ident'>ring</span>.<span class='ident'>as_slice</span>().<span class='ident'>slice</span>(<span class='self'>self</span>.<span class='ident'>ring</span>.<span class='ident'>pos</span>, <span class='ident'>to</span>)
+        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>ring</span>.<span class='ident'>as_slice</span>()[<span class='self'>self</span>.<span class='ident'>ring</span>.<span class='ident'>pos</span>..<span class='ident'>to</span>]
     }
 
     <span class='kw'>fn</span> <span class='ident'>advance</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cnt</span>: <span class='ident'>usize</span>) {
@@ -525,7 +525,7 @@
             <span class='ident'>to</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>ring</span>.<span class='ident'>cap</span>;
         }
 
-        <span class='self'>self</span>.<span class='ident'>ring</span>.<span class='ident'>as_slice</span>().<span class='ident'>slice</span>(<span class='ident'>from</span>, <span class='ident'>to</span>)
+        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>ring</span>.<span class='ident'>as_slice</span>()[<span class='ident'>from</span>..<span class='ident'>to</span>]
     }
 
     <span class='kw'>fn</span> <span class='ident'>advance</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cnt</span>: <span class='ident'>usize</span>) {

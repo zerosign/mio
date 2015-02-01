@@ -456,7 +456,7 @@
 
 <span class='doccomment'>/// Represents the OS&#39;s handle to the IO instance. In this case, it is the file</span>
 <span class='doccomment'>/// descriptor.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>IoDesc</span> {
     <span class='kw'>pub</span> <span class='ident'>fd</span>: <span class='ident'>nix</span>::<span class='ident'>Fd</span>
 }

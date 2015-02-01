@@ -695,7 +695,7 @@
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Show</span> <span class='kw'>for</span> <span class='ident'>SockAddr</span> {
+<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Debug</span> <span class='kw'>for</span> <span class='ident'>SockAddr</span> {
     <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>fmt</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
         <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
             <span class='ident'>InetAddr</span>(<span class='ident'>ip</span>, <span class='ident'>port</span>) <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>fmt</span>, <span class='string'>&quot;{}:{}&quot;</span>, <span class='ident'>ip</span>, <span class='ident'>port</span>),
@@ -723,7 +723,7 @@
     <span class='kw'>use</span> <span class='ident'>net</span>::<span class='ident'>SocketType</span>::<span class='ident'>Stream</span>;
     <span class='kw'>use</span> <span class='ident'>net</span>::<span class='ident'>AddressFamily</span>::{<span class='self'>self</span>, <span class='ident'>Inet</span>, <span class='ident'>Inet6</span>};
 
-    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>TcpSocket</span> {
         <span class='ident'>desc</span>: <span class='ident'>os</span>::<span class='ident'>IoDesc</span>
     }
@@ -805,7 +805,7 @@
     <span class='kw'>impl</span> <span class='ident'>Socket</span> <span class='kw'>for</span> <span class='ident'>TcpSocket</span> {
     }
 
-    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>TcpListener</span> {
         <span class='ident'>desc</span>: <span class='ident'>os</span>::<span class='ident'>IoDesc</span>,
     }
@@ -823,7 +823,7 @@
         }
     }
 
-    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>TcpAcceptor</span> {
         <span class='ident'>desc</span>: <span class='ident'>os</span>::<span class='ident'>IoDesc</span>,
     }
@@ -875,7 +875,7 @@
     <span class='kw'>use</span> <span class='ident'>net</span>::<span class='ident'>AddressFamily</span>::<span class='ident'>Inet</span>;
     <span class='kw'>use</span> <span class='ident'>super</span>::<span class='ident'>UnconnectedSocket</span>;
 
-    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>UdpSocket</span> {
         <span class='ident'>desc</span>: <span class='ident'>os</span>::<span class='ident'>IoDesc</span>
     }
@@ -985,7 +985,7 @@
     <span class='kw'>use</span> <span class='ident'>net</span>::<span class='ident'>SocketType</span>::<span class='ident'>Stream</span>;
     <span class='kw'>use</span> <span class='ident'>net</span>::<span class='ident'>AddressFamily</span>::<span class='ident'>Unix</span>;
 
-    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>UnixSocket</span> {
         <span class='ident'>desc</span>: <span class='ident'>os</span>::<span class='ident'>IoDesc</span>
     }
@@ -1048,7 +1048,7 @@
     <span class='kw'>impl</span> <span class='ident'>Socket</span> <span class='kw'>for</span> <span class='ident'>UnixSocket</span> {
     }
 
-    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>UnixListener</span> {
         <span class='ident'>desc</span>: <span class='ident'>os</span>::<span class='ident'>IoDesc</span>,
     }
@@ -1066,7 +1066,7 @@
         }
     }
 
-    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Show</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>UnixAcceptor</span> {
         <span class='ident'>desc</span>: <span class='ident'>os</span>::<span class='ident'>IoDesc</span>,
     }

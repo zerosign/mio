@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.1.0/rust/src/liblibc/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.1.1/rust/src/liblibc/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -5111,6 +5111,43 @@
 <span id="5069">5069</span>
 <span id="5070">5070</span>
 <span id="5071">5071</span>
+<span id="5072">5072</span>
+<span id="5073">5073</span>
+<span id="5074">5074</span>
+<span id="5075">5075</span>
+<span id="5076">5076</span>
+<span id="5077">5077</span>
+<span id="5078">5078</span>
+<span id="5079">5079</span>
+<span id="5080">5080</span>
+<span id="5081">5081</span>
+<span id="5082">5082</span>
+<span id="5083">5083</span>
+<span id="5084">5084</span>
+<span id="5085">5085</span>
+<span id="5086">5086</span>
+<span id="5087">5087</span>
+<span id="5088">5088</span>
+<span id="5089">5089</span>
+<span id="5090">5090</span>
+<span id="5091">5091</span>
+<span id="5092">5092</span>
+<span id="5093">5093</span>
+<span id="5094">5094</span>
+<span id="5095">5095</span>
+<span id="5096">5096</span>
+<span id="5097">5097</span>
+<span id="5098">5098</span>
+<span id="5099">5099</span>
+<span id="5100">5100</span>
+<span id="5101">5101</span>
+<span id="5102">5102</span>
+<span id="5103">5103</span>
+<span id="5104">5104</span>
+<span id="5105">5105</span>
+<span id="5106">5106</span>
+<span id="5107">5107</span>
+<span id="5108">5108</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2012-2015 The Rust Project Developers. See the COPYRIGHT</span>
 <span class='comment'>// file at the top-level directory of this distribution and at</span>
@@ -5124,14 +5161,18 @@
 
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_name</span> <span class='op'>=</span> <span class='string'>&quot;libc&quot;</span>]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_type</span> <span class='op'>=</span> <span class='string'>&quot;rlib&quot;</span>]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>not</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;cargo-build&quot;</span>), <span class='ident'>unstable</span>)]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>not</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;cargo-build&quot;</span>),
+            <span class='ident'>unstable</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;libc&quot;</span>))]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>not</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;cargo-build&quot;</span>), <span class='ident'>feature</span>(<span class='ident'>staged_api</span>))]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>not</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;cargo-build&quot;</span>), <span class='ident'>staged_api</span>)]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>not</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;cargo-build&quot;</span>), <span class='ident'>feature</span>(<span class='ident'>core</span>))]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>unknown_features</span>)]</span> <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>int_uint</span>)]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>no_std</span>]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>doc</span>(<span class='ident'>html_logo_url</span> <span class='op'>=</span> <span class='string'>&quot;http://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png&quot;</span>,
        <span class='ident'>html_favicon_url</span> <span class='op'>=</span> <span class='string'>&quot;http://www.rust-lang.org/favicon.ico&quot;</span>,
        <span class='ident'>html_root_url</span> <span class='op'>=</span> <span class='string'>&quot;http://doc.rust-lang.org/nightly/&quot;</span>,
        <span class='ident'>html_playground_url</span> <span class='op'>=</span> <span class='string'>&quot;http://play.rust-lang.org/&quot;</span>)]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>test</span>, <span class='ident'>feature</span>(<span class='ident'>test</span>))]</span>
 
 <span class='doccomment'>//! Bindings for the C standard library and other platform libraries</span>
 <span class='doccomment'>//!</span>
@@ -5186,7 +5227,6 @@
 <span class='doccomment'>//! one from Berkeley after the lawsuits died down and the CSRG dissolved.</span>
 
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>bad_style</span>, <span class='ident'>raw_pointer_derive</span>)]</span>
-
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;cargo-build&quot;</span>)]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='string'>&quot;std&quot;</span> <span class='kw'>as</span> <span class='ident'>core</span>;
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;cargo-build&quot;</span>))]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>core</span>;
 
@@ -5384,6 +5424,7 @@
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>windows</span>)]</span> <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>funcs</span>::<span class='ident'>extra</span>::<span class='ident'>kernel32</span>::{<span class='ident'>GetOverlappedResult</span>, <span class='ident'>ConnectNamedPipe</span>};
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>windows</span>)]</span> <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>funcs</span>::<span class='ident'>extra</span>::<span class='ident'>kernel32</span>::{<span class='ident'>DisconnectNamedPipe</span>, <span class='ident'>OpenProcess</span>};
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>windows</span>)]</span> <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>funcs</span>::<span class='ident'>extra</span>::<span class='ident'>kernel32</span>::{<span class='ident'>MoveFileExW</span>, <span class='ident'>VirtualProtect</span>};
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>windows</span>)]</span> <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>funcs</span>::<span class='ident'>extra</span>::<span class='ident'>kernel32</span>::{<span class='ident'>RemoveDirectoryW</span>};
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>windows</span>)]</span> <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>funcs</span>::<span class='ident'>extra</span>::<span class='ident'>msvcrt</span>::{<span class='ident'>get_osfhandle</span>, <span class='ident'>open_osfhandle</span>};
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>windows</span>)]</span> <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>funcs</span>::<span class='ident'>extra</span>::<span class='ident'>winsock</span>::{<span class='ident'>ioctlsocket</span>};
 
@@ -5611,7 +5652,8 @@
         <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;x86&quot;</span>,
                   <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;arm&quot;</span>,
                   <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mips&quot;</span>,
-                  <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mipsel&quot;</span>))]</span>
+                  <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mipsel&quot;</span>,
+                  <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;powerpc&quot;</span>))]</span>
         <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>arch</span> {
             <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>c95</span> {
                 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>c_char</span> <span class='op'>=</span> <span class='ident'>i8</span>;
@@ -5642,7 +5684,8 @@
             }
             <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;x86&quot;</span>,
                       <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mips&quot;</span>,
-                      <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mipsel&quot;</span>))]</span>
+                      <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mipsel&quot;</span>,
+                      <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;powerpc&quot;</span>))]</span>
             <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>posix88</span> {
                 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>off_t</span> <span class='op'>=</span> <span class='ident'>i32</span>;
                 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>dev_t</span> <span class='op'>=</span> <span class='ident'>u64</span>;
@@ -5666,7 +5709,8 @@
                 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>mode_t</span> <span class='op'>=</span> <span class='ident'>u16</span>;
                 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>ssize_t</span> <span class='op'>=</span> <span class='ident'>i32</span>;
             }
-            <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;x86&quot;</span>)]</span>
+            <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;x86&quot;</span>,
+                      <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;powerpc&quot;</span>))]</span>
             <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>posix01</span> {
                 <span class='kw'>use</span> <span class='ident'>types</span>::<span class='ident'>os</span>::<span class='ident'>arch</span>::<span class='ident'>c95</span>::{<span class='ident'>c_short</span>, <span class='ident'>c_long</span>, <span class='ident'>time_t</span>};
                 <span class='kw'>use</span> <span class='ident'>types</span>::<span class='ident'>os</span>::<span class='ident'>arch</span>::<span class='ident'>posix88</span>::{<span class='ident'>dev_t</span>, <span class='ident'>gid_t</span>, <span class='ident'>ino_t</span>};
@@ -5756,7 +5800,8 @@
                     <span class='kw'>pub</span> <span class='ident'>__size</span>: [<span class='ident'>u32</span>; <span class='number'>9</span>]
                 }
             }
-            <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mips&quot;</span>, <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mipsel&quot;</span>))]</span>
+            <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mips&quot;</span>,
+                      <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mipsel&quot;</span>))]</span>
             <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>posix01</span> {
                 <span class='kw'>use</span> <span class='ident'>types</span>::<span class='ident'>os</span>::<span class='ident'>arch</span>::<span class='ident'>c95</span>::{<span class='ident'>c_long</span>, <span class='ident'>c_ulong</span>, <span class='ident'>time_t</span>};
                 <span class='kw'>use</span> <span class='ident'>types</span>::<span class='ident'>os</span>::<span class='ident'>arch</span>::<span class='ident'>posix88</span>::{<span class='ident'>gid_t</span>, <span class='ident'>ino_t</span>};
@@ -6650,7 +6695,8 @@
                 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>DWORDLONG</span> <span class='op'>=</span> <span class='ident'>c_ulonglong</span>;
 
                 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>HANDLE</span> <span class='op'>=</span> <span class='ident'>LPVOID</span>;
-                <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>HMODULE</span> <span class='op'>=</span> <span class='ident'>c_uint</span>;
+                <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>HINSTANCE</span> <span class='op'>=</span> <span class='ident'>HANDLE</span>;
+                <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>HMODULE</span> <span class='op'>=</span> <span class='ident'>HINSTANCE</span>;
 
                 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>LONG</span> <span class='op'>=</span> <span class='ident'>c_long</span>;
                 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>PLONG</span> <span class='op'>=</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_long</span>;
@@ -7316,10 +7362,10 @@
             <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>IPPROTO_TCP</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>6</span>;
             <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>IPPROTO_IP</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>0</span>;
             <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>IPPROTO_IPV6</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>41</span>;
-            <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>IP_MULTICAST_TTL</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>3</span>;
-            <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>IP_MULTICAST_LOOP</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>4</span>;
-            <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>IP_ADD_MEMBERSHIP</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>5</span>;
-            <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>IP_DROP_MEMBERSHIP</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>6</span>;
+            <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>IP_MULTICAST_TTL</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>10</span>;
+            <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>IP_MULTICAST_LOOP</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>11</span>;
+            <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>IP_ADD_MEMBERSHIP</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>12</span>;
+            <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>IP_DROP_MEMBERSHIP</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>13</span>;
             <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>IPV6_ADD_MEMBERSHIP</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>5</span>;
             <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>IPV6_DROP_MEMBERSHIP</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>6</span>;
             <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>IP_TTL</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>4</span>;
@@ -7599,7 +7645,8 @@
         <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;x86&quot;</span>,
                   <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;x86_64&quot;</span>,
                   <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;arm&quot;</span>,
-                  <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;aarch64&quot;</span>))]</span>
+                  <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;aarch64&quot;</span>,
+                  <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;powerpc&quot;</span>))]</span>
         <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>posix88</span> {
             <span class='kw'>use</span> <span class='ident'>types</span>::<span class='ident'>os</span>::<span class='ident'>arch</span>::<span class='ident'>c95</span>::<span class='ident'>c_int</span>;
             <span class='kw'>use</span> <span class='ident'>types</span>::<span class='ident'>common</span>::<span class='ident'>c95</span>::<span class='ident'>c_void</span>;
@@ -7811,7 +7858,8 @@
             <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>EHWPOISON</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>133</span>;
         }
 
-        <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mips&quot;</span>, <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mipsel&quot;</span>))]</span>
+        <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mips&quot;</span>,
+                  <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mipsel&quot;</span>))]</span>
         <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>posix88</span> {
             <span class='kw'>use</span> <span class='ident'>types</span>::<span class='ident'>os</span>::<span class='ident'>arch</span>::<span class='ident'>c95</span>::<span class='ident'>c_int</span>;
             <span class='kw'>use</span> <span class='ident'>types</span>::<span class='ident'>common</span>::<span class='ident'>c95</span>::<span class='ident'>c_void</span>;
@@ -8096,7 +8144,8 @@
             <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>all</span>(<span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;linux&quot;</span>,
                       <span class='ident'>any</span>(<span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mips&quot;</span>,
                           <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mipsel&quot;</span>,
-                          <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;aarch64&quot;</span>)))]</span>
+                          <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;aarch64&quot;</span>,
+                          <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;powerpc&quot;</span>)))]</span>
             <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>PTHREAD_STACK_MIN</span>: <span class='ident'>size_t</span> <span class='op'>=</span> <span class='number'>131072</span>;
 
             <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>CLOCK_REALTIME</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>0</span>;
@@ -8107,7 +8156,8 @@
         <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;arm&quot;</span>,
                   <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;aarch64&quot;</span>,
                   <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;x86&quot;</span>,
-                  <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;x86_64&quot;</span>))]</span>
+                  <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;x86_64&quot;</span>,
+                  <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;powerpc&quot;</span>))]</span>
         <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>bsd44</span> {
             <span class='kw'>use</span> <span class='ident'>types</span>::<span class='ident'>os</span>::<span class='ident'>arch</span>::<span class='ident'>c95</span>::<span class='ident'>c_int</span>;
 
@@ -8154,7 +8204,8 @@
             <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SHUT_WR</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>1</span>;
             <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SHUT_RDWR</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>2</span>;
         }
-        <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mips&quot;</span>, <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mipsel&quot;</span>))]</span>
+        <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mips&quot;</span>,
+                  <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mipsel&quot;</span>))]</span>
         <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>bsd44</span> {
             <span class='kw'>use</span> <span class='ident'>types</span>::<span class='ident'>os</span>::<span class='ident'>arch</span>::<span class='ident'>c95</span>::<span class='ident'>c_int</span>;
 
@@ -8202,7 +8253,8 @@
         <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;x86&quot;</span>,
                   <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;x86_64&quot;</span>,
                   <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;arm&quot;</span>,
-                  <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;aarch64&quot;</span>))]</span>
+                  <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;aarch64&quot;</span>,
+                  <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;powerpc&quot;</span>))]</span>
         <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>extra</span> {
             <span class='kw'>use</span> <span class='ident'>types</span>::<span class='ident'>os</span>::<span class='ident'>arch</span>::<span class='ident'>c95</span>::<span class='ident'>c_int</span>;
 
@@ -8229,7 +8281,8 @@
             <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MAP_NONBLOCK</span> : <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>0x010000</span>;
             <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MAP_STACK</span> : <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>0x020000</span>;
         }
-        <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mips&quot;</span>, <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mipsel&quot;</span>))]</span>
+        <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mips&quot;</span>,
+                  <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;mipsel&quot;</span>))]</span>
         <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>extra</span> {
             <span class='kw'>use</span> <span class='ident'>types</span>::<span class='ident'>os</span>::<span class='ident'>arch</span>::<span class='ident'>c95</span>::<span class='ident'>c_int</span>;
 
@@ -9271,6 +9324,27 @@
                 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>malloc</span>(<span class='ident'>size</span>: <span class='ident'>size_t</span>) <span class='op'>-&gt;</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>;
                 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>realloc</span>(<span class='ident'>p</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>, <span class='ident'>size</span>: <span class='ident'>size_t</span>) <span class='op'>-&gt;</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>;
                 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>free</span>(<span class='ident'>p</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>);
+
+                <span class='doccomment'>/// Exits the running program in a possibly dangerous manner.</span>
+                <span class='doccomment'>///</span>
+                <span class='doccomment'>/// # Unsafety</span>
+                <span class='doccomment'>///</span>
+                <span class='doccomment'>/// While this forces your program to exit, it does so in a way that has</span>
+                <span class='doccomment'>/// consequences. This will skip all unwinding code, which means that anything</span>
+                <span class='doccomment'>/// relying on unwinding for cleanup (such as flushing and closing a buffer to a</span>
+                <span class='doccomment'>/// file) may act in an unexpected way.</span>
+                <span class='doccomment'>///</span>
+                <span class='doccomment'>/// # Examples</span>
+                <span class='doccomment'>///</span>
+                <span class='doccomment'>/// ```no_run</span>
+                <span class='doccomment'>/// extern crate libc;</span>
+                <span class='doccomment'>///</span>
+                <span class='doccomment'>/// fn main() {</span>
+                <span class='doccomment'>///     unsafe {</span>
+                <span class='doccomment'>///         libc::exit(1);</span>
+                <span class='doccomment'>///     }</span>
+                <span class='doccomment'>/// }</span>
+                <span class='doccomment'>/// ```</span>
                 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>exit</span>(<span class='ident'>status</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='op'>!</span>;
                 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>_exit</span>(<span class='ident'>status</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='op'>!</span>;
                 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>atexit</span>(<span class='ident'>cb</span>: <span class='kw'>extern</span> <span class='kw'>fn</span>()) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
@@ -9728,13 +9802,13 @@
             <span class='kw'>use</span> <span class='ident'>types</span>::<span class='ident'>os</span>::<span class='ident'>arch</span>::<span class='ident'>c95</span>::<span class='ident'>c_int</span>;
             <span class='kw'>use</span> <span class='ident'>types</span>::<span class='ident'>os</span>::<span class='ident'>common</span>::<span class='ident'>posix01</span>::<span class='ident'>sighandler_t</span>;
 
-            <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;android&quot;</span>))]</span>
+            <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>all</span>(<span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;android&quot;</span>, <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;arm&quot;</span>)))]</span>
             <span class='kw'>extern</span> {
                 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>signal</span>(<span class='ident'>signum</span>: <span class='ident'>c_int</span>,
                               <span class='ident'>handler</span>: <span class='ident'>sighandler_t</span>) <span class='op'>-&gt;</span> <span class='ident'>sighandler_t</span>;
             }
 
-            <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;android&quot;</span>)]</span>
+            <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>all</span>(<span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;android&quot;</span>, <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;arm&quot;</span>))]</span>
             <span class='kw'>extern</span> {
                 <span class='attribute'>#[<span class='ident'>link_name</span> <span class='op'>=</span> <span class='string'>&quot;bsd_signal&quot;</span>]</span>
                 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>signal</span>(<span class='ident'>signum</span>: <span class='ident'>c_int</span>,
