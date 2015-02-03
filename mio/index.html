@@ -44,7 +44,7 @@
 <h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>mio</a><wbr></span><span class='out-of-band'><a href='stability.html'>[stability]</a> <span id='render-detail'>
             <a id="collapse-all" href="#">[-]
             </a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-0' href='../src/mio/lib.rs.html#1-154'>[src]</a></span></h1>
+        </span><a id='src-0' href='../src/mio/lib.rs.html#1-153'>[src]</a></span></h1>
 <div class='docblock'><p>A fast, low-level IO library for Rust focusing on non-blocking APIs, event
 notification, and other useful utilities for building high performance IO
 apps.</p>
@@ -76,8 +76,7 @@ handles receiving events from the OS and dispatching them to a supplied
 <span class='kw'>const</span> <span class='ident'>SERVER</span>: <span class='ident'>Token</span> <span class='op'>=</span> <span class='ident'>Token</span>(<span class='number'>0</span>);
 <span class='kw'>const</span> <span class='ident'>CLIENT</span>: <span class='ident'>Token</span> <span class='op'>=</span> <span class='ident'>Token</span>(<span class='number'>1</span>);
 
-<span class='kw'>let</span> <span class='ident'>addr</span> <span class='op'>=</span> <span class='ident'>SockAddr</span>::<span class='ident'>parse</span>(<span class='string'>&quot;127.0.0.1:13265&quot;</span>)
-    .<span class='ident'>expect</span>(<span class='string'>&quot;could not parse InetAddr&quot;</span>);
+<span class='kw'>let</span> <span class='ident'>addr</span> <span class='op'>=</span> <span class='ident'>SockAddr</span>::<span class='ident'>parse</span>(<span class='string'>&quot;127.0.0.1:13265&quot;</span>).<span class='ident'>unwrap</span>();
 
 <span class='comment'>// Setup the server socket</span>
 <span class='kw'>let</span> <span class='ident'>server</span> <span class='op'>=</span> <span class='ident'>TcpSocket</span>::<span class='ident'>v4</span>().<span class='ident'>unwrap</span>()

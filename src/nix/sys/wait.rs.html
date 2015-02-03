@@ -78,6 +78,11 @@
 <span id="36">36</span>
 <span id="37">37</span>
 <span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>libc</span>::{<span class='ident'>pid_t</span>, <span class='ident'>c_int</span>};
 <span class='kw'>use</span> <span class='ident'>errno</span>::{<span class='ident'>SysResult</span>, <span class='ident'>SysError</span>};
@@ -102,12 +107,17 @@
     <span class='ident'>StillAlive</span>
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>waitpid</span>(<span class='ident'>pid</span>: <span class='ident'>pid_t</span>, <span class='ident'>options</span>: <span class='ident'>WaitPidFlag</span>) <span class='op'>-&gt;</span> <span class='ident'>SysResult</span><span class='op'>&lt;</span><span class='ident'>WaitStatus</span><span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>waitpid</span>(<span class='ident'>pid</span>: <span class='ident'>pid_t</span>, <span class='ident'>options</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>WaitPidFlag</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>SysResult</span><span class='op'>&lt;</span><span class='ident'>WaitStatus</span><span class='op'>&gt;</span> {
     <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>WaitStatus</span>::<span class='op'>*</span>;
 
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>status</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0</span>;
 
-    <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>waitpid</span>(<span class='ident'>pid</span> <span class='kw'>as</span> <span class='ident'>pid_t</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>status</span> <span class='kw'>as</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_int</span>, <span class='ident'>options</span>.<span class='ident'>bits</span>()) };
+    <span class='kw'>let</span> <span class='ident'>option_bits</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>options</span> {
+        <span class='prelude-val'>Some</span>(<span class='ident'>bits</span>) <span class='op'>=&gt;</span> <span class='ident'>bits</span>.<span class='ident'>bits</span>(),
+        <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='number'>0</span>
+    };
+
+    <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>waitpid</span>(<span class='ident'>pid</span> <span class='kw'>as</span> <span class='ident'>pid_t</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>status</span> <span class='kw'>as</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_int</span>, <span class='ident'>option_bits</span>) };
 
     <span class='kw'>if</span> <span class='ident'>res</span> <span class='op'>&lt;</span> <span class='number'>0</span> {
         <span class='prelude-val'>Err</span>(<span class='ident'>SysError</span>::<span class='ident'>last</span>())
