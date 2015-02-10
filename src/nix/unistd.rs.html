@@ -917,7 +917,7 @@
 
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;linux&quot;</span>)]</span>
 <span class='kw'>mod</span> <span class='ident'>linux</span> {
-    <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>Path</span>;
+    <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>old_path</span>::<span class='ident'>Path</span>;
     <span class='kw'>use</span> <span class='ident'>syscall</span>::{<span class='ident'>syscall</span>, <span class='ident'>SYSPIVOTROOT</span>};
     <span class='kw'>use</span> <span class='ident'>errno</span>::{<span class='ident'>SysResult</span>, <span class='ident'>SysError</span>};
     <span class='kw'>use</span> <span class='ident'>utils</span>::<span class='ident'>ToCStr</span>;
