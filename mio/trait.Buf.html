@@ -7,9 +7,9 @@
     <meta name="description" content="API documentation for the Rust `Buf` trait in crate `mio`.">
     <meta name="keywords" content="rust, rustlang, rust-lang, Buf">
 
-    <title>mio::buf::Buf - Rust</title>
+    <title>mio::Buf - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
 
     
     
@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../index.html'>mio</a>::<wbr><a href='index.html'>buf</a></p><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.ByteBuf.html' title='A `Buf` backed by a contiguous region of memory.'>ByteBuf</a><a class='struct ' href='struct.MutByteBuf.html' title=''>MutByteBuf</a><a class='struct ' href='struct.MutSliceBuf.html' title=''>MutSliceBuf</a><a class='struct ' href='struct.RingBuf.html' title='Buf backed by a continous chunk of memory. Maintains a read cursor and a write cursor. When reads and writes reach the end of the allocated buffer, wraps around to the start.'>RingBuf</a><a class='struct ' href='struct.RingBufReader.html' title=''>RingBufReader</a><a class='struct ' href='struct.RingBufWriter.html' title=''>RingBufWriter</a><a class='struct ' href='struct.SliceBuf.html' title=''>SliceBuf</a></div><div class='block trait'><h2>Traits</h2><a class='trait current' href='trait.Buf.html' title='A trait for values that provide random and sequential access to bytes.'>Buf</a><a class='trait ' href='trait.MutBuf.html' title=''>MutBuf</a></div>
+        <p class='location'><a href='index.html'>mio</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='buf/index.html' title=''>buf</a><a class='mod ' href='event/index.html' title=''>event</a><a class='mod ' href='net/index.html' title='Networking primitives '>net</a><a class='mod ' href='util/index.html' title='Utilities for non-blocking IO programs'>util</a></div><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.EventLoop.html' title='Single threaded IO event loop.'>EventLoop</a><a class='struct ' href='struct.EventLoopConfig.html' title='Configure EventLoop runtime details'>EventLoopConfig</a><a class='struct ' href='struct.EventLoopError.html' title=''>EventLoopError</a><a class='struct ' href='struct.EventLoopSender.html' title='Sends messages to the EventLoop from other threads.'>EventLoopSender</a><a class='struct ' href='struct.IoDesc.html' title='Represents the OS&#39;s handle to the IO instance. In this case, it is the file descriptor.'>IoDesc</a><a class='struct ' href='struct.MioError.html' title=''>MioError</a><a class='struct ' href='struct.PipeReader.html' title=''>PipeReader</a><a class='struct ' href='struct.PipeWriter.html' title=''>PipeWriter</a><a class='struct ' href='struct.Poll.html' title=''>Poll</a><a class='struct ' href='struct.Timeout.html' title=''>Timeout</a><a class='struct ' href='struct.TimerError.html' title=''>TimerError</a><a class='struct ' href='struct.Token.html' title=''>Token</a></div><div class='block enum'><h2>Enums</h2><a class='enum ' href='enum.MioErrorKind.html' title=''>MioErrorKind</a><a class='enum ' href='enum.NonBlock.html' title='The result of a non-blocking operation.'>NonBlock</a></div><div class='block trait'><h2>Traits</h2><a class='trait current' href='trait.Buf.html' title='A trait for values that provide random and sequential access to bytes.'>Buf</a><a class='trait ' href='trait.Handler.html' title=''>Handler</a><a class='trait ' href='trait.IoAcceptor.html' title=''>IoAcceptor</a><a class='trait ' href='trait.IoHandle.html' title=''>IoHandle</a><a class='trait ' href='trait.IoReader.html' title=''>IoReader</a><a class='trait ' href='trait.IoWriter.html' title=''>IoWriter</a><a class='trait ' href='trait.MutBuf.html' title=''>MutBuf</a></div><div class='block fn'><h2>Functions</h2><a class='fn ' href='fn.pipe.html' title=''>pipe</a></div>
     </section>
 
     <nav class="sub">
@@ -41,7 +41,7 @@
     </nav>
 
     <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>mio</a>::<wbr><a href='index.html'>buf</a>::<wbr><a class='trait' href=''>Buf</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>mio</a>::<wbr><a class='trait' href=''>Buf</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]
             </a>&nbsp;<a id="expand-all" href="#">[+]</a>
         </span></span></h1>
@@ -85,15 +85,15 @@ request (aka <code>dst.len()</code> &gt; self.remaining()<code>), then
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../mio/buf/trait.Buf.html' title='mio::buf::Buf'>Buf</a> for <a class='struct' href='../../mio/buf/struct.ByteBuf.html' title='mio::buf::ByteBuf'>ByteBuf</a></code></li>
-<li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../mio/buf/trait.Buf.html' title='mio::buf::Buf'>Buf</a> for ROByteBuf</code></li>
-<li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../mio/buf/trait.Buf.html' title='mio::buf::Buf'>Buf</a> for SmallByteStrBuf</code></li>
-<li><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a&gt; <a class='trait' href='../../mio/buf/trait.Buf.html' title='mio::buf::Buf'>Buf</a> for <a class='struct' href='../../mio/buf/struct.RingBufReader.html' title='mio::buf::RingBufReader'>RingBufReader</a>&lt;'a&gt;</code></li>
-<li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../mio/buf/trait.Buf.html' title='mio::buf::Buf'>Buf</a> for RopeBuf</code></li>
-<li><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a&gt; <a class='trait' href='../../mio/buf/trait.Buf.html' title='mio::buf::Buf'>Buf</a> for <a class='struct' href='../../mio/buf/struct.SliceBuf.html' title='mio::buf::SliceBuf'>SliceBuf</a>&lt;'a&gt;</code></li>
-<li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../mio/buf/trait.Buf.html' title='mio::buf::Buf'>Buf</a> for <a class='struct' href='http://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='trait' href='../../mio/buf/trait.Buf.html' title='mio::buf::Buf'>Buf</a> + 'static&gt;</code></li>
+    <li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../mio/buf/trait.Buf.html' title='mio::buf::Buf'>Buf</a> for <a class='struct' href='../mio/buf/struct.ByteBuf.html' title='mio::buf::ByteBuf'>ByteBuf</a></code></li>
+<li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../mio/buf/trait.Buf.html' title='mio::buf::Buf'>Buf</a> for ROByteBuf</code></li>
+<li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../mio/buf/trait.Buf.html' title='mio::buf::Buf'>Buf</a> for SmallByteStrBuf</code></li>
+<li><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a&gt; <a class='trait' href='../mio/buf/trait.Buf.html' title='mio::buf::Buf'>Buf</a> for <a class='struct' href='../mio/buf/struct.RingBufReader.html' title='mio::buf::RingBufReader'>RingBufReader</a>&lt;'a&gt;</code></li>
+<li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../mio/buf/trait.Buf.html' title='mio::buf::Buf'>Buf</a> for RopeBuf</code></li>
+<li><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a&gt; <a class='trait' href='../mio/buf/trait.Buf.html' title='mio::buf::Buf'>Buf</a> for <a class='struct' href='../mio/buf/struct.SliceBuf.html' title='mio::buf::SliceBuf'>SliceBuf</a>&lt;'a&gt;</code></li>
+<li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../mio/buf/trait.Buf.html' title='mio::buf::Buf'>Buf</a> for <a class='struct' href='http://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='trait' href='../mio/buf/trait.Buf.html' title='mio::buf::Buf'>Buf</a> + 'static&gt;</code></li>
 </ul><script type="text/javascript" async
-                              src="../../implementors/bytes/trait.Buf.js">
+                              src="../implementors/bytes/trait.Buf.js">
                       </script></section>
     <section id='search' class="content hidden"></section>
 
@@ -133,13 +133,13 @@ request (aka <code>dst.len()</code> &gt; self.remaining()<code>), then
     
 
     <script>
-        window.rootPath = "../../";
+        window.rootPath = "../";
         window.currentCrate = "mio";
         window.playgroundUrl = "";
     </script>
-    <script src="../../jquery.js"></script>
-    <script src="../../main.js"></script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
     
-    <script async src="../../search-index.js"></script>
+    <script async src="../search-index.js"></script>
 </body>
 </html>
