@@ -150,9 +150,11 @@
 <span id="108">108</span>
 <span id="109">109</span>
 <span id="110">110</span>
+<span id="111">111</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>old_io</span>;
-<span class='kw'>use</span> <span class='ident'>nix</span>::<span class='ident'>errno</span>::{<span class='ident'>SysError</span>, <span class='ident'>EAGAIN</span>, <span class='ident'>EADDRINUSE</span>};
+<span class='kw'>use</span> <span class='ident'>nix</span>::<span class='ident'>NixError</span>;
+<span class='kw'>use</span> <span class='ident'>nix</span>::<span class='ident'>errno</span>::{<span class='ident'>EAGAIN</span>, <span class='ident'>EADDRINUSE</span>};
 
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>MioErrorKind</span>::{
     <span class='ident'>Eof</span>,
@@ -169,7 +171,7 @@
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Clone</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>MioError</span> {
     <span class='kw'>pub</span> <span class='ident'>kind</span>: <span class='ident'>MioErrorKind</span>,
-    <span class='ident'>sys</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>SysError</span><span class='op'>&gt;</span>
+    <span class='ident'>sys</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>NixError</span><span class='op'>&gt;</span>
 }
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Clone</span>)]</span>
@@ -205,11 +207,11 @@
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_sys_error</span>(<span class='ident'>err</span>: <span class='ident'>SysError</span>) <span class='op'>-&gt;</span> <span class='ident'>MioError</span> {
-        <span class='kw'>let</span> <span class='ident'>kind</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>err</span>.<span class='ident'>kind</span> {
-            <span class='ident'>EAGAIN</span> <span class='op'>=&gt;</span> <span class='ident'>WouldBlock</span>,
-            <span class='ident'>EADDRINUSE</span> <span class='op'>=&gt;</span> <span class='ident'>AddrInUse</span>,
-            _ <span class='op'>=&gt;</span> <span class='ident'>OtherError</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_nix_error</span>(<span class='ident'>err</span>: <span class='ident'>NixError</span>) <span class='op'>-&gt;</span> <span class='ident'>MioError</span> {
+        <span class='kw'>let</span> <span class='ident'>kind</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>err</span> {
+            <span class='ident'>NixError</span>::<span class='ident'>Sys</span>(<span class='ident'>EAGAIN</span>) <span class='op'>=&gt;</span> <span class='ident'>WouldBlock</span>,
+            <span class='ident'>NixError</span>::<span class='ident'>Sys</span>(<span class='ident'>EADDRINUSE</span>) <span class='op'>=&gt;</span> <span class='ident'>AddrInUse</span>,
+            _ <span class='op'>=&gt;</span> <span class='ident'>OtherError</span>,
         };
 
         <span class='ident'>MioError</span> {
@@ -254,8 +256,8 @@
             <span class='ident'>WouldBlock</span> <span class='op'>=&gt;</span> <span class='ident'>old_io</span>::<span class='ident'>standard_error</span>(<span class='ident'>old_io</span>::<span class='ident'>ResourceUnavailable</span>),
             <span class='ident'>AddrInUse</span> <span class='op'>=&gt;</span> <span class='ident'>old_io</span>::<span class='ident'>standard_error</span>(<span class='ident'>old_io</span>::<span class='ident'>PathAlreadyExists</span>),
             <span class='ident'>OtherError</span> <span class='op'>=&gt;</span> <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>sys</span> {
-                <span class='prelude-val'>Some</span>(<span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='ident'>old_io</span>::<span class='ident'>IoError</span>::<span class='ident'>from_errno</span>(<span class='ident'>err</span>.<span class='ident'>kind</span> <span class='kw'>as</span> <span class='ident'>usize</span>, <span class='boolval'>false</span>),
-                <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='ident'>old_io</span>::<span class='ident'>standard_error</span>(<span class='ident'>old_io</span>::<span class='ident'>OtherIoError</span>)
+                <span class='prelude-val'>Some</span>(<span class='ident'>NixError</span>::<span class='ident'>Sys</span>(<span class='ident'>err</span>)) <span class='op'>=&gt;</span> <span class='ident'>old_io</span>::<span class='ident'>IoError</span>::<span class='ident'>from_errno</span>(<span class='ident'>err</span> <span class='kw'>as</span> <span class='ident'>usize</span>, <span class='boolval'>false</span>),
+                _ <span class='op'>=&gt;</span> <span class='ident'>old_io</span>::<span class='ident'>standard_error</span>(<span class='ident'>old_io</span>::<span class='ident'>OtherIoError</span>)
             },
             <span class='ident'>EventLoopTerminated</span> <span class='op'>=&gt;</span> <span class='ident'>old_io</span>::<span class='ident'>standard_error</span>(<span class='ident'>OtherIoError</span>)
         }

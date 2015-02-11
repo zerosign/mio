@@ -404,7 +404,7 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>old_io</span>::<span class='ident'>net</span>::<span class='ident'>ip</span>::<span class='ident'>IpAddr</span>;
 
 <span class='kw'>mod</span> <span class='ident'>nix</span> {
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>nix</span>::<span class='ident'>c_int</span>;
+    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>nix</span>::{<span class='ident'>c_int</span>, <span class='ident'>NixError</span>};
     <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>nix</span>::<span class='ident'>fcntl</span>::{<span class='ident'>Fd</span>, <span class='ident'>O_NONBLOCK</span>, <span class='ident'>O_CLOEXEC</span>};
     <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>nix</span>::<span class='ident'>errno</span>::<span class='ident'>EINPROGRESS</span>;
     <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>nix</span>::<span class='ident'>sys</span>::<span class='ident'>socket</span>::<span class='op'>*</span>;
@@ -475,7 +475,7 @@
 
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>pipe</span>() <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>(<span class='ident'>IoDesc</span>, <span class='ident'>IoDesc</span>)<span class='op'>&gt;</span> {
     <span class='kw'>let</span> (<span class='ident'>rd</span>, <span class='ident'>wr</span>) <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>nix</span>::<span class='ident'>pipe2</span>(<span class='ident'>nix</span>::<span class='ident'>O_NONBLOCK</span> <span class='op'>|</span> <span class='ident'>nix</span>::<span class='ident'>O_CLOEXEC</span>)
-                        .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>));
+                        .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>));
 
     <span class='prelude-val'>Ok</span>((<span class='ident'>IoDesc</span> { <span class='ident'>fd</span>: <span class='ident'>rd</span> }, <span class='ident'>IoDesc</span> { <span class='ident'>fd</span>: <span class='ident'>wr</span> }))
 }
@@ -500,7 +500,7 @@
 
     <span class='prelude-val'>Ok</span>(<span class='ident'>IoDesc</span> {
         <span class='ident'>fd</span>: <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>nix</span>::<span class='ident'>socket</span>(<span class='ident'>family</span>, <span class='ident'>socket_type</span>, <span class='ident'>nix</span>::<span class='ident'>SOCK_NONBLOCK</span> <span class='op'>|</span> <span class='ident'>nix</span>::<span class='ident'>SOCK_CLOEXEC</span>)
-                    .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>))
+                    .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>))
     })
 }
 
@@ -508,9 +508,9 @@
     <span class='kw'>match</span> <span class='ident'>nix</span>::<span class='ident'>connect</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='kw-2'>&amp;</span><span class='ident'>from_sockaddr</span>(<span class='ident'>addr</span>)) {
         <span class='prelude-val'>Ok</span>(_) <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(<span class='boolval'>true</span>),
         <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> {
-            <span class='kw'>match</span> <span class='ident'>e</span>.<span class='ident'>kind</span> {
-                <span class='ident'>nix</span>::<span class='ident'>EINPROGRESS</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(<span class='boolval'>false</span>),
-                _ <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>(<span class='ident'>e</span>))
+            <span class='kw'>match</span> <span class='ident'>e</span> {
+                <span class='ident'>nix</span>::<span class='ident'>NixError</span>::<span class='ident'>Sys</span>(<span class='ident'>nix</span>::<span class='ident'>EINPROGRESS</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(<span class='boolval'>false</span>),
+                _ <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>(<span class='ident'>e</span>))
             }
         }
     }
@@ -518,24 +518,24 @@
 
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>bind</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>addr</span>: <span class='kw-2'>&amp;</span><span class='ident'>SockAddr</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
     <span class='ident'>nix</span>::<span class='ident'>bind</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='kw-2'>&amp;</span><span class='ident'>from_sockaddr</span>(<span class='ident'>addr</span>))
-        .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>)
+        .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>)
 }
 
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>listen</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>backlog</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
     <span class='ident'>nix</span>::<span class='ident'>listen</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>backlog</span>)
-        .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>)
+        .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>)
 }
 
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>accept</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>IoDesc</span><span class='op'>&gt;</span> {
     <span class='prelude-val'>Ok</span>(<span class='ident'>IoDesc</span> {
         <span class='ident'>fd</span>: <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>nix</span>::<span class='ident'>accept4</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>nix</span>::<span class='ident'>SOCK_NONBLOCK</span> <span class='op'>|</span> <span class='ident'>nix</span>::<span class='ident'>SOCK_CLOEXEC</span>)
-                     .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>))
+                     .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>))
     })
 }
 
 <span class='attribute'>#[<span class='ident'>inline</span>]</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>recvfrom</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>(<span class='ident'>usize</span>, <span class='ident'>SockAddr</span>)<span class='op'>&gt;</span> {
-    <span class='kw'>match</span> <span class='ident'>nix</span>::<span class='ident'>recvfrom</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>buf</span>).<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>) {
+    <span class='kw'>match</span> <span class='ident'>nix</span>::<span class='ident'>recvfrom</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>buf</span>).<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>) {
         <span class='prelude-val'>Ok</span>((<span class='ident'>cnt</span>, <span class='ident'>addr</span>)) <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>((<span class='ident'>cnt</span>, <span class='ident'>to_sockaddr</span>(<span class='kw-2'>&amp;</span><span class='ident'>addr</span>))),
         <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>e</span>)
     }
@@ -543,13 +543,13 @@
 
 <span class='attribute'>#[<span class='ident'>inline</span>]</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>sendto</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>], <span class='ident'>tgt</span>: <span class='kw-2'>&amp;</span><span class='ident'>SockAddr</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>nix</span>::<span class='ident'>sendto</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>buf</span>, <span class='kw-2'>&amp;</span><span class='ident'>from_sockaddr</span>(<span class='ident'>tgt</span>), <span class='ident'>nix</span>::<span class='ident'>MSG_DONTWAIT</span>).<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>));
+    <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>nix</span>::<span class='ident'>sendto</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>buf</span>, <span class='kw-2'>&amp;</span><span class='ident'>from_sockaddr</span>(<span class='ident'>tgt</span>), <span class='ident'>nix</span>::<span class='ident'>MSG_DONTWAIT</span>).<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>));
     <span class='prelude-val'>Ok</span>(<span class='ident'>res</span>)
 }
 
 <span class='attribute'>#[<span class='ident'>inline</span>]</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>read</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>dst</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>nix</span>::<span class='ident'>read</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>dst</span>).<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>));
+    <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>nix</span>::<span class='ident'>read</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>dst</span>).<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>));
 
     <span class='kw'>if</span> <span class='ident'>res</span> <span class='op'>==</span> <span class='number'>0</span> {
         <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>MioError</span>::<span class='ident'>eof</span>());
@@ -560,7 +560,7 @@
 
 <span class='attribute'>#[<span class='ident'>inline</span>]</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>write</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>src</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
-    <span class='ident'>nix</span>::<span class='ident'>write</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>src</span>).<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>)
+    <span class='ident'>nix</span>::<span class='ident'>write</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>src</span>).<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>)
 }
 
 <span class='comment'>// ===== Socket options =====</span>
@@ -573,49 +573,49 @@
     <span class='kw'>let</span> <span class='ident'>v</span>: <span class='ident'>nix</span>::<span class='ident'>c_int</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>val</span> { <span class='number'>1</span> } <span class='kw'>else</span> { <span class='number'>0</span> };
 
     <span class='ident'>nix</span>::<span class='ident'>setsockopt</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>nix</span>::<span class='ident'>SOL_SOCKET</span>, <span class='ident'>nix</span>::<span class='ident'>SO_REUSEADDR</span>, <span class='kw-2'>&amp;</span><span class='ident'>v</span>)
-        .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>)
+        .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>)
 }
 
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_reuseport</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>val</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
     <span class='kw'>let</span> <span class='ident'>v</span>: <span class='ident'>nix</span>::<span class='ident'>c_int</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>val</span> { <span class='number'>1</span> } <span class='kw'>else</span> { <span class='number'>0</span> };
 
     <span class='ident'>nix</span>::<span class='ident'>setsockopt</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>nix</span>::<span class='ident'>SOL_SOCKET</span>, <span class='ident'>nix</span>::<span class='ident'>SO_REUSEPORT</span>, <span class='kw-2'>&amp;</span><span class='ident'>v</span>)
-        .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>)
+        .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>)
 }
 
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_tcp_nodelay</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>val</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
     <span class='kw'>let</span> <span class='ident'>v</span>: <span class='ident'>nix</span>::<span class='ident'>c_int</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>val</span> { <span class='number'>1</span> } <span class='kw'>else</span> { <span class='number'>0</span> };
 
     <span class='ident'>nix</span>::<span class='ident'>setsockopt</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>nix</span>::<span class='ident'>IPPROTO_TCP</span>, <span class='ident'>nix</span>::<span class='ident'>TCP_NODELAY</span>, <span class='kw-2'>&amp;</span><span class='ident'>v</span>)
-        .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>)
+        .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>)
 }
 
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>join_multicast_group</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>addr</span>: <span class='kw-2'>&amp;</span><span class='ident'>IpAddr</span>, <span class='ident'>interface</span>: <span class='kw-2'>&amp;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>IpAddr</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
     <span class='kw'>let</span> <span class='ident'>grp_req</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>make_ip_mreq</span>(<span class='ident'>addr</span>, <span class='ident'>interface</span>));
 
     <span class='ident'>nix</span>::<span class='ident'>setsockopt</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>nix</span>::<span class='ident'>IPPROTO_IP</span>, <span class='ident'>nix</span>::<span class='ident'>IP_ADD_MEMBERSHIP</span>, <span class='kw-2'>&amp;</span><span class='ident'>grp_req</span>)
-        .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>)
+        .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>)
 }
 
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>leave_multicast_group</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>addr</span>: <span class='kw-2'>&amp;</span><span class='ident'>IpAddr</span>, <span class='ident'>interface</span>: <span class='kw-2'>&amp;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>IpAddr</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
     <span class='kw'>let</span> <span class='ident'>grp_req</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>make_ip_mreq</span>(<span class='ident'>addr</span>, <span class='ident'>interface</span>));
 
     <span class='ident'>nix</span>::<span class='ident'>setsockopt</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>nix</span>::<span class='ident'>IPPROTO_IP</span>, <span class='ident'>nix</span>::<span class='ident'>IP_ADD_MEMBERSHIP</span>, <span class='kw-2'>&amp;</span><span class='ident'>grp_req</span>)
-        .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>)
+        .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>)
 }
 
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_multicast_ttl</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>, <span class='ident'>val</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
     <span class='kw'>let</span> <span class='ident'>v</span>: <span class='ident'>nix</span>::<span class='ident'>IpMulticastTtl</span> <span class='op'>=</span> <span class='ident'>val</span>;
 
     <span class='ident'>nix</span>::<span class='ident'>setsockopt</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>nix</span>::<span class='ident'>IPPROTO_IP</span>, <span class='ident'>nix</span>::<span class='ident'>IP_MULTICAST_TTL</span>, <span class='kw-2'>&amp;</span><span class='ident'>v</span>)
-        .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>)
+        .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>)
 }
 
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>linger</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>linger</span>: <span class='ident'>nix</span>::<span class='ident'>linger</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>mem</span>::<span class='ident'>uninitialized</span>() };
 
     <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>nix</span>::<span class='ident'>getsockopt</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>nix</span>::<span class='ident'>SOL_SOCKET</span>, <span class='ident'>nix</span>::<span class='ident'>SO_LINGER</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>linger</span>)
-            .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>));
+            .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>));
 
     <span class='kw'>if</span> <span class='ident'>linger</span>.<span class='ident'>l_onoff</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
         <span class='prelude-val'>Ok</span>(<span class='ident'>linger</span>.<span class='ident'>l_linger</span> <span class='kw'>as</span> <span class='ident'>usize</span>)
@@ -628,7 +628,7 @@
     <span class='kw'>let</span> <span class='ident'>sa</span> : <span class='ident'>nix</span>::<span class='ident'>sockaddr_in</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>mem</span>::<span class='ident'>zeroed</span>() };
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>nix</span>::<span class='ident'>SockAddr</span>::<span class='ident'>SockIpV4</span>(<span class='ident'>sa</span>);
 
-    <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>nix</span>::<span class='ident'>getpeername</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>a</span>).<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>));
+    <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>nix</span>::<span class='ident'>getpeername</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>a</span>).<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>));
 
     <span class='prelude-val'>Ok</span>(<span class='ident'>to_sockaddr</span>(<span class='kw-2'>&amp;</span><span class='ident'>a</span>))
 }
@@ -637,7 +637,7 @@
     <span class='kw'>let</span> <span class='ident'>sa</span> : <span class='ident'>nix</span>::<span class='ident'>sockaddr_in</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>mem</span>::<span class='ident'>zeroed</span>() };
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>nix</span>::<span class='ident'>SockAddr</span>::<span class='ident'>SockIpV4</span>(<span class='ident'>sa</span>);
 
-    <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>nix</span>::<span class='ident'>getsockname</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>a</span>).<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>));
+    <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>nix</span>::<span class='ident'>getsockname</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>a</span>).<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>));
 
     <span class='prelude-val'>Ok</span>(<span class='ident'>to_sockaddr</span>(<span class='kw-2'>&amp;</span><span class='ident'>a</span>))
 }
@@ -649,7 +649,7 @@
     };
 
     <span class='ident'>nix</span>::<span class='ident'>setsockopt</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='ident'>nix</span>::<span class='ident'>SOL_SOCKET</span>, <span class='ident'>nix</span>::<span class='ident'>SO_LINGER</span>, <span class='kw-2'>&amp;</span><span class='ident'>linger</span>)
-        .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>)
+        .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>)
 }
 
 <span class='kw'>fn</span> <span class='ident'>make_ip_mreq</span>(<span class='ident'>group_addr</span>: <span class='kw-2'>&amp;</span><span class='ident'>IpAddr</span>, <span class='ident'>iface_addr</span>: <span class='kw-2'>&amp;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>IpAddr</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>nix</span>::<span class='ident'>ip_mreq</span><span class='op'>&gt;</span> {

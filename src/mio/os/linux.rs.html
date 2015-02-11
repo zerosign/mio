@@ -131,7 +131,7 @@
 
 <span class='kw'>fn</span> <span class='ident'>eventfd</span>() <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>IoDesc</span><span class='op'>&gt;</span> {
     <span class='kw'>let</span> <span class='ident'>fd</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>nix</span>::<span class='ident'>eventfd</span>(<span class='number'>0</span>, <span class='ident'>nix</span>::<span class='ident'>EFD_CLOEXEC</span> <span class='op'>|</span> <span class='ident'>nix</span>::<span class='ident'>EFD_NONBLOCK</span>)
-                    .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_sys_error</span>));
+                    .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>));
 
     <span class='prelude-val'>Ok</span>(<span class='ident'>IoDesc</span> { <span class='ident'>fd</span>: <span class='ident'>fd</span> })
 }

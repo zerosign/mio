@@ -44,7 +44,7 @@
 <h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>mio</a>::<wbr><a class='struct' href=''>MioError</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]
             </a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-4880' href='../src/mio/error.rs.html#17-20'>[src]</a></span></h1>
+        </span><a id='src-4880' href='../src/mio/error.rs.html#18-21'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct MioError {
     pub kind: <a class='enum' href='../mio/enum.MioErrorKind.html' title='mio::MioErrorKind'>MioErrorKind</a>,
     // some fields omitted
@@ -52,7 +52,7 @@
 <table><tr><td id='structfield.kind'><a class='stability Unmarked' title='No stability level'></a><code>kind</code></td><td></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='struct' href='../mio/struct.MioError.html' title='mio::MioError'>MioError</a></code></h3><div class='impl-items'><h4 id='method.eof' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.eof' class='fnname'>eof</a>() -&gt; <a class='struct' href='../mio/struct.MioError.html' title='mio::MioError'>MioError</a></code></h4>
 <h4 id='method.buf_underflow' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.buf_underflow' class='fnname'>buf_underflow</a>() -&gt; <a class='struct' href='../mio/struct.MioError.html' title='mio::MioError'>MioError</a></code></h4>
 <h4 id='method.buf_overflow' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.buf_overflow' class='fnname'>buf_overflow</a>() -&gt; <a class='struct' href='../mio/struct.MioError.html' title='mio::MioError'>MioError</a></code></h4>
-<h4 id='method.from_sys_error' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.from_sys_error' class='fnname'>from_sys_error</a>(err: SysError) -&gt; <a class='struct' href='../mio/struct.MioError.html' title='mio::MioError'>MioError</a></code></h4>
+<h4 id='method.from_nix_error' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.from_nix_error' class='fnname'>from_nix_error</a>(err: <a class='enum' href='../nix/nix/enum.NixError.html' title='nix::nix::NixError'>NixError</a>) -&gt; <a class='struct' href='../mio/struct.MioError.html' title='mio::MioError'>MioError</a></code></h4>
 <h4 id='method.is_eof' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.is_eof' class='fnname'>is_eof</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 <h4 id='method.is_would_block' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.is_would_block' class='fnname'>is_would_block</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 <h4 id='method.is_buf_underflow' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.is_buf_underflow' class='fnname'>is_buf_underflow</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
