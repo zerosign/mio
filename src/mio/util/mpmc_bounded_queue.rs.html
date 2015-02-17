@@ -303,11 +303,11 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>num</span>::<span class='ident'>UnsignedInt</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>UnsafeCell</span>;
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>atomic</span>::<span class='ident'>AtomicUint</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>atomic</span>::<span class='ident'>AtomicUsize</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>atomic</span>::<span class='ident'>Ordering</span>::{<span class='ident'>Relaxed</span>, <span class='ident'>Release</span>, <span class='ident'>Acquire</span>};
 
 <span class='kw'>struct</span> <span class='ident'>Node</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='ident'>sequence</span>: <span class='ident'>AtomicUint</span>,
+    <span class='ident'>sequence</span>: <span class='ident'>AtomicUsize</span>,
     <span class='ident'>value</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>,
 }
 
@@ -319,9 +319,9 @@
     <span class='ident'>buffer</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>UnsafeCell</span><span class='op'>&lt;</span><span class='ident'>Node</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>,
     <span class='ident'>mask</span>: <span class='ident'>usize</span>,
     <span class='ident'>pad1</span>: [<span class='ident'>u8</span>; <span class='number'>64</span>],
-    <span class='ident'>enqueue_pos</span>: <span class='ident'>AtomicUint</span>,
+    <span class='ident'>enqueue_pos</span>: <span class='ident'>AtomicUsize</span>,
     <span class='ident'>pad2</span>: [<span class='ident'>u8</span>; <span class='number'>64</span>],
-    <span class='ident'>dequeue_pos</span>: <span class='ident'>AtomicUint</span>,
+    <span class='ident'>dequeue_pos</span>: <span class='ident'>AtomicUsize</span>,
     <span class='ident'>pad3</span>: [<span class='ident'>u8</span>; <span class='number'>64</span>],
 }
 
@@ -345,16 +345,16 @@
             <span class='ident'>capacity</span>
         };
         <span class='kw'>let</span> <span class='ident'>buffer</span> <span class='op'>=</span> <span class='ident'>range</span>(<span class='number'>0</span>, <span class='ident'>capacity</span>).<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>i</span><span class='op'>|</span> {
-            <span class='ident'>UnsafeCell</span>::<span class='ident'>new</span>(<span class='ident'>Node</span> { <span class='ident'>sequence</span>:<span class='ident'>AtomicUint</span>::<span class='ident'>new</span>(<span class='ident'>i</span>), <span class='ident'>value</span>: <span class='prelude-val'>None</span> })
+            <span class='ident'>UnsafeCell</span>::<span class='ident'>new</span>(<span class='ident'>Node</span> { <span class='ident'>sequence</span>:<span class='ident'>AtomicUsize</span>::<span class='ident'>new</span>(<span class='ident'>i</span>), <span class='ident'>value</span>: <span class='prelude-val'>None</span> })
         }).<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>();
         <span class='ident'>State</span>{
             <span class='ident'>pad0</span>: [<span class='number'>0</span>; <span class='number'>64</span>],
             <span class='ident'>buffer</span>: <span class='ident'>buffer</span>,
             <span class='ident'>mask</span>: <span class='ident'>capacity</span><span class='op'>-</span><span class='number'>1</span>,
             <span class='ident'>pad1</span>: [<span class='number'>0</span>; <span class='number'>64</span>],
-            <span class='ident'>enqueue_pos</span>: <span class='ident'>AtomicUint</span>::<span class='ident'>new</span>(<span class='number'>0</span>),
+            <span class='ident'>enqueue_pos</span>: <span class='ident'>AtomicUsize</span>::<span class='ident'>new</span>(<span class='number'>0</span>),
             <span class='ident'>pad2</span>: [<span class='number'>0</span>; <span class='number'>64</span>],
-            <span class='ident'>dequeue_pos</span>: <span class='ident'>AtomicUint</span>::<span class='ident'>new</span>(<span class='number'>0</span>),
+            <span class='ident'>dequeue_pos</span>: <span class='ident'>AtomicUsize</span>::<span class='ident'>new</span>(<span class='number'>0</span>),
             <span class='ident'>pad3</span>: [<span class='number'>0</span>; <span class='number'>64</span>],
         }
     }

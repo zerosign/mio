@@ -517,6 +517,7 @@
 <span id="475">475</span>
 <span id="476">476</span>
 <span id="477">477</span>
+<span id="478">478</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::{<span class='ident'>usize</span>, <span class='ident'>iter</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>max</span>;
@@ -538,6 +539,7 @@
 <span class='comment'>// * Handle the case when the timer falls more than an entire wheel behind. There</span>
 <span class='comment'>//   is no point to loop multiple times around the wheel in one go.</span>
 <span class='comment'>// * New type for tick, now() -&gt; Tick</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Timer</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='comment'>// Size of each tick in milliseconds</span>
     <span class='ident'>tick_ms</span>: <span class='ident'>u64</span>,
