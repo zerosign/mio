@@ -208,6 +208,7 @@
 <span id="166">166</span>
 <span id="167">167</span>
 <span id="168">168</span>
+<span id="169">169</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! A fast, low-level IO library for Rust focusing on non-blocking APIs, event</span>
 <span class='doccomment'>//! notification, and other useful utilities for building high performance IO</span>
@@ -230,7 +231,7 @@
 <span class='doccomment'>//! # Example</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! ```</span>
-<span class='doccomment'>//! use mio::{event, EventLoop, IoAcceptor, Handler, Token};</span>
+<span class='doccomment'>//! use mio::*;</span>
 <span class='doccomment'>//! use mio::net::{SockAddr};</span>
 <span class='doccomment'>//! use mio::net::tcp::{TcpSocket, TcpAcceptor};</span>
 <span class='doccomment'>//!</span>
@@ -265,7 +266,7 @@
 <span class='doccomment'>//! struct MyHandler(TcpAcceptor);</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! impl Handler&lt;(), ()&gt; for MyHandler {</span>
-<span class='doccomment'>//!     fn readable(&amp;mut self, event_loop: &amp;mut EventLoop&lt;(), ()&gt;, token: Token, _: event::ReadHint) {</span>
+<span class='doccomment'>//!     fn readable(&amp;mut self, event_loop: &amp;mut EventLoop&lt;(), ()&gt;, token: Token, _: ReadHint) {</span>
 <span class='doccomment'>//!         match token {</span>
 <span class='doccomment'>//!             SERVER =&gt; {</span>
 <span class='doccomment'>//!                 let MyHandler(ref mut server) = *self;</span>
@@ -304,8 +305,6 @@
 
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>log</span>;
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>bitflags</span>;
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>buf</span>::{
     <span class='ident'>Buf</span>,
@@ -348,8 +347,11 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>os</span>::<span class='ident'>token</span>::{
     <span class='ident'>Token</span>,
 };
-
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>os</span>::<span class='ident'>event</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>os</span>::<span class='ident'>event</span>::{
+    <span class='ident'>PollOpt</span>,
+    <span class='ident'>Interest</span>,
+    <span class='ident'>ReadHint</span>,
+};
 
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>net</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>util</span>;

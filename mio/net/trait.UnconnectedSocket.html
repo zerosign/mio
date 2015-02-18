@@ -44,7 +44,7 @@
 <h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>mio</a>::<wbr><a href='index.html'>net</a>::<wbr><a class='trait' href=''>UnconnectedSocket</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]
             </a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-216' href='../../src/mio/net.rs.html#51-56'>[src]</a></span></h1>
+        </span><a id='src-218' href='../../src/mio/net.rs.html#51-56'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait UnconnectedSocket {
     fn <a href='#tymethod.send_to' class='fnname'>send_to</a>&lt;B: <a class='trait' href='../../mio/buf/trait.Buf.html' title='mio::buf::Buf'>Buf</a>&gt;(&amp;mut self, buf: &amp;mut B, tgt: &amp;<a class='enum' href='../../mio/net/enum.SockAddr.html' title='mio::net::SockAddr'>SockAddr</a>) -&gt; <a class='type' href='../../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a class='enum' href='../../mio/enum.NonBlock.html' title='mio::NonBlock'>NonBlock</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;&gt;;
     fn <a href='#tymethod.recv_from' class='fnname'>recv_from</a>&lt;B: <a class='trait' href='../../mio/buf/trait.MutBuf.html' title='mio::buf::MutBuf'>MutBuf</a>&gt;(&amp;mut self, buf: &amp;mut B) -&gt; <a class='type' href='../../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a class='enum' href='../../mio/enum.NonBlock.html' title='mio::NonBlock'>NonBlock</a>&lt;<a class='enum' href='../../mio/net/enum.SockAddr.html' title='mio::net::SockAddr'>SockAddr</a>&gt;&gt;;

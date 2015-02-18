@@ -44,7 +44,7 @@
 <h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>mio</a><wbr></span><span class='out-of-band'><a href='stability.html'>[stability]</a> <span id='render-detail'>
             <a id="collapse-all" href="#">[-]
             </a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-0' href='../src/mio/lib.rs.html#1-168'>[src]</a></span></h1>
+        </span><a id='src-0' href='../src/mio/lib.rs.html#1-169'>[src]</a></span></h1>
 <div class='docblock'><p>A fast, low-level IO library for Rust focusing on non-blocking APIs, event
 notification, and other useful utilities for building high performance IO
 apps.</p>
@@ -67,7 +67,7 @@ handles receiving events from the OS and dispatching them to a supplied
 
 <h1 id="example" class='section-header'><a
                            href="#example">Example</a></h1><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>use</span> <span class='ident'>mio</span>::{<span class='ident'>event</span>, <span class='ident'>EventLoop</span>, <span class='ident'>IoAcceptor</span>, <span class='ident'>Handler</span>, <span class='ident'>Token</span>};
+<span class='kw'>use</span> <span class='ident'>mio</span>::<span class='op'>*</span>;
 <span class='kw'>use</span> <span class='ident'>mio</span>::<span class='ident'>net</span>::{<span class='ident'>SockAddr</span>};
 <span class='kw'>use</span> <span class='ident'>mio</span>::<span class='ident'>net</span>::<span class='ident'>tcp</span>::{<span class='ident'>TcpSocket</span>, <span class='ident'>TcpAcceptor</span>};
 
@@ -102,7 +102,7 @@ handles receiving events from the OS and dispatching them to a supplied
 <span class='kw'>struct</span> <span class='ident'>MyHandler</span>(<span class='ident'>TcpAcceptor</span>);
 
 <span class='kw'>impl</span> <span class='ident'>Handler</span><span class='op'>&lt;</span>(), ()<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>MyHandler</span> {
-    <span class='kw'>fn</span> <span class='ident'>readable</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>event_loop</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>EventLoop</span><span class='op'>&lt;</span>(), ()<span class='op'>&gt;</span>, <span class='ident'>token</span>: <span class='ident'>Token</span>, _: <span class='ident'>event</span>::<span class='ident'>ReadHint</span>) {
+    <span class='kw'>fn</span> <span class='ident'>readable</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>event_loop</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>EventLoop</span><span class='op'>&lt;</span>(), ()<span class='op'>&gt;</span>, <span class='ident'>token</span>: <span class='ident'>Token</span>, _: <span class='ident'>ReadHint</span>) {
         <span class='kw'>match</span> <span class='ident'>token</span> {
             <span class='ident'>SERVER</span> <span class='op'>=&gt;</span> {
                 <span class='kw'>let</span> <span class='ident'>MyHandler</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>server</span>) <span class='op'>=</span> <span class='op'>*</span><span class='self'>self</span>;
@@ -128,12 +128,6 @@ handles receiving events from the OS and dispatching them to a supplied
                     <tr>
                         <td><a class='stability Unmarked' title='No stability level'></a><a class='mod' href='buf/index.html'
                                title='mio::buf'>buf</a></td>
-                        <td class='docblock short'></td>
-                    </tr>
-                
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='mod' href='event/index.html'
-                               title='mio::event'>event</a></td>
                         <td class='docblock short'></td>
                     </tr>
                 
@@ -180,6 +174,12 @@ handles receiving events from the OS and dispatching them to a supplied
                     </tr>
                 
                     <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Interest.html'
+                               title='mio::Interest'>Interest</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
                         <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.IoDesc.html'
                                title='mio::IoDesc'>IoDesc</a></td>
                         <td class='docblock short'><p>Represents the OS&#39;s handle to the IO instance. In this case, it is the file
@@ -208,6 +208,18 @@ descriptor.</p>
                     <tr>
                         <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Poll.html'
                                title='mio::Poll'>Poll</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.PollOpt.html'
+                               title='mio::PollOpt'>PollOpt</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.ReadHint.html'
+                               title='mio::ReadHint'>ReadHint</a></td>
                         <td class='docblock short'></td>
                     </tr>
                 
