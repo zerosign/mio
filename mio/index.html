@@ -44,7 +44,7 @@
 <h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>mio</a><wbr></span><span class='out-of-band'><a href='stability.html'>[stability]</a> <span id='render-detail'>
             <a id="collapse-all" href="#">[-]
             </a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-0' href='../src/mio/lib.rs.html#1-170'>[src]</a></span></h1>
+        </span><a id='src-0' href='../src/mio/lib.rs.html#1-168'>[src]</a></span></h1>
 <div class='docblock'><p>A fast, low-level IO library for Rust focusing on non-blocking APIs, event
 notification, and other useful utilities for building high performance IO
 apps.</p>
@@ -121,7 +121,7 @@ handles receiving events from the OS and dispatching them to a supplied
 }
 
 <span class='comment'>// Start handling events</span>
-<span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>event_loop</span>.<span class='ident'>run</span>(<span class='ident'>MyHandler</span>(<span class='ident'>server</span>));
+<span class='ident'>event_loop</span>.<span class='ident'>run</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>MyHandler</span>(<span class='ident'>server</span>)).<span class='ident'>unwrap</span>();
 </pre>
 </div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
@@ -158,12 +158,6 @@ handles receiving events from the OS and dispatching them to a supplied
                                title='mio::EventLoopConfig'>EventLoopConfig</a></td>
                         <td class='docblock short'><p>Configure EventLoop runtime details</p>
 </td>
-                    </tr>
-                
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.EventLoopError.html'
-                               title='mio::EventLoopError'>EventLoopError</a></td>
-                        <td class='docblock short'></td>
                     </tr>
                 
                     <tr>
@@ -314,12 +308,6 @@ descriptor.</p>
                     </tr>
                 </table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
 <table>
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.EventLoopResult.html'
-                               title='mio::EventLoopResult'>EventLoopResult</a></td>
-                        <td class='docblock short'></td>
-                    </tr>
-                
                     <tr>
                         <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.MioResult.html'
                                title='mio::MioResult'>MioResult</a></td>
