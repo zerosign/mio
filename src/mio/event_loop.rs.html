@@ -725,7 +725,7 @@
 
     <span class='comment'>// Process IO events that have been previously polled</span>
     <span class='kw'>fn</span> <span class='ident'>io_process</span><span class='op'>&lt;</span><span class='ident'>H</span>: <span class='ident'>Handler</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>M</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>handler</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>H</span>, <span class='ident'>cnt</span>: <span class='ident'>usize</span>) {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>i</span> <span class='op'>=</span> <span class='number'>0us</span>;
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>i</span> <span class='op'>=</span> <span class='number'>0</span>;
 
         <span class='comment'>// Iterate over the notifications. Each event provides the token</span>
         <span class='comment'>// it was registered with (which usually represents, at least, the</span>
