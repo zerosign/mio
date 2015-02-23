@@ -640,7 +640,7 @@
 
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>getpeername</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>SockAddr</span><span class='op'>&gt;</span> {
     <span class='kw'>let</span> <span class='ident'>sa</span> : <span class='ident'>nix</span>::<span class='ident'>sockaddr_in</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>mem</span>::<span class='ident'>zeroed</span>() };
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>nix</span>::<span class='ident'>SockAddr</span>::<span class='ident'>SockIpV4</span>(<span class='ident'>sa</span>);
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>nix</span>::<span class='ident'>SockAddr</span>::<span class='ident'>IpV4</span>(<span class='ident'>sa</span>);
 
     <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>nix</span>::<span class='ident'>getpeername</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>a</span>).<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>));
 
@@ -649,7 +649,7 @@
 
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>getsockname</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>SockAddr</span><span class='op'>&gt;</span> {
     <span class='kw'>let</span> <span class='ident'>sa</span> : <span class='ident'>nix</span>::<span class='ident'>sockaddr_in</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>mem</span>::<span class='ident'>zeroed</span>() };
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>nix</span>::<span class='ident'>SockAddr</span>::<span class='ident'>SockIpV4</span>(<span class='ident'>sa</span>);
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>nix</span>::<span class='ident'>SockAddr</span>::<span class='ident'>IpV4</span>(<span class='ident'>sa</span>);
 
     <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>nix</span>::<span class='ident'>getsockname</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>a</span>).<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>));
 
@@ -687,10 +687,10 @@
 
 <span class='kw'>fn</span> <span class='ident'>to_sockaddr</span>(<span class='ident'>addr</span>: <span class='kw-2'>&amp;</span><span class='ident'>nix</span>::<span class='ident'>SockAddr</span>) <span class='op'>-&gt;</span> <span class='ident'>SockAddr</span> {
     <span class='kw'>match</span> <span class='op'>*</span><span class='ident'>addr</span> {
-        <span class='ident'>nix</span>::<span class='ident'>SockAddr</span>::<span class='ident'>SockIpV4</span>(<span class='ident'>sin</span>) <span class='op'>=&gt;</span> {
+        <span class='ident'>nix</span>::<span class='ident'>SockAddr</span>::<span class='ident'>IpV4</span>(<span class='ident'>sin</span>) <span class='op'>=&gt;</span> {
             <span class='ident'>InetAddr</span>(<span class='ident'>u32be_to_ipv4</span>(<span class='ident'>sin</span>.<span class='ident'>sin_addr</span>.<span class='ident'>s_addr</span>), <span class='ident'>Int</span>::<span class='ident'>from_be</span>(<span class='ident'>sin</span>.<span class='ident'>sin_port</span>))
         }
-        <span class='ident'>nix</span>::<span class='ident'>SockAddr</span>::<span class='ident'>SockUnix</span>(<span class='ident'>addr</span>) <span class='op'>=&gt;</span> {
+        <span class='ident'>nix</span>::<span class='ident'>SockAddr</span>::<span class='ident'>Unix</span>(<span class='ident'>addr</span>) <span class='op'>=&gt;</span> {
             <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>str_path</span> <span class='op'>=</span> <span class='ident'>String</span>::<span class='ident'>new</span>();
             <span class='kw'>for</span> <span class='ident'>c</span> <span class='kw'>in</span> <span class='ident'>addr</span>.<span class='ident'>sun_path</span>.<span class='ident'>iter</span>() {
                 <span class='kw'>if</span> <span class='op'>*</span><span class='ident'>c</span> <span class='op'>==</span> <span class='number'>0</span> { <span class='kw'>break</span>; }
@@ -716,7 +716,7 @@
                     <span class='ident'>addr</span>.<span class='ident'>sin_port</span> <span class='op'>=</span> <span class='ident'>port</span>.<span class='ident'>to_be</span>();
                     <span class='ident'>addr</span>.<span class='ident'>sin_addr</span> <span class='op'>=</span> <span class='ident'>ipv4_to_inaddr</span>(<span class='ident'>a</span>, <span class='ident'>b</span>, <span class='ident'>c</span>, <span class='ident'>d</span>);
 
-                    <span class='ident'>nix</span>::<span class='ident'>SockAddr</span>::<span class='ident'>SockIpV4</span>(<span class='ident'>addr</span>)
+                    <span class='ident'>nix</span>::<span class='ident'>SockAddr</span>::<span class='ident'>IpV4</span>(<span class='ident'>addr</span>)
                 }
                 _ <span class='op'>=&gt;</span> <span class='macro'>unimplemented</span><span class='macro'>!</span>()
             }
@@ -732,7 +732,7 @@
                 <span class='op'>*</span><span class='ident'>sp_iter</span> <span class='op'>=</span> <span class='op'>*</span><span class='ident'>path_iter</span> <span class='kw'>as</span> <span class='ident'>i8</span>;
             }
 
-            <span class='ident'>nix</span>::<span class='ident'>SockAddr</span>::<span class='ident'>SockUnix</span>(<span class='ident'>addr</span>)
+            <span class='ident'>nix</span>::<span class='ident'>SockAddr</span>::<span class='ident'>Unix</span>(<span class='ident'>addr</span>)
         }
     }
 }
