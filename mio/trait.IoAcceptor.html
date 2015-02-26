@@ -43,18 +43,18 @@
     <section id='main' class="content trait">
 <h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>mio</a>::<wbr><a class='trait' href=''>IoAcceptor</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-7695' href='../src/mio/io.rs.html#50-53'>[src]</a></span></h1>
+        </span><a id='src-7045' href='../src/mio/io.rs.html#50-53'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait IoAcceptor {
     type Output;
 
-    fn <a href='#tymethod.accept' class='fnname'>accept</a>(&amp;mut self) -&gt; <a class='type' href='../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a class='enum' href='../mio/enum.NonBlock.html' title='mio::NonBlock'>NonBlock</a>&lt;Self::<a class='trait' href='../mio/trait.IoAcceptor.html' title='mio::IoAcceptor'>Output</a>&gt;&gt;;
+    fn <a href='#tymethod.accept' class='fnname'>accept</a>(&amp;mut self) -&gt; <a class='type' href='../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a class='enum' href='../mio/enum.NonBlock.html' title='mio::NonBlock'>NonBlock</a>&lt;Self::Output&gt;&gt;;
 }</pre>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
         <h3 id='associatedtype.Output' class='method'><a class='stability Unmarked' title='No stability level'></a><code>type Output</code></h3></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.accept' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.accept' class='fnname'>accept</a>(&amp;mut self) -&gt; <a class='type' href='../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a class='enum' href='../mio/enum.NonBlock.html' title='mio::NonBlock'>NonBlock</a>&lt;Self::<a class='trait' href='../mio/trait.IoAcceptor.html' title='mio::IoAcceptor'>Output</a>&gt;&gt;</code></h3></div>
+        <h3 id='tymethod.accept' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.accept' class='fnname'>accept</a>(&amp;mut self) -&gt; <a class='type' href='../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a class='enum' href='../mio/enum.NonBlock.html' title='mio::NonBlock'>NonBlock</a>&lt;Self::Output&gt;&gt;</code></h3></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
     <li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../mio/trait.IoAcceptor.html' title='mio::IoAcceptor'>IoAcceptor</a> for <a class='struct' href='../mio/net/tcp/struct.TcpAcceptor.html' title='mio::net::tcp::TcpAcceptor'>TcpAcceptor</a></code></li>
