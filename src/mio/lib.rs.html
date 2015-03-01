@@ -211,7 +211,6 @@
 <span id="169">169</span>
 <span id="170">170</span>
 <span id="171">171</span>
-<span id="172">172</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! A fast, low-level IO library for Rust focusing on non-blocking APIs, event</span>
 <span class='doccomment'>//! notification, and other useful utilities for building high performance IO</span>
@@ -327,13 +326,12 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>io</span>::{
     <span class='ident'>pipe</span>,
     <span class='ident'>NonBlock</span>,
-    <span class='ident'>FromIoDesc</span>,
+    <span class='ident'>FromFd</span>,
     <span class='ident'>Io</span>,
     <span class='ident'>IoReader</span>,
     <span class='ident'>IoWriter</span>,
     <span class='ident'>IoAcceptor</span>,
     <span class='ident'>IoHandle</span>,
-    <span class='ident'>IoDesc</span>,
     <span class='ident'>PipeReader</span>,
     <span class='ident'>PipeWriter</span>,
 };

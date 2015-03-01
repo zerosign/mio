@@ -149,7 +149,7 @@
         <span class='macro'>debug</span><span class='macro'>!</span>(<span class='string'>&quot;registering  with poller&quot;</span>);
 
         <span class='comment'>// Register interests for this socket</span>
-        <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>selector</span>.<span class='ident'>register</span>(<span class='ident'>io</span>.<span class='ident'>desc</span>(), <span class='ident'>token</span>.<span class='ident'>as_usize</span>(), <span class='ident'>interest</span>, <span class='ident'>opts</span>));
+        <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>selector</span>.<span class='ident'>register</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>(), <span class='ident'>token</span>.<span class='ident'>as_usize</span>(), <span class='ident'>interest</span>, <span class='ident'>opts</span>));
 
         <span class='prelude-val'>Ok</span>(())
     }
@@ -158,7 +158,7 @@
         <span class='macro'>debug</span><span class='macro'>!</span>(<span class='string'>&quot;registering  with poller&quot;</span>);
 
         <span class='comment'>// Register interests for this socket</span>
-        <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>selector</span>.<span class='ident'>reregister</span>(<span class='ident'>io</span>.<span class='ident'>desc</span>(), <span class='ident'>token</span>.<span class='ident'>as_usize</span>(), <span class='ident'>interest</span>, <span class='ident'>opts</span>));
+        <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>selector</span>.<span class='ident'>reregister</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>(), <span class='ident'>token</span>.<span class='ident'>as_usize</span>(), <span class='ident'>interest</span>, <span class='ident'>opts</span>));
 
         <span class='prelude-val'>Ok</span>(())
     }
@@ -167,7 +167,7 @@
         <span class='macro'>debug</span><span class='macro'>!</span>(<span class='string'>&quot;deregistering IO with poller&quot;</span>);
 
         <span class='comment'>// Deregister interests for this socket</span>
-        <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>selector</span>.<span class='ident'>deregister</span>(<span class='ident'>io</span>.<span class='ident'>desc</span>()));
+        <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>selector</span>.<span class='ident'>deregister</span>(<span class='ident'>io</span>.<span class='ident'>fd</span>()));
 
         <span class='prelude-val'>Ok</span>(())
     }

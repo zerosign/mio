@@ -248,43 +248,10 @@
 <span id="206">206</span>
 <span id="207">207</span>
 <span id="208">208</span>
-<span id="209">209</span>
-<span id="210">210</span>
-<span id="211">211</span>
-<span id="212">212</span>
-<span id="213">213</span>
-<span id="214">214</span>
-<span id="215">215</span>
-<span id="216">216</span>
-<span id="217">217</span>
-<span id="218">218</span>
-<span id="219">219</span>
-<span id="220">220</span>
-<span id="221">221</span>
-<span id="222">222</span>
-<span id="223">223</span>
-<span id="224">224</span>
-<span id="225">225</span>
-<span id="226">226</span>
-<span id="227">227</span>
-<span id="228">228</span>
-<span id="229">229</span>
-<span id="230">230</span>
-<span id="231">231</span>
-<span id="232">232</span>
-<span id="233">233</span>
-<span id="234">234</span>
-<span id="235">235</span>
-<span id="236">236</span>
-<span id="237">237</span>
-<span id="238">238</span>
-<span id="239">239</span>
-<span id="240">240</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> {<span class='ident'>os</span>, <span class='ident'>MioResult</span>, <span class='ident'>MioError</span>};
+<span class='kw'>use</span> {<span class='ident'>MioResult</span>, <span class='ident'>MioError</span>};
 <span class='kw'>use</span> <span class='ident'>buf</span>::{<span class='ident'>Buf</span>, <span class='ident'>MutBuf</span>};
-
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>os</span>::<span class='ident'>IoDesc</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>unix</span>::<span class='ident'>Fd</span>;
 
 <span class='doccomment'>/// The result of a non-blocking operation.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
@@ -310,25 +277,49 @@
 }
 
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>IoHandle</span> {
-    <span class='kw'>fn</span> <span class='ident'>desc</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>IoDesc</span>;
+    <span class='kw'>fn</span> <span class='ident'>fd</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Fd</span>;
 }
 
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>FromIoDesc</span> {
-    <span class='kw'>fn</span> <span class='ident'>from_desc</span>(<span class='ident'>desc</span>: <span class='ident'>IoDesc</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span>;
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>FromFd</span> {
+    <span class='kw'>fn</span> <span class='ident'>from_fd</span>(<span class='ident'>fd</span>: <span class='ident'>Fd</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span>;
 }
 
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>IoReader</span> {
-    <span class='kw'>fn</span> <span class='ident'>read</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>MutBuf</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span>;
+    <span class='kw'>fn</span> <span class='ident'>read</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>MutBuf</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
+        <span class='comment'>// Reads the length of the slice supplied by buf.mut_bytes into the buffer</span>
+        <span class='comment'>// This is not guaranteed to consume an entire datagram or segment.</span>
+        <span class='comment'>// If your protocol is msg based (instead of continuous stream) you should</span>
+        <span class='comment'>// ensure that your buffer is large enough to hold an entire segment (1532 bytes if not jumbo</span>
+        <span class='comment'>// frames)</span>
+        <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>read_slice</span>(<span class='ident'>buf</span>.<span class='ident'>mut_bytes</span>());
+
+        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Ok</span>(<span class='ident'>NonBlock</span>::<span class='ident'>Ready</span>(<span class='ident'>cnt</span>)) <span class='op'>=</span> <span class='ident'>res</span> {
+            <span class='ident'>buf</span>.<span class='ident'>advance</span>(<span class='ident'>cnt</span>);
+        }
+
+        <span class='ident'>res</span>
+    }
+
     <span class='kw'>fn</span> <span class='ident'>read_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span>;
 }
 
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>IoWriter</span> {
-    <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>Buf</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span>;
+    <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>Buf</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
+        <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>write_slice</span>(<span class='ident'>buf</span>.<span class='ident'>bytes</span>());
+
+        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Ok</span>(<span class='ident'>NonBlock</span>::<span class='ident'>Ready</span>(<span class='ident'>cnt</span>)) <span class='op'>=</span> <span class='ident'>res</span> {
+            <span class='ident'>buf</span>.<span class='ident'>advance</span>(<span class='ident'>cnt</span>);
+        }
+
+        <span class='ident'>res</span>
+    }
+
     <span class='kw'>fn</span> <span class='ident'>write_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span>;
 }
 
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>IoAcceptor</span> {
     <span class='kw'>type</span> <span class='ident'>Output</span>;
+
     <span class='kw'>fn</span> <span class='ident'>accept</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>Self</span>::<span class='ident'>Output</span><span class='op'>&gt;&gt;</span>;
 }
 
@@ -338,39 +329,55 @@
  *
  */</span>
 
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Io</span> {
-    <span class='ident'>desc</span>: <span class='ident'>IoDesc</span>,
+    <span class='ident'>fd</span>: <span class='ident'>Fd</span>,
 }
 
 <span class='kw'>impl</span> <span class='ident'>Io</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>desc</span>: <span class='ident'>IoDesc</span>) <span class='op'>-&gt;</span> <span class='ident'>Io</span> {
-        <span class='ident'>Io</span> { <span class='ident'>desc</span>: <span class='ident'>desc</span> }
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>fd</span>: <span class='ident'>Fd</span>) <span class='op'>-&gt;</span> <span class='ident'>Io</span> {
+        <span class='ident'>Io</span> { <span class='ident'>fd</span>: <span class='ident'>fd</span> }
     }
 }
 
 <span class='kw'>impl</span> <span class='ident'>IoHandle</span> <span class='kw'>for</span> <span class='ident'>Io</span> {
-    <span class='kw'>fn</span> <span class='ident'>desc</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>os</span>::<span class='ident'>IoDesc</span> {
-        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>desc</span>
+    <span class='kw'>fn</span> <span class='ident'>fd</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Fd</span> {
+        <span class='self'>self</span>.<span class='ident'>fd</span>
     }
 }
 
 <span class='kw'>impl</span> <span class='ident'>IoReader</span> <span class='kw'>for</span> <span class='ident'>Io</span> {
-    <span class='kw'>fn</span> <span class='ident'>read</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>MutBuf</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
-        <span class='ident'>read</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
-    }
+    <span class='kw'>fn</span> <span class='ident'>read_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>dst</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
+        <span class='kw'>use</span> <span class='ident'>nix</span>::<span class='ident'>unistd</span>::<span class='ident'>read</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>read_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
-        <span class='ident'>read_slice</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
+        <span class='ident'>read</span>(<span class='self'>self</span>.<span class='ident'>fd</span>(), <span class='ident'>dst</span>)
+            .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>)
+            .<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>cnt</span><span class='op'>|</span> {
+                <span class='kw'>if</span> <span class='ident'>cnt</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
+                    <span class='prelude-val'>Ok</span>(<span class='ident'>NonBlock</span>::<span class='ident'>Ready</span>(<span class='ident'>cnt</span>))
+                } <span class='kw'>else</span> {
+                    <span class='prelude-val'>Err</span>(<span class='ident'>MioError</span>::<span class='ident'>eof</span>())
+                }
+            })
+            .<span class='ident'>or_else</span>(<span class='ident'>to_non_block</span>)
     }
 }
 
 <span class='kw'>impl</span> <span class='ident'>IoWriter</span> <span class='kw'>for</span> <span class='ident'>Io</span> {
-    <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>Buf</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
-        <span class='ident'>write</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
-    }
+    <span class='kw'>fn</span> <span class='ident'>write_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>src</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
+        <span class='kw'>use</span> <span class='ident'>nix</span>::<span class='ident'>unistd</span>::<span class='ident'>write</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>write_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
-        <span class='ident'>write_slice</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
+        <span class='ident'>write</span>(<span class='self'>self</span>.<span class='ident'>fd</span>(), <span class='ident'>src</span>)
+            .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>)
+            .<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>cnt</span><span class='op'>|</span> <span class='ident'>NonBlock</span>::<span class='ident'>Ready</span>(<span class='ident'>cnt</span>))
+            .<span class='ident'>or_else</span>(<span class='ident'>to_non_block</span>)
+    }
+}
+
+<span class='kw'>impl</span> <span class='ident'>Drop</span> <span class='kw'>for</span> <span class='ident'>Io</span> {
+    <span class='kw'>fn</span> <span class='ident'>drop</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
+        <span class='kw'>use</span> <span class='ident'>nix</span>::<span class='ident'>unistd</span>::<span class='ident'>close</span>;
+        <span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>close</span>(<span class='self'>self</span>.<span class='ident'>fd</span>());
     }
 }
 
@@ -387,125 +394,54 @@
     <span class='kw'>let</span> (<span class='ident'>rd</span>, <span class='ident'>wr</span>) <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>pipe2</span>(<span class='ident'>O_NONBLOCK</span> <span class='op'>|</span> <span class='ident'>O_CLOEXEC</span>)
         .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>));
 
-    <span class='kw'>let</span> <span class='ident'>rd</span> <span class='op'>=</span> <span class='ident'>PipeReader</span> { <span class='ident'>desc</span>: <span class='ident'>IoDesc</span> { <span class='ident'>fd</span>: <span class='ident'>rd</span> }};
-    <span class='kw'>let</span> <span class='ident'>wr</span> <span class='op'>=</span> <span class='ident'>PipeWriter</span> { <span class='ident'>desc</span>: <span class='ident'>IoDesc</span> { <span class='ident'>fd</span>: <span class='ident'>wr</span> }};
+    <span class='kw'>let</span> <span class='ident'>rd</span> <span class='op'>=</span> <span class='ident'>FromFd</span>::<span class='ident'>from_fd</span>(<span class='ident'>rd</span>);
+    <span class='kw'>let</span> <span class='ident'>wr</span> <span class='op'>=</span> <span class='ident'>FromFd</span>::<span class='ident'>from_fd</span>(<span class='ident'>wr</span>);
 
     <span class='prelude-val'>Ok</span>((<span class='ident'>rd</span>, <span class='ident'>wr</span>))
 }
 
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>PipeReader</span> {
-    <span class='ident'>desc</span>: <span class='ident'>os</span>::<span class='ident'>IoDesc</span>
+    <span class='ident'>io</span>: <span class='ident'>Io</span>,
 }
+
+<span class='kw'>impl</span> <span class='ident'>FromFd</span> <span class='kw'>for</span> <span class='ident'>PipeReader</span> {
+    <span class='kw'>fn</span> <span class='ident'>from_fd</span>(<span class='ident'>fd</span>: <span class='ident'>Fd</span>) <span class='op'>-&gt;</span> <span class='ident'>PipeReader</span> {
+        <span class='ident'>PipeReader</span> { <span class='ident'>io</span>: <span class='ident'>Io</span>::<span class='ident'>new</span>(<span class='ident'>fd</span>) }
+    }
+}
+
 
 <span class='kw'>impl</span> <span class='ident'>IoHandle</span> <span class='kw'>for</span> <span class='ident'>PipeReader</span> {
-    <span class='kw'>fn</span> <span class='ident'>desc</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>os</span>::<span class='ident'>IoDesc</span> {
-        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>desc</span>
-    }
-}
-
-<span class='kw'>impl</span> <span class='ident'>FromIoDesc</span> <span class='kw'>for</span> <span class='ident'>PipeReader</span> {
-    <span class='kw'>fn</span> <span class='ident'>from_desc</span>(<span class='ident'>desc</span>: <span class='ident'>IoDesc</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
-        <span class='ident'>PipeReader</span> { <span class='ident'>desc</span>: <span class='ident'>desc</span> }
-    }
-}
-
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>PipeWriter</span> {
-    <span class='ident'>desc</span>: <span class='ident'>os</span>::<span class='ident'>IoDesc</span>
-}
-
-<span class='kw'>impl</span> <span class='ident'>IoHandle</span> <span class='kw'>for</span> <span class='ident'>PipeWriter</span> {
-    <span class='kw'>fn</span> <span class='ident'>desc</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>os</span>::<span class='ident'>IoDesc</span> {
-        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>desc</span>
-    }
-}
-
-<span class='kw'>impl</span> <span class='ident'>FromIoDesc</span> <span class='kw'>for</span> <span class='ident'>PipeWriter</span> {
-    <span class='kw'>fn</span> <span class='ident'>from_desc</span>(<span class='ident'>desc</span>: <span class='ident'>IoDesc</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
-        <span class='ident'>PipeWriter</span> { <span class='ident'>desc</span>: <span class='ident'>desc</span> }
+    <span class='kw'>fn</span> <span class='ident'>fd</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Fd</span> {
+        <span class='self'>self</span>.<span class='ident'>io</span>.<span class='ident'>fd</span>()
     }
 }
 
 <span class='kw'>impl</span> <span class='ident'>IoReader</span> <span class='kw'>for</span> <span class='ident'>PipeReader</span> {
-    <span class='kw'>fn</span> <span class='ident'>read</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>MutBuf</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
-        <span class='ident'>read</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
-    }
-
     <span class='kw'>fn</span> <span class='ident'>read_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
-        <span class='ident'>read_slice</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
+        <span class='self'>self</span>.<span class='ident'>io</span>.<span class='ident'>read_slice</span>(<span class='ident'>buf</span>)
+    }
+}
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>PipeWriter</span> {
+    <span class='ident'>io</span>: <span class='ident'>Io</span>,
+}
+
+<span class='kw'>impl</span> <span class='ident'>FromFd</span> <span class='kw'>for</span> <span class='ident'>PipeWriter</span> {
+    <span class='kw'>fn</span> <span class='ident'>from_fd</span>(<span class='ident'>fd</span>: <span class='ident'>Fd</span>) <span class='op'>-&gt;</span> <span class='ident'>PipeWriter</span> {
+        <span class='ident'>PipeWriter</span> { <span class='ident'>io</span>: <span class='ident'>Io</span>::<span class='ident'>new</span>(<span class='ident'>fd</span>) }
+    }
+}
+
+<span class='kw'>impl</span> <span class='ident'>IoHandle</span> <span class='kw'>for</span> <span class='ident'>PipeWriter</span> {
+    <span class='kw'>fn</span> <span class='ident'>fd</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Fd</span> {
+        <span class='self'>self</span>.<span class='ident'>io</span>.<span class='ident'>fd</span>
     }
 }
 
 <span class='kw'>impl</span> <span class='ident'>IoWriter</span> <span class='kw'>for</span> <span class='ident'>PipeWriter</span> {
-    <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>Buf</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
-        <span class='ident'>write</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
-    }
-
     <span class='kw'>fn</span> <span class='ident'>write_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
-        <span class='ident'>write_slice</span>(<span class='self'>self</span>, <span class='ident'>buf</span>)
+        <span class='self'>self</span>.<span class='ident'>io</span>.<span class='ident'>write_slice</span>(<span class='ident'>buf</span>)
     }
-}
-
-<span class='comment'>/*
- *
- * ===== Read / Write =====
- *
- */</span>
-
-<span class='doccomment'>/// Reads the length of the slice supplied by buf.mut_bytes into the buffer</span>
-<span class='doccomment'>/// This is not guaranteed to consume an entire datagram or segment.</span>
-<span class='doccomment'>/// If your protocol is msg based (instead of continuous stream) you should</span>
-<span class='doccomment'>/// ensure that your buffer is large enough to hold an entire segment (1532 bytes if not jumbo</span>
-<span class='doccomment'>/// frames)</span>
-<span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>read</span><span class='op'>&lt;</span><span class='ident'>I</span>: <span class='ident'>IoHandle</span>, <span class='ident'>B</span>: <span class='ident'>MutBuf</span><span class='op'>&gt;</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>I</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
-    <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>read_slice</span>(<span class='ident'>io</span>, <span class='ident'>buf</span>.<span class='ident'>mut_bytes</span>());
-
-    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Ok</span>(<span class='ident'>NonBlock</span>::<span class='ident'>Ready</span>(<span class='ident'>cnt</span>)) <span class='op'>=</span> <span class='ident'>res</span> {
-        <span class='ident'>buf</span>.<span class='ident'>advance</span>(<span class='ident'>cnt</span>);
-    }
-
-    <span class='ident'>res</span>
-}
-
-<span class='doccomment'>///writes the length of the slice supplied by Buf.bytes into the socket</span>
-<span class='doccomment'>///then advances the buffer that many bytes</span>
-<span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='ident'>O</span>: <span class='ident'>IoHandle</span>, <span class='ident'>B</span>: <span class='ident'>Buf</span><span class='op'>&gt;</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>O</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
-    <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>write_slice</span>(<span class='ident'>io</span>, <span class='ident'>buf</span>.<span class='ident'>bytes</span>());
-
-    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Ok</span>(<span class='ident'>NonBlock</span>::<span class='ident'>Ready</span>(<span class='ident'>cnt</span>)) <span class='op'>=</span> <span class='ident'>res</span> {
-        <span class='ident'>buf</span>.<span class='ident'>advance</span>(<span class='ident'>cnt</span>);
-    }
-
-    <span class='ident'>res</span>
-}
-
-<span class='doccomment'>///reads the length of the supplied slice from the socket into the slice</span>
-<span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>read_slice</span><span class='op'>&lt;</span><span class='ident'>I</span>: <span class='ident'>IoHandle</span><span class='op'>&gt;</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span> <span class='ident'>I</span>, <span class='ident'>dst</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
-    <span class='kw'>use</span> <span class='ident'>nix</span>::<span class='ident'>unistd</span>::<span class='ident'>read</span>;
-
-    <span class='ident'>read</span>(<span class='ident'>io</span>.<span class='ident'>desc</span>().<span class='ident'>fd</span>, <span class='ident'>dst</span>)
-        .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>)
-        .<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>cnt</span><span class='op'>|</span> {
-            <span class='kw'>if</span> <span class='ident'>cnt</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
-                <span class='prelude-val'>Ok</span>(<span class='ident'>NonBlock</span>::<span class='ident'>Ready</span>(<span class='ident'>cnt</span>))
-            } <span class='kw'>else</span> {
-                <span class='prelude-val'>Err</span>(<span class='ident'>MioError</span>::<span class='ident'>eof</span>())
-            }
-        })
-        .<span class='ident'>or_else</span>(<span class='ident'>to_non_block</span>)
-}
-
-<span class='doccomment'>///writes the length of the supplied slice into the socket from the slice</span>
-<span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>write_slice</span><span class='op'>&lt;</span><span class='ident'>I</span>: <span class='ident'>IoHandle</span><span class='op'>&gt;</span>(<span class='ident'>io</span>: <span class='kw-2'>&amp;</span> <span class='ident'>I</span>, <span class='ident'>src</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
-    <span class='kw'>use</span> <span class='ident'>nix</span>::<span class='ident'>unistd</span>::<span class='ident'>write</span>;
-
-    <span class='ident'>write</span>(<span class='ident'>io</span>.<span class='ident'>desc</span>().<span class='ident'>fd</span>, <span class='ident'>src</span>)
-        .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>)
-        .<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>cnt</span><span class='op'>|</span> <span class='ident'>NonBlock</span>::<span class='ident'>Ready</span>(<span class='ident'>cnt</span>))
-        .<span class='ident'>or_else</span>(<span class='ident'>to_non_block</span>)
 }
 
 <span class='comment'>/*
