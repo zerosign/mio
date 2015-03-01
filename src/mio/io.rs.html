@@ -284,7 +284,7 @@
     <span class='kw'>fn</span> <span class='ident'>from_fd</span>(<span class='ident'>fd</span>: <span class='ident'>Fd</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span>;
 }
 
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>IoReader</span> {
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>TryRead</span> {
     <span class='kw'>fn</span> <span class='ident'>read</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>MutBuf</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
         <span class='comment'>// Reads the length of the slice supplied by buf.mut_bytes into the buffer</span>
         <span class='comment'>// This is not guaranteed to consume an entire datagram or segment.</span>
@@ -303,7 +303,7 @@
     <span class='kw'>fn</span> <span class='ident'>read_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span>;
 }
 
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>IoWriter</span> {
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>TryWrite</span> {
     <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>Buf</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>write_slice</span>(<span class='ident'>buf</span>.<span class='ident'>bytes</span>());
 
@@ -346,7 +346,7 @@
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>IoReader</span> <span class='kw'>for</span> <span class='ident'>Io</span> {
+<span class='kw'>impl</span> <span class='ident'>TryRead</span> <span class='kw'>for</span> <span class='ident'>Io</span> {
     <span class='kw'>fn</span> <span class='ident'>read_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>dst</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
         <span class='kw'>use</span> <span class='ident'>nix</span>::<span class='ident'>unistd</span>::<span class='ident'>read</span>;
 
@@ -363,7 +363,7 @@
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>IoWriter</span> <span class='kw'>for</span> <span class='ident'>Io</span> {
+<span class='kw'>impl</span> <span class='ident'>TryWrite</span> <span class='kw'>for</span> <span class='ident'>Io</span> {
     <span class='kw'>fn</span> <span class='ident'>write_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>src</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
         <span class='kw'>use</span> <span class='ident'>nix</span>::<span class='ident'>unistd</span>::<span class='ident'>write</span>;
 
@@ -417,7 +417,7 @@
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>IoReader</span> <span class='kw'>for</span> <span class='ident'>PipeReader</span> {
+<span class='kw'>impl</span> <span class='ident'>TryRead</span> <span class='kw'>for</span> <span class='ident'>PipeReader</span> {
     <span class='kw'>fn</span> <span class='ident'>read_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>io</span>.<span class='ident'>read_slice</span>(<span class='ident'>buf</span>)
     }
@@ -438,7 +438,7 @@
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>IoWriter</span> <span class='kw'>for</span> <span class='ident'>PipeWriter</span> {
+<span class='kw'>impl</span> <span class='ident'>TryWrite</span> <span class='kw'>for</span> <span class='ident'>PipeWriter</span> {
     <span class='kw'>fn</span> <span class='ident'>write_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>io</span>.<span class='ident'>write_slice</span>(<span class='ident'>buf</span>)
     }

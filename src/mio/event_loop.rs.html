@@ -454,7 +454,6 @@
 <span id="412">412</span>
 <span id="413">413</span>
 <span id="414">414</span>
-<span id="415">415</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>default</span>::<span class='ident'>Default</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>time</span>::<span class='ident'>duration</span>::<span class='ident'>Duration</span>;
@@ -821,8 +820,7 @@
     <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>atomic</span>::<span class='ident'>AtomicIsize</span>;
     <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>atomic</span>::<span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>;
     <span class='kw'>use</span> <span class='ident'>super</span>::<span class='ident'>EventLoop</span>;
-    <span class='kw'>use</span> <span class='ident'>io</span>::{<span class='ident'>IoWriter</span>, <span class='ident'>IoReader</span>};
-    <span class='kw'>use</span> {<span class='ident'>io</span>, <span class='ident'>buf</span>, <span class='ident'>Buf</span>, <span class='ident'>Handler</span>, <span class='ident'>Token</span>};
+    <span class='kw'>use</span> {<span class='ident'>io</span>, <span class='ident'>buf</span>, <span class='ident'>Buf</span>, <span class='ident'>Handler</span>, <span class='ident'>Token</span>, <span class='ident'>TryRead</span>, <span class='ident'>TryWrite</span>};
     <span class='kw'>use</span> <span class='ident'>os</span>::<span class='ident'>event</span>;
 
     <span class='kw'>type</span> <span class='ident'>TestEventLoop</span> <span class='op'>=</span> <span class='ident'>EventLoop</span><span class='op'>&lt;</span><span class='ident'>usize</span>, ()<span class='op'>&gt;</span>;
