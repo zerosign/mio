@@ -43,22 +43,14 @@
     <section id='main' class="content mod">
 <h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>mio</a>::<wbr><a class='mod' href=''>net</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-45' href='../../src/mio/net.rs.html#1-586'>[src]</a></span></h1>
+        </span><a id='src-45' href='../../src/mio/net/mod.rs.html#1-267'>[src]</a></span></h1>
 <div class='docblock'><p>Networking primitives</p>
 </div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                     <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='mod' href='pipe/index.html'
-                               title='mio::net::pipe'>pipe</a></td>
-                        <td class='docblock short'><p>Named pipes</p>
-</td>
-                    </tr>
-                
-                    <tr>
                         <td><a class='stability Unmarked' title='No stability level'></a><a class='mod' href='tcp/index.html'
                                title='mio::net::tcp'>tcp</a></td>
-                        <td class='docblock short'><p>TCP networking primitives</p>
-</td>
+                        <td class='docblock short'></td>
                     </tr>
                 
                     <tr>
@@ -66,52 +58,10 @@
                                title='mio::net::udp'>udp</a></td>
                         <td class='docblock short'></td>
                     </tr>
-                </table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
-<table>
-                    <tr>
-                        <td><a class='stability Unstable' title='Unstable'></a><a class='struct' href='struct.InetAddr.html'
-                               title='mio::net::InetAddr'>InetAddr</a></td>
-                        <td class='docblock short'><p>Representation of a socket address for networking applications</p>
-</td>
-                    </tr>
                 
                     <tr>
-                        <td><a class='stability Unstable' title='Unstable'></a><a class='struct' href='struct.Ipv4Addr.html'
-                               title='mio::net::Ipv4Addr'>Ipv4Addr</a></td>
-                        <td class='docblock short'><p>Representation of an IPv4 address.</p>
-</td>
-                    </tr>
-                
-                    <tr>
-                        <td><a class='stability Unstable' title='Unstable'></a><a class='struct' href='struct.Ipv6Addr.html'
-                               title='mio::net::Ipv6Addr'>Ipv6Addr</a></td>
-                        <td class='docblock short'><p>Representation of an IPv6 address.</p>
-</td>
-                    </tr>
-                </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
-<table>
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='enum' href='enum.AddressFamily.html'
-                               title='mio::net::AddressFamily'>AddressFamily</a></td>
-                        <td class='docblock short'></td>
-                    </tr>
-                
-                    <tr>
-                        <td><a class='stability Unstable' title='Unstable'></a><a class='enum' href='enum.IpAddr.html'
-                               title='mio::net::IpAddr'>IpAddr</a></td>
-                        <td class='docblock short'><p>Enumeration of possible IP addresses</p>
-</td>
-                    </tr>
-                
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='enum' href='enum.SockAddr.html'
-                               title='mio::net::SockAddr'>SockAddr</a></td>
-                        <td class='docblock short'></td>
-                    </tr>
-                
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='enum' href='enum.SockType.html'
-                               title='mio::net::SockType'>SockType</a></td>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='mod' href='unix/index.html'
+                               title='mio::net::unix'>unix</a></td>
                         <td class='docblock short'></td>
                     </tr>
                 </table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
@@ -129,15 +79,75 @@
                     </tr>
                 
                     <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='trait' href='trait.ToInAddr.html'
-                               title='mio::net::ToInAddr'>ToInAddr</a></td>
-                        <td class='docblock short'><p>Convert to an in_addr</p>
-</td>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='trait' href='trait.UnconnectedSocket.html'
+                               title='mio::net::UnconnectedSocket'>UnconnectedSocket</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                </table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='fn' href='fn.accept.html'
+                               title='mio::net::accept'>accept</a></td>
+                        <td class='docblock short'></td>
                     </tr>
                 
                     <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='trait' href='trait.UnconnectedSocket.html'
-                               title='mio::net::UnconnectedSocket'>UnconnectedSocket</a></td>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='fn' href='fn.bind.html'
+                               title='mio::net::bind'>bind</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='fn' href='fn.connect.html'
+                               title='mio::net::connect'>connect</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='fn' href='fn.getpeername.html'
+                               title='mio::net::getpeername'>getpeername</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='fn' href='fn.getsockname.html'
+                               title='mio::net::getsockname'>getsockname</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='fn' href='fn.listen.html'
+                               title='mio::net::listen'>listen</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='fn' href='fn.read.html'
+                               title='mio::net::read'>read</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='fn' href='fn.recvfrom.html'
+                               title='mio::net::recvfrom'>recvfrom</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='fn' href='fn.sendto.html'
+                               title='mio::net::sendto'>sendto</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='fn' href='fn.socket.html'
+                               title='mio::net::socket'>socket</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='fn' href='fn.write.html'
+                               title='mio::net::write'>write</a></td>
                         <td class='docblock short'></td>
                     </tr>
                 </table></section>

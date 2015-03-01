@@ -87,10 +87,12 @@
 <span id="45">45</span>
 <span id="46">46</span>
 <span id="47">47</span>
+<span id="48">48</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
 <span class='kw'>use</span> <span class='ident'>super</span>::<span class='ident'>posix</span>::<span class='op'>*</span>;
 <span class='kw'>use</span> <span class='ident'>error</span>::{<span class='ident'>MioResult</span>, <span class='ident'>MioError</span>};
+<span class='kw'>use</span> <span class='ident'>net</span>;
 
 <span class='kw'>const</span> <span class='ident'>MARK</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> [<span class='ident'>u8</span>] <span class='op'>=</span> <span class='string'>b&quot;0x000x000x000x000x000x000x000x01&quot;</span>;
 
@@ -108,7 +110,7 @@
     }
 
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wakeup</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
-        <span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>eventfd</span>, <span class='ident'>MARK</span>)
+        <span class='ident'>net</span>::<span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>eventfd</span>, <span class='ident'>MARK</span>)
             .<span class='ident'>map</span>(<span class='op'>|</span>_<span class='op'>|</span> ())
     }
 
@@ -121,7 +123,7 @@
 
         <span class='kw'>loop</span> {
             <span class='comment'>// Consume data until all bytes are purged</span>
-            <span class='kw'>match</span> <span class='ident'>read</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>eventfd</span>, <span class='ident'>buf</span>.<span class='ident'>as_mut_slice</span>()) {
+            <span class='kw'>match</span> <span class='ident'>net</span>::<span class='ident'>read</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>eventfd</span>, <span class='ident'>buf</span>.<span class='ident'>as_mut_slice</span>()) {
                 <span class='prelude-val'>Ok</span>(_) <span class='op'>=&gt;</span> {}
                 <span class='prelude-val'>Err</span>(_) <span class='op'>=&gt;</span> <span class='kw'>return</span>
             }

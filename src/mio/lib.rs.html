@@ -208,6 +208,7 @@
 <span id="166">166</span>
 <span id="167">167</span>
 <span id="168">168</span>
+<span id="169">169</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! A fast, low-level IO library for Rust focusing on non-blocking APIs, event</span>
 <span class='doccomment'>//! notification, and other useful utilities for building high performance IO</span>
@@ -231,15 +232,16 @@
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! ```</span>
 <span class='doccomment'>//! use mio::*;</span>
-<span class='doccomment'>//! use mio::net::{SockAddr};</span>
 <span class='doccomment'>//! use mio::net::tcp::{TcpSocket, TcpAcceptor};</span>
+<span class='doccomment'>//! use std::net::SocketAddr;</span>
+<span class='doccomment'>//! use std::str::FromStr;</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! // Setup some tokens to allow us to identify which event is</span>
 <span class='doccomment'>//! // for which socket.</span>
 <span class='doccomment'>//! const SERVER: Token = Token(0);</span>
 <span class='doccomment'>//! const CLIENT: Token = Token(1);</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//! let addr = SockAddr::parse(&quot;127.0.0.1:13265&quot;).unwrap();</span>
+<span class='doccomment'>//! let addr = FromStr::from_str(&quot;127.0.0.1:13265&quot;).unwrap();</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! // Setup the server socket</span>
 <span class='doccomment'>//! let server = TcpSocket::v4().unwrap()</span>

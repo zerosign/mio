@@ -151,6 +151,13 @@
 <span id="109">109</span>
 <span id="110">110</span>
 <span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>old_io</span>;
 <span class='kw'>use</span> <span class='ident'>nix</span>::<span class='ident'>NixError</span>;
@@ -204,6 +211,13 @@
         <span class='ident'>MioError</span> {
             <span class='ident'>kind</span>: <span class='ident'>BufOverflow</span>,
             <span class='ident'>sys</span>: <span class='prelude-val'>None</span>
+        }
+    }
+
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>other</span>() <span class='op'>-&gt;</span> <span class='ident'>MioError</span> {
+        <span class='ident'>MioError</span> {
+            <span class='ident'>kind</span>: <span class='ident'>OtherError</span>,
+            <span class='ident'>sys</span>: <span class='prelude-val'>None</span>,
         }
     }
 
