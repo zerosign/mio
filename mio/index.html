@@ -43,7 +43,7 @@
     <section id='main' class="content mod">
 <h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>mio</a><wbr></span><span class='out-of-band'><a href='stability.html'>[stability]</a> <span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-0' href='../src/mio/lib.rs.html#1-169'>[src]</a></span></h1>
+        </span><a id='src-0' href='../src/mio/lib.rs.html#1-172'>[src]</a></span></h1>
 <div class='docblock'><p>A fast, low-level IO library for Rust focusing on non-blocking APIs, event
 notification, and other useful utilities for building high performance IO
 apps.</p>
@@ -66,6 +66,8 @@ handles receiving events from the OS and dispatching them to a supplied
 
 <h1 id="example" class='section-header'><a
                            href="#example">Example</a></h1><pre id='rust-example-rendered' class='rust '>
+<span class='attribute'>#[<span class='ident'>feature</span>(<span class='ident'>net</span>)]</span>
+
 <span class='kw'>use</span> <span class='ident'>mio</span>::<span class='op'>*</span>;
 <span class='kw'>use</span> <span class='ident'>mio</span>::<span class='ident'>net</span>::<span class='ident'>tcp</span>::{<span class='ident'>TcpSocket</span>, <span class='ident'>TcpAcceptor</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>net</span>::<span class='ident'>SocketAddr</span>;
@@ -170,6 +172,12 @@ handles receiving events from the OS and dispatching them to a supplied
                     <tr>
                         <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Interest.html'
                                title='mio::Interest'>Interest</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Io.html'
+                               title='mio::Io'>Io</a></td>
                         <td class='docblock short'></td>
                     </tr>
                 
