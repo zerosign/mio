@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../../index.html'>mio</a>::<wbr><a href='../index.html'>net</a>::<wbr><a href='index.html'>tcp</a></p><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.TcpAcceptor.html' title=''>TcpAcceptor</a><a class='struct current' href='struct.TcpListener.html' title=''>TcpListener</a><a class='struct ' href='struct.TcpSocket.html' title=''>TcpSocket</a><a class='struct ' href='struct.TcpStream.html' title='A structure which represents a TCP stream between a local socket and a remote socket.'>TcpStream</a></div>
+        <p class='location'><a href='../../index.html'>mio</a>::<wbr><a href='../index.html'>net</a>::<wbr><a href='index.html'>tcp</a></p><div class='block struct'><h2>Structs</h2><a class='struct current' href='struct.TcpListener.html' title='A structure representing a socket server.'>TcpListener</a><a class='struct ' href='struct.TcpSocket.html' title=''>TcpSocket</a><a class='struct ' href='struct.TcpStream.html' title='A structure which represents a TCP stream between a local socket and a remote socket.'>TcpStream</a></div>
     </section>
 
     <nav class="sub">
@@ -41,15 +41,80 @@
     </nav>
 
     <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../../index.html'>mio</a>::<wbr><a href='../index.html'>net</a>::<wbr><a href='index.html'>tcp</a>::<wbr><a class='struct' href=''>TcpListener</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Struct <a href='../../index.html'>mio</a>::<wbr><a href='../index.html'>net</a>::<wbr><a href='index.html'>tcp</a>::<wbr><a class='struct' href=''>TcpListener</a><wbr><a class='stability Unstable' title=''>Unstable</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-447' href='../../../src/mio/net/tcp.rs.html#122-124'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct TcpListener {
-    // some fields omitted
-}</pre><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='struct' href='../../../mio/net/tcp/struct.TcpListener.html' title='mio::net::tcp::TcpListener'>TcpListener</a></code></h3><div class='impl-items'><h4 id='method.listen' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.listen' class='fnname'>listen</a>(self, backlog: <a href='http://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='type' href='../../../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a class='struct' href='../../../mio/net/tcp/struct.TcpAcceptor.html' title='mio::net::tcp::TcpAcceptor'>TcpAcceptor</a>&gt;</code></h4>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../../mio/trait.IoHandle.html' title='mio::IoHandle'>IoHandle</a> for <a class='struct' href='../../../mio/net/tcp/struct.TcpListener.html' title='mio::net::tcp::TcpListener'>TcpListener</a></code></h3><div class='impl-items'><h4 id='method.fd' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.fd' class='fnname'>fd</a>(&amp;self) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/std/sys/ext/type.Fd.html' title='std::sys::ext::Fd'>Fd</a></code></h4>
+        </span><a id='src-49097' href='http://doc.rust-lang.org/nightly/std/net/tcp/struct.TcpListener.html?gotosrc=49097'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct TcpListener(_);</pre><div class='docblock'><p>A structure representing a socket server.</p>
+
+<h1 id="examples" class='section-header'><a
+                           href="#examples">Examples</a></h1><pre id='rust-example-rendered' class='rust '>
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>net</span>::{<span class='ident'>TcpListener</span>, <span class='ident'>TcpStream</span>};
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>thread</span>;
+
+<span class='kw'>let</span> <span class='ident'>listener</span> <span class='op'>=</span> <span class='ident'>TcpListener</span>::<span class='ident'>bind</span>(<span class='string'>&quot;127.0.0.1:80&quot;</span>).<span class='ident'>unwrap</span>();
+
+<span class='kw'>fn</span> <span class='ident'>handle_client</span>(<span class='ident'>stream</span>: <span class='ident'>TcpStream</span>) {
+    <span class='comment'>// ...</span>
+}
+
+<span class='comment'>// accept connections and process them, spawning a new thread for each one</span>
+<span class='kw'>for</span> <span class='ident'>stream</span> <span class='kw'>in</span> <span class='ident'>listener</span>.<span class='ident'>incoming</span>() {
+    <span class='kw'>match</span> <span class='ident'>stream</span> {
+        <span class='prelude-val'>Ok</span>(<span class='ident'>stream</span>) <span class='op'>=&gt;</span> {
+            <span class='ident'>thread</span>::<span class='ident'>spawn</span>(<span class='kw'>move</span><span class='op'>||</span> {
+                <span class='comment'>// connection succeeded</span>
+                <span class='ident'>handle_client</span>(<span class='ident'>stream</span>)
+            });
+        }
+        <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> { <span class='comment'>/* connection failed */</span> }
+    }
+}
+
+<span class='comment'>// close the socket server</span>
+<span class='ident'>drop</span>(<span class='ident'>listener</span>);
+</pre>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unstable' title='Unstable'></a><code>impl <a class='struct' href='../../../mio/net/tcp/struct.TcpListener.html' title='mio::net::tcp::TcpListener'>TcpListener</a></code></h3><div class='impl-items'><h4 id='method.bind' class='method'><a class='stability Unstable' title='Unstable'></a><code>fn <a href='#method.bind' class='fnname'>bind</a>&lt;A&gt;(addr: &amp;A) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../../mio/net/tcp/struct.TcpListener.html' title='mio::net::tcp::TcpListener'>TcpListener</a>, <a class='struct' href='http://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>&gt; <span class='where'>where A: <a class='trait' href='http://doc.rust-lang.org/nightly/std/net/addr/trait.ToSocketAddrs.html' title='std::net::addr::ToSocketAddrs'>ToSocketAddrs</a>, A: ?<a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a></span></code></h4>
+<div class='docblock'><p>Creates a new <code>TcpListener</code> which will be bound to the specified
+address.</p>
+
+<p>The returned listener is ready for accepting connections.</p>
+
+<p>Binding with a port number of 0 will request that the OS assigns a port
+to this listener. The port allocated can be queried via the
+<code>socket_addr</code> function.</p>
+
+<p>The address type can be any implementer of <code>ToSocketAddrs</code> trait. See
+its documentation for concrete examples.</p>
+</div><h4 id='method.socket_addr' class='method'><a class='stability Unstable' title='Unstable'></a><code>fn <a href='#method.socket_addr' class='fnname'>socket_addr</a>(&amp;self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/std/net/addr/struct.SocketAddr.html' title='std::net::addr::SocketAddr'>SocketAddr</a>, <a class='struct' href='http://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>&gt;</code></h4>
+<div class='docblock'><p>Returns the local socket address of this listener.</p>
+</div><h4 id='method.try_clone' class='method'><a class='stability Unstable' title='Unstable'></a><code>fn <a href='#method.try_clone' class='fnname'>try_clone</a>(&amp;self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../../mio/net/tcp/struct.TcpListener.html' title='mio::net::tcp::TcpListener'>TcpListener</a>, <a class='struct' href='http://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>&gt;</code></h4>
+<div class='docblock'><p>Create a new independently owned handle to the underlying socket.</p>
+
+<p>The returned <code>TcpListener</code> is a reference to the same socket that this
+object references. Both handles can be used to accept incoming
+connections and options set on one listener will affect the other.</p>
+</div><h4 id='method.accept' class='method'><a class='stability Unstable' title='Unstable'></a><code>fn <a href='#method.accept' class='fnname'>accept</a>(&amp;self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(<a class='struct' href='../../../mio/net/tcp/struct.TcpStream.html' title='mio::net::tcp::TcpStream'>TcpStream</a>, <a class='struct' href='http://doc.rust-lang.org/nightly/std/net/addr/struct.SocketAddr.html' title='std::net::addr::SocketAddr'>SocketAddr</a>)</a>, <a class='struct' href='http://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>&gt;</code></h4>
+<div class='docblock'><p>Accept a new incoming connection from this listener.</p>
+
+<p>This function will block the calling thread until a new TCP connection
+is established. When established, the corresponding <code>TcpStream</code> and the
+remote peer&#39;s address will be returned.</p>
+</div><h4 id='method.incoming' class='method'><a class='stability Unstable' title='Unstable'></a><code>fn <a href='#method.incoming' class='fnname'>incoming</a>(&amp;self) -&gt; <a class='struct' href='http://doc.rust-lang.org/nightly/std/net/tcp/struct.Incoming.html' title='std::net::tcp::Incoming'>Incoming</a></code></h4>
+<div class='docblock'><p>Returns an iterator over the connections being received on this
+listener.</p>
+
+<p>The returned iterator will never returned <code>None</code> and will also not yield
+the peer&#39;s <code>SocketAddr</code> structure.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><a class='stability Unstable' title='Unstable'></a><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/std/sys/ext/trait.AsRawFd.html' title='std::sys::ext::AsRawFd'>AsRawFd</a> for <a class='struct' href='../../../mio/net/tcp/struct.TcpListener.html' title='mio::net::tcp::TcpListener'>TcpListener</a></code></h3><div class='impl-items'><h4 id='method.as_raw_fd' class='method'><a class='stability Unstable' title='Unstable'></a><code>fn <a href='#method.as_raw_fd' class='fnname'>as_raw_fd</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a></code></h4>
 </div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../../mio/trait.FromFd.html' title='mio::FromFd'>FromFd</a> for <a class='struct' href='../../../mio/net/tcp/struct.TcpListener.html' title='mio::net::tcp::TcpListener'>TcpListener</a></code></h3><div class='impl-items'><h4 id='method.from_fd' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.from_fd' class='fnname'>from_fd</a>(fd: <a class='type' href='http://doc.rust-lang.org/nightly/std/sys/ext/type.Fd.html' title='std::sys::ext::Fd'>Fd</a>) -&gt; <a class='struct' href='../../../mio/net/tcp/struct.TcpListener.html' title='mio::net::tcp::TcpListener'>TcpListener</a></code></h4>
-</div><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../../mio/net/tcp/struct.TcpListener.html' title='mio::net::tcp::TcpListener'>TcpListener</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='#method.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='http://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../../mio/trait.IoHandle.html' title='mio::IoHandle'>IoHandle</a> for <a class='struct' href='../../../mio/net/tcp/struct.TcpListener.html' title='mio::net::tcp::TcpListener'>TcpListener</a></code></h3><div class='impl-items'><h4 id='method.fd' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.fd' class='fnname'>fd</a>(&amp;self) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/std/sys/ext/type.Fd.html' title='std::sys::ext::Fd'>Fd</a></code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../../mio/net/trait.Socket.html' title='mio::net::Socket'>Socket</a> for <a class='struct' href='../../../mio/net/tcp/struct.TcpListener.html' title='mio::net::tcp::TcpListener'>TcpListener</a></code></h3><div class='impl-items'><h4 id='method.linger' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.linger' class='fnname'>linger</a>(&amp;self) -&gt; <a class='type' href='../../../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt;</code></h4>
+<h4 id='method.set_linger' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.set_linger' class='fnname'>set_linger</a>(&amp;self, dur_s: <a href='http://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='type' href='../../../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
+<h4 id='method.set_reuseaddr' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.set_reuseaddr' class='fnname'>set_reuseaddr</a>(&amp;self, val: <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='type' href='../../../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
+<h4 id='method.set_reuseport' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.set_reuseport' class='fnname'>set_reuseport</a>(&amp;self, val: <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='type' href='../../../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
+<h4 id='method.set_tcp_nodelay' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.set_tcp_nodelay' class='fnname'>set_tcp_nodelay</a>(&amp;self, val: <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='type' href='../../../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../../mio/trait.TryAccept.html' title='mio::TryAccept'>TryAccept</a> for <a class='struct' href='../../../mio/net/tcp/struct.TcpListener.html' title='mio::net::tcp::TcpListener'>TcpListener</a></code></h3><div class='impl-items'><h4 id='assoc_type.Sock' class='type'><a class='stability Unmarked' title='No stability level'></a><code>type Sock = <a class='struct' href='../../../mio/net/tcp/struct.TcpStream.html' title='mio::net::tcp::TcpStream'>TcpStream</a></code></h4>
+<h4 id='method.try_accept' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.try_accept' class='fnname'>try_accept</a>(&amp;self) -&gt; <a class='type' href='../../../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a class='enum' href='../../../mio/enum.NonBlock.html' title='mio::NonBlock'>NonBlock</a>&lt;<a class='struct' href='../../../mio/net/tcp/struct.TcpStream.html' title='mio::net::tcp::TcpStream'>TcpStream</a>&gt;&gt;</code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 

@@ -206,6 +206,15 @@
 <span id="164">164</span>
 <span id="165">165</span>
 <span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! A fast, low-level IO library for Rust focusing on non-blocking APIs, event</span>
 <span class='doccomment'>//! notification, and other useful utilities for building high performance IO</span>
@@ -229,7 +238,7 @@
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! ```</span>
 <span class='doccomment'>//! use mio::*;</span>
-<span class='doccomment'>//! use mio::net::tcp::{TcpSocket, TcpAcceptor};</span>
+<span class='doccomment'>//! use mio::net::tcp::{TcpSocket, TcpListener};</span>
 <span class='doccomment'>//! use std::net::SocketAddr;</span>
 <span class='doccomment'>//! use std::str::FromStr;</span>
 <span class='doccomment'>//!</span>
@@ -241,9 +250,9 @@
 <span class='doccomment'>//! let addr = FromStr::from_str(&quot;127.0.0.1:13265&quot;).unwrap();</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! // Setup the server socket</span>
-<span class='doccomment'>//! let server = TcpSocket::v4().unwrap()</span>
-<span class='doccomment'>//!     .bind(&amp;addr).unwrap()</span>
-<span class='doccomment'>//!     .listen(256).unwrap();</span>
+<span class='doccomment'>//! let sock = TcpSocket::v4().unwrap();</span>
+<span class='doccomment'>//! sock.bind(&amp;addr).unwrap();</span>
+<span class='doccomment'>//! let server = sock.listen(256).unwrap();</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! // Create an event loop</span>
 <span class='doccomment'>//! let mut event_loop = EventLoop::&lt;(), ()&gt;::new().unwrap();</span>
@@ -259,7 +268,7 @@
 <span class='doccomment'>//! event_loop.register(&amp;sock, CLIENT).unwrap();</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! // Define a handler to process the events</span>
-<span class='doccomment'>//! struct MyHandler(TcpAcceptor);</span>
+<span class='doccomment'>//! struct MyHandler(TcpListener);</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! impl Handler&lt;(), ()&gt; for MyHandler {</span>
 <span class='doccomment'>//!     fn readable(&amp;mut self, event_loop: &amp;mut EventLoop&lt;(), ()&gt;, token: Token, _: ReadHint) {</span>
@@ -321,6 +330,7 @@
     <span class='ident'>Io</span>,
     <span class='ident'>TryRead</span>,
     <span class='ident'>TryWrite</span>,
+    <span class='ident'>TryAccept</span>,
     <span class='ident'>IoHandle</span>,
     <span class='ident'>PipeReader</span>,
     <span class='ident'>PipeWriter</span>,
@@ -358,6 +368,14 @@
 <span class='kw'>mod</span> <span class='ident'>os</span>;
 <span class='kw'>mod</span> <span class='ident'>poll</span>;
 <span class='kw'>mod</span> <span class='ident'>timer</span>;
+
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>prelude</span> {
+    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>super</span>::{
+        <span class='ident'>EventLoop</span>,
+        <span class='ident'>TryRead</span>,
+        <span class='ident'>TryWrite</span>,
+    };
+}
 
 <span class='comment'>// Re-export bytes</span>
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>buf</span> {

@@ -43,7 +43,7 @@
     <section id='main' class="content trait">
 <h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>mio</a>::<wbr><a href='index.html'>net</a>::<wbr><a class='trait' href=''>Socket</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-1800' href='../../src/mio/net/mod.rs.html#20-56'>[src]</a></span></h1>
+        </span><a id='src-1592' href='../../src/mio/net/mod.rs.html#19-55'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Socket: <a class='trait' href='../../mio/trait.IoHandle.html' title='mio::IoHandle'>IoHandle</a> {
     fn <a href='#method.linger' class='fnname'>linger</a>(&amp;self) -&gt; <a class='type' href='../../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt; { ... }
     fn <a href='#method.set_linger' class='fnname'>set_linger</a>(&amp;self, dur_s: <a href='http://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='type' href='../../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt; { ... }
@@ -58,7 +58,7 @@
         <ul class='item-list' id='implementors-list'>
     <li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../mio/net/trait.Socket.html' title='mio::net::Socket'>Socket</a> for <a class='struct' href='../../mio/net/tcp/struct.TcpSocket.html' title='mio::net::tcp::TcpSocket'>TcpSocket</a></code></li>
 <li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../mio/net/trait.Socket.html' title='mio::net::Socket'>Socket</a> for <a class='struct' href='../../mio/net/tcp/struct.TcpStream.html' title='mio::net::tcp::TcpStream'>TcpStream</a></code></li>
-<li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../mio/net/trait.Socket.html' title='mio::net::Socket'>Socket</a> for <a class='struct' href='../../mio/net/tcp/struct.TcpAcceptor.html' title='mio::net::tcp::TcpAcceptor'>TcpAcceptor</a></code></li>
+<li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../mio/net/trait.Socket.html' title='mio::net::Socket'>Socket</a> for <a class='struct' href='../../mio/net/tcp/struct.TcpListener.html' title='mio::net::tcp::TcpListener'>TcpListener</a></code></li>
 <li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../mio/net/trait.Socket.html' title='mio::net::Socket'>Socket</a> for <a class='struct' href='../../mio/net/udp/struct.UdpSocket.html' title='mio::net::udp::UdpSocket'>UdpSocket</a></code></li>
 <li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../mio/net/trait.Socket.html' title='mio::net::Socket'>Socket</a> for <a class='struct' href='../../mio/net/unix/struct.UnixSocket.html' title='mio::net::unix::UnixSocket'>UnixSocket</a></code></li>
 <li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../mio/net/trait.Socket.html' title='mio::net::Socket'>Socket</a> for <a class='struct' href='../../mio/net/unix/struct.UnixAcceptor.html' title='mio::net::unix::UnixAcceptor'>UnixAcceptor</a></code></li>
