@@ -200,10 +200,10 @@
 <span id="158">158</span>
 <span id="159">159</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> {<span class='ident'>TryRead</span>, <span class='ident'>TryWrite</span>, <span class='ident'>TryAccept</span>, <span class='ident'>NonBlock</span>, <span class='ident'>MioResult</span>};
+<span class='kw'>use</span> {<span class='ident'>TryRead</span>, <span class='ident'>TryWrite</span>, <span class='ident'>NonBlock</span>, <span class='ident'>MioResult</span>};
 <span class='kw'>use</span> <span class='ident'>buf</span>::{<span class='ident'>Buf</span>, <span class='ident'>MutBuf</span>};
 <span class='kw'>use</span> <span class='ident'>io</span>::{<span class='self'>self</span>, <span class='ident'>FromFd</span>, <span class='ident'>Io</span>, <span class='ident'>IoHandle</span>};
-<span class='kw'>use</span> <span class='ident'>net</span>::{<span class='self'>self</span>, <span class='ident'>nix</span>, <span class='ident'>Socket</span>};
+<span class='kw'>use</span> <span class='ident'>net</span>::{<span class='self'>self</span>, <span class='ident'>nix</span>, <span class='ident'>TryAccept</span>, <span class='ident'>Socket</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>net</span>::<span class='ident'>SocketAddr</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>unix</span>::{<span class='ident'>Fd</span>, <span class='ident'>AsRawFd</span>};
