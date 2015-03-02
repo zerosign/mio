@@ -43,7 +43,7 @@
     <section id='main' class="content trait">
 <h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>mio</a>::<wbr><a class='trait' href=''>TryRead</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-6747' href='../src/mio/io.rs.html#36-53'>[src]</a></span></h1>
+        </span><a id='src-6832' href='../src/mio/io.rs.html#36-53'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait TryRead {
     fn <a href='#tymethod.read_slice' class='fnname'>read_slice</a>(&amp;self, buf: <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;mut [</a><a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; <a class='type' href='../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a class='enum' href='../mio/enum.NonBlock.html' title='mio::NonBlock'>NonBlock</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt;&gt;;
 
@@ -57,7 +57,7 @@
         <h3 id='method.read' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.read' class='fnname'>read</a>&lt;B: <a class='trait' href='../mio/buf/trait.MutBuf.html' title='mio::buf::MutBuf'>MutBuf</a>&gt;(&amp;self, buf: &amp;mut B) -&gt; <a class='type' href='../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a class='enum' href='../mio/enum.NonBlock.html' title='mio::NonBlock'>NonBlock</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt;&gt;</code></h3></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../mio/trait.TryRead.html' title='mio::TryRead'>TryRead</a> for <a class='struct' href='../mio/net/tcp/struct.TcpSocket.html' title='mio::net::tcp::TcpSocket'>TcpSocket</a></code></li>
+    <li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../mio/trait.TryRead.html' title='mio::TryRead'>TryRead</a> for <a class='struct' href='../mio/net/tcp/struct.TcpStream.html' title='mio::net::tcp::TcpStream'>TcpStream</a></code></li>
 <li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../mio/trait.TryRead.html' title='mio::TryRead'>TryRead</a> for <a class='struct' href='../mio/net/udp/struct.UdpSocket.html' title='mio::net::udp::UdpSocket'>UdpSocket</a></code></li>
 <li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../mio/trait.TryRead.html' title='mio::TryRead'>TryRead</a> for <a class='struct' href='../mio/net/unix/struct.UnixSocket.html' title='mio::net::unix::UnixSocket'>UnixSocket</a></code></li>
 <li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../mio/trait.TryRead.html' title='mio::TryRead'>TryRead</a> for <a class='struct' href='../mio/struct.Io.html' title='mio::Io'>Io</a></code></li>
