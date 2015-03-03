@@ -208,12 +208,6 @@
 <span id="166">166</span>
 <span id="167">167</span>
 <span id="168">168</span>
-<span id="169">169</span>
-<span id="170">170</span>
-<span id="171">171</span>
-<span id="172">172</span>
-<span id="173">173</span>
-<span id="174">174</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! A fast, low-level IO library for Rust focusing on non-blocking APIs, event</span>
 <span class='doccomment'>//! notification, and other useful utilities for building high performance IO</span>
@@ -298,7 +292,7 @@
 <span class='comment'>// mio is still in rapid development</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>unstable</span>]</span>
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>alloc</span>, <span class='ident'>core</span>, <span class='ident'>old_io</span>, <span class='ident'>libc</span>, <span class='ident'>net</span>, <span class='ident'>path</span>, <span class='ident'>std_misc</span>, <span class='ident'>unsafe_destructor</span>)]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>alloc</span>, <span class='ident'>core</span>, <span class='ident'>io</span>, <span class='ident'>libc</span>, <span class='ident'>net</span>, <span class='ident'>path</span>, <span class='ident'>std_misc</span>, <span class='ident'>unsafe_destructor</span>)]</span>
 
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
 
@@ -313,11 +307,6 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>buf</span>::{
     <span class='ident'>Buf</span>,
     <span class='ident'>MutBuf</span>,
-};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>error</span>::{
-    <span class='ident'>MioResult</span>,
-    <span class='ident'>MioError</span>,
-    <span class='ident'>MioErrorKind</span>
 };
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>handler</span>::{
     <span class='ident'>Handler</span>,
@@ -358,7 +347,6 @@
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>net</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>util</span>;
 
-<span class='kw'>mod</span> <span class='ident'>error</span>;
 <span class='kw'>mod</span> <span class='ident'>event_loop</span>;
 <span class='kw'>mod</span> <span class='ident'>handler</span>;
 <span class='kw'>mod</span> <span class='ident'>io</span>;
