@@ -94,9 +94,9 @@
 <span id="52">52</span>
 <span id="53">53</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> {<span class='ident'>IoHandle</span>, <span class='ident'>TryRead</span>, <span class='ident'>TryWrite</span>, <span class='ident'>NonBlock</span>, <span class='ident'>MioResult</span>};
+<span class='kw'>use</span> {<span class='ident'>TryRead</span>, <span class='ident'>TryWrite</span>, <span class='ident'>NonBlock</span>, <span class='ident'>MioResult</span>};
 <span class='kw'>use</span> <span class='ident'>io</span>::{<span class='self'>self</span>, <span class='ident'>PipeReader</span>, <span class='ident'>PipeWriter</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>unix</span>::<span class='ident'>Fd</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>unix</span>::{<span class='ident'>Fd</span>, <span class='ident'>AsRawFd</span>};
 
 <span class='kw'>mod</span> <span class='ident'>nix</span> {
     <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>nix</span>::{<span class='ident'>c_int</span>, <span class='ident'>NixError</span>};
@@ -127,8 +127,8 @@
         })
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>fd</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Fd</span> {
-        <span class='self'>self</span>.<span class='ident'>reader</span>.<span class='ident'>fd</span>()
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_raw_fd</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Fd</span> {
+        <span class='self'>self</span>.<span class='ident'>reader</span>.<span class='ident'>as_raw_fd</span>()
     }
 
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wakeup</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {

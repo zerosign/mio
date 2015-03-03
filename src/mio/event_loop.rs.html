@@ -450,22 +450,14 @@
 <span id="408">408</span>
 <span id="409">409</span>
 <span id="410">410</span>
-<span id="411">411</span>
-<span id="412">412</span>
-<span id="413">413</span>
-<span id="414">414</span>
 </pre><pre class='rust '>
+<span class='kw'>use</span> {<span class='ident'>Handler</span>, <span class='ident'>Evented</span>, <span class='ident'>Poll</span>, <span class='ident'>Token</span>, <span class='ident'>MioResult</span>};
+<span class='kw'>use</span> <span class='ident'>os</span>::<span class='ident'>event</span>::{<span class='ident'>IoEvent</span>, <span class='ident'>Interest</span>, <span class='ident'>PollOpt</span>};
+<span class='kw'>use</span> <span class='ident'>notify</span>::<span class='ident'>Notify</span>;
+<span class='kw'>use</span> <span class='ident'>timer</span>::{<span class='ident'>Timer</span>, <span class='ident'>Timeout</span>, <span class='ident'>TimerResult</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>default</span>::<span class='ident'>Default</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>time</span>::<span class='ident'>duration</span>::<span class='ident'>Duration</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::{<span class='ident'>fmt</span>, <span class='ident'>usize</span>};
-<span class='kw'>use</span> <span class='ident'>error</span>::<span class='ident'>MioResult</span>;
-<span class='kw'>use</span> <span class='ident'>handler</span>::<span class='ident'>Handler</span>;
-<span class='kw'>use</span> <span class='ident'>io</span>::<span class='ident'>IoHandle</span>;
-<span class='kw'>use</span> <span class='ident'>notify</span>::<span class='ident'>Notify</span>;
-<span class='kw'>use</span> <span class='ident'>os</span>::<span class='ident'>event</span>::{<span class='ident'>IoEvent</span>, <span class='ident'>Interest</span>, <span class='ident'>PollOpt</span>};
-<span class='kw'>use</span> <span class='ident'>poll</span>::{<span class='ident'>Poll</span>};
-<span class='kw'>use</span> <span class='ident'>timer</span>::{<span class='ident'>Timer</span>, <span class='ident'>Timeout</span>, <span class='ident'>TimerResult</span>};
-<span class='kw'>use</span> <span class='ident'>os</span>::<span class='ident'>token</span>::<span class='ident'>Token</span>;
 
 <span class='doccomment'>/// Configure EventLoop runtime details</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>Debug</span>)]</span>
@@ -641,17 +633,17 @@
     }
 
     <span class='doccomment'>/// Registers an IO handle with the event loop.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register</span><span class='op'>&lt;</span><span class='ident'>H</span>: <span class='ident'>IoHandle</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>H</span>, <span class='ident'>token</span>: <span class='ident'>Token</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register</span><span class='op'>&lt;</span><span class='ident'>E</span>: <span class='ident'>Evented</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>E</span>, <span class='ident'>token</span>: <span class='ident'>Token</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>poll</span>.<span class='ident'>register</span>(<span class='ident'>io</span>, <span class='ident'>token</span>, <span class='ident'>Interest</span>::<span class='ident'>readable</span>(), <span class='ident'>PollOpt</span>::<span class='ident'>level</span>())
     }
 
     <span class='doccomment'>/// Registers an IO handle with the event loop.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register_opt</span><span class='op'>&lt;</span><span class='ident'>H</span>: <span class='ident'>IoHandle</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>H</span>, <span class='ident'>token</span>: <span class='ident'>Token</span>, <span class='ident'>interest</span>: <span class='ident'>Interest</span>, <span class='ident'>opt</span>: <span class='ident'>PollOpt</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register_opt</span><span class='op'>&lt;</span><span class='ident'>E</span>: <span class='ident'>Evented</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>E</span>, <span class='ident'>token</span>: <span class='ident'>Token</span>, <span class='ident'>interest</span>: <span class='ident'>Interest</span>, <span class='ident'>opt</span>: <span class='ident'>PollOpt</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>poll</span>.<span class='ident'>register</span>(<span class='ident'>io</span>, <span class='ident'>token</span>, <span class='ident'>interest</span>, <span class='ident'>opt</span>)
     }
 
     <span class='doccomment'>/// Re-Registers an IO handle with the event loop.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>reregister</span><span class='op'>&lt;</span><span class='ident'>H</span>: <span class='ident'>IoHandle</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>H</span>, <span class='ident'>token</span>: <span class='ident'>Token</span>, <span class='ident'>interest</span>: <span class='ident'>Interest</span>, <span class='ident'>opt</span>: <span class='ident'>PollOpt</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>reregister</span><span class='op'>&lt;</span><span class='ident'>E</span>: <span class='ident'>Evented</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>E</span>, <span class='ident'>token</span>: <span class='ident'>Token</span>, <span class='ident'>interest</span>: <span class='ident'>Interest</span>, <span class='ident'>opt</span>: <span class='ident'>PollOpt</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>poll</span>.<span class='ident'>reregister</span>(<span class='ident'>io</span>, <span class='ident'>token</span>, <span class='ident'>interest</span>, <span class='ident'>opt</span>)
     }
 
@@ -669,7 +661,7 @@
     }
 
     <span class='doccomment'>/// Deregisters an IO handle with the event loop.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>deregister</span><span class='op'>&lt;</span><span class='ident'>H</span>: <span class='ident'>IoHandle</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>H</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>deregister</span><span class='op'>&lt;</span><span class='ident'>E</span>: <span class='ident'>Evented</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='ident'>E</span>) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>poll</span>.<span class='ident'>deregister</span>(<span class='ident'>io</span>)
     }
 

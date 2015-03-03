@@ -87,8 +87,8 @@
 <span id="45">45</span>
 <span id="46">46</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> {<span class='ident'>Io</span>, <span class='ident'>NonBlock</span>, <span class='ident'>TryRead</span>, <span class='ident'>TryWrite</span>, <span class='ident'>IoHandle</span>, <span class='ident'>MioResult</span>, <span class='ident'>MioError</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>unix</span>::<span class='ident'>Fd</span>;
+<span class='kw'>use</span> {<span class='ident'>Io</span>, <span class='ident'>NonBlock</span>, <span class='ident'>TryRead</span>, <span class='ident'>TryWrite</span>, <span class='ident'>MioResult</span>, <span class='ident'>MioError</span>};
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>unix</span>::{<span class='ident'>Fd</span>, <span class='ident'>AsRawFd</span>};
 
 <span class='kw'>const</span> <span class='ident'>MARK</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> [<span class='ident'>u8</span>] <span class='op'>=</span> <span class='string'>b&quot;0x000x000x000x000x000x000x000x01&quot;</span>;
 
@@ -112,8 +112,8 @@
             .<span class='ident'>map</span>(<span class='op'>|</span>_<span class='op'>|</span> ())
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>fd</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Fd</span> {
-        <span class='self'>self</span>.<span class='ident'>io</span>.<span class='ident'>fd</span>()
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_raw_fd</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Fd</span> {
+        <span class='self'>self</span>.<span class='ident'>io</span>.<span class='ident'>as_raw_fd</span>()
     }
 
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cleanup</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {

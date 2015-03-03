@@ -43,8 +43,8 @@
     <section id='main' class="content trait">
 <h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>mio</a>::<wbr><a href='index.html'>net</a>::<wbr><a class='trait' href=''>Socket</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-1309' href='../../src/mio/net/mod.rs.html#33-69'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait Socket: <a class='trait' href='../../mio/trait.IoHandle.html' title='mio::IoHandle'>IoHandle</a> {
+        </span><a id='src-1299' href='../../src/mio/net/mod.rs.html#33-69'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait Socket: <a class='trait' href='http://doc.rust-lang.org/nightly/std/sys/ext/trait.AsRawFd.html' title='std::sys::ext::AsRawFd'>AsRawFd</a> {
     fn <a href='#method.linger' class='fnname'>linger</a>(&amp;self) -&gt; <a class='type' href='../../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt; { ... }
     fn <a href='#method.set_linger' class='fnname'>set_linger</a>(&amp;self, dur_s: <a href='http://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='type' href='../../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt; { ... }
     fn <a href='#method.set_reuseaddr' class='fnname'>set_reuseaddr</a>(&amp;self, val: <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='type' href='../../mio/type.MioResult.html' title='mio::MioResult'>MioResult</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt; { ... }

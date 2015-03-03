@@ -242,10 +242,17 @@
 <span id="200">200</span>
 <span id="201">201</span>
 <span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> {<span class='ident'>MioResult</span>, <span class='ident'>MioError</span>};
 <span class='kw'>use</span> <span class='ident'>buf</span>::{<span class='ident'>Buf</span>, <span class='ident'>MutBuf</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>unix</span>::<span class='ident'>Fd</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>unix</span>::{<span class='ident'>Fd</span>, <span class='ident'>AsRawFd</span>};
 
 <span class='doccomment'>/// The result of a non-blocking operation.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
@@ -270,8 +277,7 @@
     }
 }
 
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>IoHandle</span> {
-    <span class='kw'>fn</span> <span class='ident'>fd</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Fd</span>;
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Evented</span> : <span class='ident'>AsRawFd</span> {
 }
 
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>FromFd</span> {
@@ -328,17 +334,20 @@
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>IoHandle</span> <span class='kw'>for</span> <span class='ident'>Io</span> {
-    <span class='kw'>fn</span> <span class='ident'>fd</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Fd</span> {
+<span class='kw'>impl</span> <span class='ident'>AsRawFd</span> <span class='kw'>for</span> <span class='ident'>Io</span> {
+    <span class='kw'>fn</span> <span class='ident'>as_raw_fd</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Fd</span> {
         <span class='self'>self</span>.<span class='ident'>fd</span>
     }
+}
+
+<span class='kw'>impl</span> <span class='ident'>Evented</span> <span class='kw'>for</span> <span class='ident'>Io</span> {
 }
 
 <span class='kw'>impl</span> <span class='ident'>TryRead</span> <span class='kw'>for</span> <span class='ident'>Io</span> {
     <span class='kw'>fn</span> <span class='ident'>read_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>dst</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
         <span class='kw'>use</span> <span class='ident'>nix</span>::<span class='ident'>unistd</span>::<span class='ident'>read</span>;
 
-        <span class='ident'>read</span>(<span class='self'>self</span>.<span class='ident'>fd</span>(), <span class='ident'>dst</span>)
+        <span class='ident'>read</span>(<span class='self'>self</span>.<span class='ident'>as_raw_fd</span>(), <span class='ident'>dst</span>)
             .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>)
             .<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>cnt</span><span class='op'>|</span> {
                 <span class='kw'>if</span> <span class='ident'>cnt</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
@@ -355,7 +364,7 @@
     <span class='kw'>fn</span> <span class='ident'>write_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>src</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>MioResult</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;&gt;</span> {
         <span class='kw'>use</span> <span class='ident'>nix</span>::<span class='ident'>unistd</span>::<span class='ident'>write</span>;
 
-        <span class='ident'>write</span>(<span class='self'>self</span>.<span class='ident'>fd</span>(), <span class='ident'>src</span>)
+        <span class='ident'>write</span>(<span class='self'>self</span>.<span class='ident'>as_raw_fd</span>(), <span class='ident'>src</span>)
             .<span class='ident'>map_err</span>(<span class='ident'>MioError</span>::<span class='ident'>from_nix_error</span>)
             .<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>cnt</span><span class='op'>|</span> <span class='ident'>NonBlock</span>::<span class='ident'>Ready</span>(<span class='ident'>cnt</span>))
             .<span class='ident'>or_else</span>(<span class='ident'>to_non_block</span>)
@@ -365,7 +374,7 @@
 <span class='kw'>impl</span> <span class='ident'>Drop</span> <span class='kw'>for</span> <span class='ident'>Io</span> {
     <span class='kw'>fn</span> <span class='ident'>drop</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
         <span class='kw'>use</span> <span class='ident'>nix</span>::<span class='ident'>unistd</span>::<span class='ident'>close</span>;
-        <span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>close</span>(<span class='self'>self</span>.<span class='ident'>fd</span>());
+        <span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>close</span>(<span class='self'>self</span>.<span class='ident'>as_raw_fd</span>());
     }
 }
 
@@ -398,11 +407,13 @@
     }
 }
 
-
-<span class='kw'>impl</span> <span class='ident'>IoHandle</span> <span class='kw'>for</span> <span class='ident'>PipeReader</span> {
-    <span class='kw'>fn</span> <span class='ident'>fd</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Fd</span> {
-        <span class='self'>self</span>.<span class='ident'>io</span>.<span class='ident'>fd</span>()
+<span class='kw'>impl</span> <span class='ident'>AsRawFd</span> <span class='kw'>for</span> <span class='ident'>PipeReader</span> {
+    <span class='kw'>fn</span> <span class='ident'>as_raw_fd</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Fd</span> {
+        <span class='self'>self</span>.<span class='ident'>io</span>.<span class='ident'>as_raw_fd</span>()
     }
+}
+
+<span class='kw'>impl</span> <span class='ident'>Evented</span> <span class='kw'>for</span> <span class='ident'>PipeReader</span> {
 }
 
 <span class='kw'>impl</span> <span class='ident'>TryRead</span> <span class='kw'>for</span> <span class='ident'>PipeReader</span> {
@@ -420,10 +431,13 @@
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>IoHandle</span> <span class='kw'>for</span> <span class='ident'>PipeWriter</span> {
-    <span class='kw'>fn</span> <span class='ident'>fd</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Fd</span> {
+<span class='kw'>impl</span> <span class='ident'>AsRawFd</span> <span class='kw'>for</span> <span class='ident'>PipeWriter</span> {
+    <span class='kw'>fn</span> <span class='ident'>as_raw_fd</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Fd</span> {
         <span class='self'>self</span>.<span class='ident'>io</span>.<span class='ident'>fd</span>
     }
+}
+
+<span class='kw'>impl</span> <span class='ident'>Evented</span> <span class='kw'>for</span> <span class='ident'>PipeWriter</span> {
 }
 
 <span class='kw'>impl</span> <span class='ident'>TryWrite</span> <span class='kw'>for</span> <span class='ident'>PipeWriter</span> {
