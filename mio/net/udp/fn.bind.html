@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `unix` mod in crate `mio`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, unix">
+    <meta name="description" content="API documentation for the Rust `bind` fn in crate `mio`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, bind">
 
-    <title>mio::net::unix - Rust</title>
+    <title>mio::net::udp::bind - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../../main.css">
 
@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../../index.html'>mio</a>::<wbr><a href='../index.html'>net</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='../tcp/index.html' title=''>tcp</a><a class='mod ' href='../udp/index.html' title=''>udp</a><a class='mod current' href='../unix/index.html' title=''>unix</a></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='../trait.Socket.html' title=''>Socket</a><a class='trait ' href='../trait.TryAccept.html' title=''>TryAccept</a></div>
+        <p class='location'><a href='../../index.html'>mio</a>::<wbr><a href='../index.html'>net</a>::<wbr><a href='index.html'>udp</a></p><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.UdpSocket.html' title='A User Datagram Protocol socket.'>UdpSocket</a></div><div class='block fn'><h2>Functions</h2><a class='fn current' href='fn.bind.html' title='Returns a new, non-blocking, UDP socket bound to the given address'>bind</a><a class='fn ' href='fn.v4.html' title='Returns a new, unbound, non-blocking, IPv4 UDP socket'>v4</a><a class='fn ' href='fn.v6.html' title='Returns a new, unbound, non-blocking, IPv6 UDP socket'>v6</a></div>
     </section>
 
     <nav class="sub">
@@ -40,30 +40,12 @@
         </form>
     </nav>
 
-    <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>mio</a>::<wbr><a href='../index.html'>net</a>::<wbr><a class='mod' href=''>unix</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content fn">
+<h1 class='fqn'><span class='in-band'>Function <a href='../../index.html'>mio</a>::<wbr><a href='../index.html'>net</a>::<wbr><a href='index.html'>udp</a>::<wbr><a class='fn' href=''>bind</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-911' href='../../../src/mio/net/unix.rs.html#1-131'>[src]</a></span></h1>
-<h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
-<table>
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.UnixListener.html'
-                               title='mio::net::unix::UnixListener'>UnixListener</a></td>
-                        <td class='docblock short'></td>
-                    </tr>
-                
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.UnixSocket.html'
-                               title='mio::net::unix::UnixSocket'>UnixSocket</a></td>
-                        <td class='docblock short'></td>
-                    </tr>
-                
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.UnixStream.html'
-                               title='mio::net::unix::UnixStream'>UnixStream</a></td>
-                        <td class='docblock short'></td>
-                    </tr>
-                </table></section>
+        </span><a id='src-636' href='../../../src/mio/net/udp.rs.html#24-32'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn bind(addr: &amp;<a class='struct' href='http://doc.rust-lang.org/nightly/std/net/addr/struct.SocketAddr.html' title='std::net::addr::SocketAddr'>SocketAddr</a>) -&gt; <a class='type' href='../../../std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='struct' href='../../../mio/struct.NonBlock.html' title='mio::NonBlock'>NonBlock</a>&lt;<a class='struct' href='../../../mio/net/udp/struct.UdpSocket.html' title='mio::net::udp::UdpSocket'>UdpSocket</a>&gt;&gt;</pre><div class='docblock'><p>Returns a new, non-blocking, UDP socket bound to the given address</p>
+</div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

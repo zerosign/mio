@@ -207,6 +207,11 @@
 <span id="165">165</span>
 <span id="166">166</span>
 <span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! A fast, low-level IO library for Rust focusing on non-blocking APIs, event</span>
 <span class='doccomment'>//! notification, and other useful utilities for building high performance IO</span>
@@ -303,9 +308,26 @@
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>log</span>;
 
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>net</span>;
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>util</span>;
+
+<span class='kw'>mod</span> <span class='ident'>event_loop</span>;
+<span class='kw'>mod</span> <span class='ident'>handler</span>;
+<span class='kw'>mod</span> <span class='ident'>io</span>;
+<span class='kw'>mod</span> <span class='ident'>nonblock</span>;
+<span class='kw'>mod</span> <span class='ident'>notify</span>;
+<span class='kw'>mod</span> <span class='ident'>os</span>;
+<span class='kw'>mod</span> <span class='ident'>poll</span>;
+<span class='kw'>mod</span> <span class='ident'>timer</span>;
+
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>buf</span>::{
     <span class='ident'>Buf</span>,
     <span class='ident'>MutBuf</span>,
+};
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>event_loop</span>::{
+    <span class='ident'>EventLoop</span>,
+    <span class='ident'>EventLoopConfig</span>,
+    <span class='ident'>EventLoopSender</span>,
 };
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>handler</span>::{
     <span class='ident'>Handler</span>,
@@ -320,18 +342,9 @@
     <span class='ident'>PipeReader</span>,
     <span class='ident'>PipeWriter</span>,
 };
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>poll</span>::{
-    <span class='ident'>Poll</span>
-};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>event_loop</span>::{
-    <span class='ident'>EventLoop</span>,
-    <span class='ident'>EventLoopConfig</span>,
-    <span class='ident'>EventLoopSender</span>,
-};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>timer</span>::{
-    <span class='ident'>Timeout</span>,
-    <span class='ident'>TimerError</span>,
-    <span class='ident'>TimerResult</span>
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>nonblock</span>::{
+    <span class='ident'>AsNonBlock</span>,
+    <span class='ident'>NonBlock</span>,
 };
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>os</span>::<span class='ident'>token</span>::{
     <span class='ident'>Token</span>,
@@ -341,17 +354,14 @@
     <span class='ident'>Interest</span>,
     <span class='ident'>ReadHint</span>,
 };
-
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>net</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>util</span>;
-
-<span class='kw'>mod</span> <span class='ident'>event_loop</span>;
-<span class='kw'>mod</span> <span class='ident'>handler</span>;
-<span class='kw'>mod</span> <span class='ident'>io</span>;
-<span class='kw'>mod</span> <span class='ident'>notify</span>;
-<span class='kw'>mod</span> <span class='ident'>os</span>;
-<span class='kw'>mod</span> <span class='ident'>poll</span>;
-<span class='kw'>mod</span> <span class='ident'>timer</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>poll</span>::{
+    <span class='ident'>Poll</span>
+};
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>timer</span>::{
+    <span class='ident'>Timeout</span>,
+    <span class='ident'>TimerError</span>,
+    <span class='ident'>TimerResult</span>
+};
 
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>prelude</span> {
     <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>super</span>::{

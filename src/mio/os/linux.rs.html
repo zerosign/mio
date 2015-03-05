@@ -86,8 +86,18 @@
 <span id="44">44</span>
 <span id="45">45</span>
 <span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> {<span class='ident'>io</span>, <span class='ident'>Io</span>, <span class='ident'>TryRead</span>, <span class='ident'>TryWrite</span>};
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>unix</span>::{<span class='ident'>Fd</span>, <span class='ident'>AsRawFd</span>};
 
 <span class='kw'>const</span> <span class='ident'>MARK</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> [<span class='ident'>u8</span>] <span class='op'>=</span> <span class='string'>b&quot;0x000x000x000x000x000x000x000x01&quot;</span>;
@@ -108,8 +118,12 @@
     }
 
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wakeup</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>io</span>.<span class='ident'>write_slice</span>(<span class='ident'>MARK</span>)
-            .<span class='ident'>map</span>(<span class='op'>|</span>_<span class='op'>|</span> ())
+        <span class='kw'>unsafe</span> {
+            <span class='kw'>let</span> <span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Io</span> <span class='op'>=</span> <span class='ident'>mem</span>::<span class='ident'>transmute</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>io</span>);
+
+            <span class='ident'>io</span>.<span class='ident'>write_slice</span>(<span class='ident'>MARK</span>)
+                .<span class='ident'>map</span>(<span class='op'>|</span>_<span class='op'>|</span> ())
+        }
     }
 
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_raw_fd</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Fd</span> {
@@ -120,10 +134,14 @@
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>buf</span> <span class='op'>=</span> [<span class='number'>0</span>; <span class='number'>8</span>];
 
         <span class='kw'>loop</span> {
-            <span class='comment'>// Consume data until all bytes are purged</span>
-            <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>io</span>.<span class='ident'>read_slice</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>buf</span>) {
-                <span class='prelude-val'>Ok</span>(<span class='prelude-val'>Some</span>(<span class='ident'>i</span>)) <span class='kw'>if</span> <span class='ident'>i</span> <span class='op'>&gt;</span> <span class='number'>0</span> <span class='op'>=&gt;</span> {},
-                _ <span class='op'>=&gt;</span> <span class='kw'>return</span>,
+            <span class='kw'>unsafe</span> {
+                <span class='kw'>let</span> <span class='ident'>io</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Io</span> <span class='op'>=</span> <span class='ident'>mem</span>::<span class='ident'>transmute</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>io</span>);
+
+                <span class='comment'>// Consume data until all bytes are purged</span>
+                <span class='kw'>match</span> <span class='ident'>io</span>.<span class='ident'>read_slice</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>buf</span>) {
+                    <span class='prelude-val'>Ok</span>(<span class='prelude-val'>Some</span>(<span class='ident'>i</span>)) <span class='kw'>if</span> <span class='ident'>i</span> <span class='op'>&gt;</span> <span class='number'>0</span> <span class='op'>=&gt;</span> {},
+                    _ <span class='op'>=&gt;</span> <span class='kw'>return</span>,
+                }
             }
         }
     }
