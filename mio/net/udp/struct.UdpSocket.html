@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../../index.html'>mio</a>::<wbr><a href='../index.html'>net</a>::<wbr><a href='index.html'>udp</a></p><div class='block struct'><h2>Structs</h2><a class='struct current' href='struct.UdpSocket.html' title='A User Datagram Protocol socket.'>UdpSocket</a></div><div class='block fn'><h2>Functions</h2><a class='fn ' href='fn.bind.html' title='Returns a new, non-blocking, UDP socket bound to the given address'>bind</a><a class='fn ' href='fn.v4.html' title='Returns a new, unbound, non-blocking, IPv4 UDP socket'>v4</a><a class='fn ' href='fn.v6.html' title='Returns a new, unbound, non-blocking, IPv6 UDP socket'>v6</a></div>
+        <p class='location'><a href='../../index.html'>mio</a>::<wbr><a href='../index.html'>net</a>::<wbr><a href='index.html'>udp</a></p><script>window.sidebarCurrent = {name: 'UdpSocket', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </section>
 
     <nav class="sub">
@@ -43,7 +43,7 @@
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='../../index.html'>mio</a>::<wbr><a href='../index.html'>net</a>::<wbr><a href='index.html'>udp</a>::<wbr><a class='struct' href=''>UdpSocket</a><wbr><a class='stability Unstable' title=''>Unstable</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-50358' href='http://doc.rust-lang.org/nightly/std/net/udp/struct.UdpSocket.html?gotosrc=50358'>[src]</a></span></h1>
+        </span><a id='src-50366' href='http://doc.rust-lang.org/nightly/std/net/udp/struct.UdpSocket.html?gotosrc=50366'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct UdpSocket(_);</pre><div class='docblock'><p>A User Datagram Protocol socket.</p>
 
 <p>This is an implementation of a bound UDP socket. This supports both IPv4 and
@@ -109,7 +109,7 @@ options set on one socket will be propagated to the other.</p>
 <h4 id='method.set_reuseaddr' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.set_reuseaddr' class='fnname'>set_reuseaddr</a>(&amp;self, val: <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='type' href='../../../std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
 <h4 id='method.set_reuseport' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.set_reuseport' class='fnname'>set_reuseport</a>(&amp;self, val: <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='type' href='../../../std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
 <h4 id='method.set_tcp_nodelay' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.set_tcp_nodelay' class='fnname'>set_tcp_nodelay</a>(&amp;self, val: <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='type' href='../../../std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
-</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../../mio/trait.AsNonBlock.html' title='mio::AsNonBlock'>AsNonBlock</a> for <a class='struct' href='../../../mio/net/udp/struct.UdpSocket.html' title='mio::net::udp::UdpSocket'>UdpSocket</a></code></h3><div class='impl-items'><h4 id='method.as_non_block' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.as_non_block' class='fnname'>as_non_block</a>(self) -&gt; <a class='type' href='../../../std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='struct' href='../../../mio/struct.NonBlock.html' title='mio::NonBlock'>NonBlock</a>&lt;<a class='struct' href='../../../mio/net/udp/struct.UdpSocket.html' title='mio::net::udp::UdpSocket'>UdpSocket</a>&gt;&gt;</code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../../mio/trait.IntoNonBlock.html' title='mio::IntoNonBlock'>IntoNonBlock</a> for <a class='struct' href='../../../mio/net/udp/struct.UdpSocket.html' title='mio::net::udp::UdpSocket'>UdpSocket</a></code></h3><div class='impl-items'><h4 id='method.into_non_block' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.into_non_block' class='fnname'>into_non_block</a>(self) -&gt; <a class='type' href='../../../std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='struct' href='../../../mio/struct.NonBlock.html' title='mio::NonBlock'>NonBlock</a>&lt;<a class='struct' href='../../../mio/net/udp/struct.UdpSocket.html' title='mio::net::udp::UdpSocket'>UdpSocket</a>&gt;&gt;</code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 
