@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Timeout",""],["TimerError",""]],"type":[["TimerResult",""]]});
+initSidebarItems({"type":[["TimerResult",""]],"struct":[["Timeout",""],["TimerError",""]]});
