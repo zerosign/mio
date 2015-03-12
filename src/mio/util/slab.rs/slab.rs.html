@@ -1039,7 +1039,7 @@
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
-    <span class='attribute'>#[<span class='ident'>should_fail</span>]</span>
+    <span class='attribute'>#[<span class='ident'>should_panic</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>test_reusing_slots_1</span>() {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>slab</span> <span class='op'>=</span> <span class='ident'>Slab</span>::<span class='ident'>new</span>(<span class='number'>16</span>);
 
@@ -1087,7 +1087,7 @@
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
-    <span class='attribute'>#[<span class='ident'>should_fail</span>]</span>
+    <span class='attribute'>#[<span class='ident'>should_panic</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>test_accessing_out_of_bounds</span>() {
         <span class='kw'>let</span> <span class='ident'>slab</span> <span class='op'>=</span> <span class='ident'>Slab</span>::<span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>::<span class='ident'>new</span>(<span class='number'>16</span>);
         <span class='ident'>slab</span>[<span class='ident'>Token</span>(<span class='number'>0</span>)];

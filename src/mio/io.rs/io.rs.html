@@ -240,7 +240,7 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>unix</span>::{<span class='ident'>Fd</span>, <span class='ident'>AsRawFd</span>};
 
 <span class='comment'>// Re-export the io::Result / Error types for convenience</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::{<span class='prelude-ty'>Result</span>, <span class='ident'>Error</span>};
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::{<span class='ident'>Read</span>, <span class='ident'>Write</span>, <span class='prelude-ty'>Result</span>, <span class='ident'>Error</span>};
 
 <span class='doccomment'>/// A value that may be registered with an `EventLoop`</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Evented</span> : <span class='ident'>AsRawFd</span> {
