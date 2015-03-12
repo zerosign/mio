@@ -208,6 +208,12 @@
 <span id="166">166</span>
 <span id="167">167</span>
 <span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! A fast, low-level IO library for Rust focusing on non-blocking APIs, event</span>
 <span class='doccomment'>//! notification, and other useful utilities for building high performance IO</span>
@@ -231,7 +237,7 @@
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! ```</span>
 <span class='doccomment'>//! use mio::*;</span>
-<span class='doccomment'>//! use mio::net::tcp::{self, TcpListener};</span>
+<span class='doccomment'>//! use mio::tcp::TcpListener;</span>
 <span class='doccomment'>//! use std::net::SocketAddr;</span>
 <span class='doccomment'>//! use std::str::FromStr;</span>
 <span class='doccomment'>//!</span>
@@ -302,12 +308,12 @@
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>log</span>;
 
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>net</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>util</span>;
 
 <span class='kw'>mod</span> <span class='ident'>event_loop</span>;
 <span class='kw'>mod</span> <span class='ident'>handler</span>;
 <span class='kw'>mod</span> <span class='ident'>io</span>;
+<span class='kw'>mod</span> <span class='ident'>net</span>;
 <span class='kw'>mod</span> <span class='ident'>nonblock</span>;
 <span class='kw'>mod</span> <span class='ident'>notify</span>;
 <span class='kw'>mod</span> <span class='ident'>os</span>;
@@ -335,6 +341,12 @@
     <span class='ident'>Evented</span>,
     <span class='ident'>PipeReader</span>,
     <span class='ident'>PipeWriter</span>,
+};
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>net</span>::{
+    <span class='ident'>tcp</span>,
+    <span class='ident'>udp</span>,
+    <span class='ident'>unix</span>,
+    <span class='ident'>Socket</span>,
 };
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>nonblock</span>::{
     <span class='ident'>IntoNonBlock</span>,

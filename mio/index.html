@@ -43,7 +43,7 @@
     <section id='main' class="content mod">
 <h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>mio</a><wbr></span><span class='out-of-band'><a href='stability.html'>[stability]</a> <span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-0' href='../src/mio/lib.rs.html#1-168'>[src]</a></span></h1>
+        </span><a id='src-0' href='../src/mio/lib.rs.html#1-174'>[src]</a></span></h1>
 <div class='docblock'><p>A fast, low-level IO library for Rust focusing on non-blocking APIs, event
 notification, and other useful utilities for building high performance IO
 apps.</p>
@@ -67,7 +67,7 @@ handles receiving events from the OS and dispatching them to a supplied
 <h1 id="example" class='section-header'><a
                            href="#example">Example</a></h1><pre id='rust-example-rendered' class='rust '>
 <span class='kw'>use</span> <span class='ident'>mio</span>::<span class='op'>*</span>;
-<span class='kw'>use</span> <span class='ident'>mio</span>::<span class='ident'>net</span>::<span class='ident'>tcp</span>::{<span class='self'>self</span>, <span class='ident'>TcpListener</span>};
+<span class='kw'>use</span> <span class='ident'>mio</span>::<span class='ident'>tcp</span>::<span class='ident'>TcpListener</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>net</span>::<span class='ident'>SocketAddr</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>FromStr</span>;
 
@@ -130,15 +130,26 @@ handles receiving events from the OS and dispatching them to a supplied
                     </tr>
                 
                     <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='mod' href='net/index.html'
-                               title='mio::net'>net</a></td>
-                        <td class='docblock short'><p>Networking primitives</p>
-</td>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='mod' href='prelude/index.html'
+                               title='mio::prelude'>prelude</a></td>
+                        <td class='docblock short'></td>
                     </tr>
                 
                     <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='mod' href='prelude/index.html'
-                               title='mio::prelude'>prelude</a></td>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='mod' href='tcp/index.html'
+                               title='mio::tcp'>tcp</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='mod' href='udp/index.html'
+                               title='mio::udp'>udp</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='mod' href='unix/index.html'
+                               title='mio::unix'>unix</a></td>
                         <td class='docblock short'></td>
                     </tr>
                 
@@ -276,6 +287,12 @@ handles receiving events from the OS and dispatching them to a supplied
                                title='mio::MutBuf'>MutBuf</a></td>
                         <td class='docblock short'><p>A trait for values that provide sequential write access to bytes.</p>
 </td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='trait' href='trait.Socket.html'
+                               title='mio::Socket'>Socket</a></td>
+                        <td class='docblock short'></td>
                     </tr>
                 
                     <tr>
