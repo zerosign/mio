@@ -232,6 +232,31 @@
 <span id="190">190</span>
 <span id="191">191</span>
 <span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Networking primitives</span>
 <span class='doccomment'>//!</span>
@@ -251,6 +276,8 @@
  */</span>
 
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Socket</span> : <span class='ident'>AsRawFd</span> {
+
+    <span class='doccomment'>/// Returns the value for the `SO_LINGER` socket option.</span>
     <span class='kw'>fn</span> <span class='ident'>linger</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>linger</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>nix</span>::<span class='ident'>getsockopt</span>(<span class='self'>self</span>.<span class='ident'>as_raw_fd</span>(), <span class='ident'>nix</span>::<span class='ident'>SockLevel</span>::<span class='ident'>Socket</span>, <span class='ident'>nix</span>::<span class='ident'>sockopt</span>::<span class='ident'>Linger</span>)
             .<span class='ident'>map_err</span>(<span class='ident'>io</span>::<span class='ident'>from_nix_error</span>));
@@ -262,6 +289,7 @@
         }
     }
 
+    <span class='doccomment'>/// Sets the value for the `SO_LINGER` socket option</span>
     <span class='kw'>fn</span> <span class='ident'>set_linger</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>dur_s</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>linger</span> <span class='op'>=</span> <span class='ident'>nix</span>::<span class='ident'>linger</span> {
             <span class='ident'>l_onoff</span>: (<span class='kw'>if</span> <span class='ident'>dur_s</span> <span class='op'>&gt;</span> <span class='number'>0</span> { <span class='number'>1</span> } <span class='kw'>else</span> { <span class='number'>0</span> }) <span class='kw'>as</span> <span class='ident'>nix</span>::<span class='ident'>c_int</span>,
@@ -284,6 +312,28 @@
 
     <span class='kw'>fn</span> <span class='ident'>set_tcp_nodelay</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>val</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
         <span class='ident'>nix</span>::<span class='ident'>setsockopt</span>(<span class='self'>self</span>.<span class='ident'>as_raw_fd</span>(), <span class='ident'>nix</span>::<span class='ident'>SockLevel</span>::<span class='ident'>Tcp</span>, <span class='ident'>nix</span>::<span class='ident'>sockopt</span>::<span class='ident'>TcpNoDelay</span>, <span class='ident'>val</span>)
+            .<span class='ident'>map_err</span>(<span class='ident'>io</span>::<span class='ident'>from_nix_error</span>)
+    }
+
+    <span class='doccomment'>/// Sets the `SO_RCVTIMEO` socket option to the supplied number of</span>
+    <span class='doccomment'>/// milliseconds.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// This function is hardcoded to milliseconds until Rust std includes a</span>
+    <span class='doccomment'>/// stable duration type.</span>
+    <span class='kw'>fn</span> <span class='ident'>set_read_timeout_ms</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>val</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
+        <span class='kw'>let</span> <span class='ident'>t</span> <span class='op'>=</span> <span class='ident'>nix</span>::<span class='ident'>TimeVal</span>::<span class='ident'>milliseconds</span>(<span class='ident'>val</span> <span class='kw'>as</span> <span class='ident'>i64</span>);
+        <span class='ident'>nix</span>::<span class='ident'>setsockopt</span>(<span class='self'>self</span>.<span class='ident'>as_raw_fd</span>(), <span class='ident'>nix</span>::<span class='ident'>SockLevel</span>::<span class='ident'>Socket</span>, <span class='ident'>nix</span>::<span class='ident'>sockopt</span>::<span class='ident'>ReceiveTimeout</span>, <span class='kw-2'>&amp;</span><span class='ident'>t</span>)
+            .<span class='ident'>map_err</span>(<span class='ident'>io</span>::<span class='ident'>from_nix_error</span>)
+    }
+
+    <span class='doccomment'>/// Sets the `SO_SNDTIMEO` socket option to the supplied number of</span>
+    <span class='doccomment'>/// milliseconds.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// This function is hardcoded to milliseconds until Rust std includes a</span>
+    <span class='doccomment'>/// stable duration type.</span>
+    <span class='kw'>fn</span> <span class='ident'>set_write_timeout_ms</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>val</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
+        <span class='kw'>let</span> <span class='ident'>t</span> <span class='op'>=</span> <span class='ident'>nix</span>::<span class='ident'>TimeVal</span>::<span class='ident'>milliseconds</span>(<span class='ident'>val</span> <span class='kw'>as</span> <span class='ident'>i64</span>);
+        <span class='ident'>nix</span>::<span class='ident'>setsockopt</span>(<span class='self'>self</span>.<span class='ident'>as_raw_fd</span>(), <span class='ident'>nix</span>::<span class='ident'>SockLevel</span>::<span class='ident'>Socket</span>, <span class='ident'>nix</span>::<span class='ident'>sockopt</span>::<span class='ident'>SendTimeout</span>, <span class='kw-2'>&amp;</span><span class='ident'>t</span>)
             .<span class='ident'>map_err</span>(<span class='ident'>io</span>::<span class='ident'>from_nix_error</span>)
     }
 }
@@ -329,7 +379,7 @@
         <span class='ident'>setsockopt</span>,
         <span class='ident'>socket</span>,
     };
-
+    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>nix</span>::<span class='ident'>sys</span>::<span class='ident'>time</span>::<span class='ident'>TimeVal</span>;
     <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>nix</span>::<span class='ident'>unistd</span>::{
         <span class='ident'>read</span>,
         <span class='ident'>write</span>

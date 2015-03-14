@@ -48,10 +48,9 @@
     fn <a href='#tymethod.remaining' class='fnname'>remaining</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>;
     fn <a href='#tymethod.bytes' class='fnname'>bytes</a>(&amp;'a self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [</a><a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>;
     fn <a href='#tymethod.advance' class='fnname'>advance</a>(&amp;mut self, cnt: <a href='http://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>);
-
-    fn <a href='#tymethod.has_remaining' class='fnname'>has_remaining</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a> { ... }
-    fn <a href='#tymethod.read_slice' class='fnname'>read_slice</a>(&amp;mut self, dst: <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;mut [</a><a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a> { ... }
-    fn <a href='#tymethod.read_byte' class='fnname'>read_byte</a>(&amp;mut self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt; { ... }
+    fn <a href='#tymethod.has_remaining' class='fnname'>has_remaining</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+    fn <a href='#tymethod.read_slice' class='fnname'>read_slice</a>(&amp;mut self, dst: <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;mut [</a><a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>;
+    fn <a href='#tymethod.read_byte' class='fnname'>read_byte</a>(&amp;mut self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;;
 }</pre><div class='docblock'><p>A trait for values that provide sequential read access to bytes.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
@@ -60,10 +59,7 @@
 </div><h3 id='tymethod.bytes' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.bytes' class='fnname'>bytes</a>(&amp;'a self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [</a><a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a></code></h3><div class='docblock'><p>Returns a slice starting at the current Buf position and of length
 between 0 and <code>Buf::remaining()</code>.</p>
 </div><h3 id='tymethod.advance' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.advance' class='fnname'>advance</a>(&amp;mut self, cnt: <a href='http://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</code></h3><div class='docblock'><p>Advance the internal cursor of the Buf</p>
-</div></div>
-            <h2 id='provided-methods'>Provided Methods</h2>
-            <div class='methods'>
-        <h3 id='tymethod.has_remaining' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.has_remaining' class='fnname'>has_remaining</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>Returns true if there are any more bytes to consume</p>
+</div><h3 id='tymethod.has_remaining' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.has_remaining' class='fnname'>has_remaining</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>Returns true if there are any more bytes to consume</p>
 </div><h3 id='tymethod.read_slice' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.read_slice' class='fnname'>read_slice</a>(&amp;mut self, dst: <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;mut [</a><a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></h3><div class='docblock'><p>Read bytes from the <code>Buf</code> into the given slice and advance the cursor by
 the number of bytes read.</p>
 
