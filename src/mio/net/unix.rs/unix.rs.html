@@ -308,7 +308,7 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>iter</span>::<span class='ident'>IntoIterator</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>num</span>::<span class='ident'>Int</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>AsPath</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>unix</span>::{<span class='ident'>Fd</span>, <span class='ident'>AsRawFd</span>};
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>unix</span>::<span class='ident'>io</span>::{<span class='ident'>Fd</span>, <span class='ident'>AsRawFd</span>};
 
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>stream</span>() <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>UnixSocket</span><span class='op'>&gt;&gt;</span> {
     <span class='ident'>UnixSocket</span>::<span class='ident'>stream</span>(<span class='boolval'>true</span>)

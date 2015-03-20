@@ -112,7 +112,7 @@
 <span class='kw'>use</span> <span class='ident'>io</span>::{<span class='self'>self</span>, <span class='ident'>Evented</span>, <span class='ident'>FromFd</span>, <span class='ident'>TryRead</span>, <span class='ident'>TryWrite</span>, <span class='prelude-ty'>Result</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::{<span class='ident'>Read</span>, <span class='ident'>Write</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Deref</span>, <span class='ident'>DerefMut</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>unix</span>::{<span class='ident'>Fd</span>, <span class='ident'>AsRawFd</span>};
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>unix</span>::<span class='ident'>io</span>::{<span class='ident'>Fd</span>, <span class='ident'>AsRawFd</span>};
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Ord</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {

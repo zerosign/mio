@@ -473,7 +473,7 @@
 <span id="431">431</span>
 <span id="432">432</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> {<span class='ident'>Handler</span>, <span class='ident'>Evented</span>, <span class='ident'>Poll</span>, <span class='ident'>Token</span>};
+<span class='kw'>use</span> {<span class='ident'>Handler</span>, <span class='ident'>Evented</span>, <span class='ident'>Poll</span>, <span class='ident'>NotifyError</span>, <span class='ident'>Token</span>};
 <span class='kw'>use</span> <span class='ident'>os</span>::<span class='ident'>event</span>::{<span class='ident'>IoEvent</span>, <span class='ident'>Interest</span>, <span class='ident'>PollOpt</span>};
 <span class='kw'>use</span> <span class='ident'>notify</span>::<span class='ident'>Notify</span>;
 <span class='kw'>use</span> <span class='ident'>timer</span>::{<span class='ident'>Timer</span>, <span class='ident'>Timeout</span>, <span class='ident'>TimerResult</span>};
@@ -500,8 +500,8 @@
     <span class='kw'>fn</span> <span class='ident'>default</span>() <span class='op'>-&gt;</span> <span class='ident'>EventLoopConfig</span> {
         <span class='ident'>EventLoopConfig</span> {
             <span class='ident'>io_poll_timeout_ms</span>: <span class='number'>1_000</span>,
-            <span class='ident'>notify_capacity</span>: <span class='number'>1_024</span>,
-            <span class='ident'>messages_per_tick</span>: <span class='number'>64</span>,
+            <span class='ident'>notify_capacity</span>: <span class='number'>4_096</span>,
+            <span class='ident'>messages_per_tick</span>: <span class='number'>256</span>,
             <span class='ident'>timer_tick_ms</span>: <span class='number'>100</span>,
             <span class='ident'>timer_wheel_size</span>: <span class='number'>1_024</span>,
             <span class='ident'>timer_capacity</span>: <span class='number'>65_536</span>,
@@ -833,7 +833,7 @@
         <span class='ident'>EventLoopSender</span> { <span class='ident'>notify</span>: <span class='ident'>notify</span> }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>send</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>msg</span>: <span class='ident'>M</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>M</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>send</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>msg</span>: <span class='ident'>M</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>NotifyError</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>notify</span>.<span class='ident'>notify</span>(<span class='ident'>msg</span>)
     }
 }

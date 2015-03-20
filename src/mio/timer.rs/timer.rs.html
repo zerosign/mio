@@ -518,12 +518,10 @@
 <span id="476">476</span>
 <span id="477">477</span>
 <span id="478">478</span>
-<span id="479">479</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::{<span class='ident'>usize</span>, <span class='ident'>iter</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>max</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>time</span>::<span class='ident'>duration</span>::<span class='ident'>Duration</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>num</span>::<span class='ident'>UnsignedInt</span>;
 <span class='kw'>use</span> <span class='ident'>time</span>::<span class='ident'>precise_time_ns</span>;
 <span class='kw'>use</span> <span class='ident'>os</span>::<span class='ident'>token</span>::<span class='ident'>Token</span>;
 <span class='kw'>use</span> <span class='ident'>util</span>::<span class='ident'>Slab</span>;
@@ -569,8 +567,8 @@
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>Timer</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>tick_ms</span>: <span class='ident'>u64</span>, <span class='kw-2'>mut</span> <span class='ident'>slots</span>: <span class='ident'>usize</span>, <span class='kw-2'>mut</span> <span class='ident'>capacity</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>Timer</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>slots</span> <span class='op'>=</span> <span class='ident'>UnsignedInt</span>::<span class='ident'>next_power_of_two</span>(<span class='ident'>slots</span>);
-        <span class='ident'>capacity</span> <span class='op'>=</span> <span class='ident'>UnsignedInt</span>::<span class='ident'>next_power_of_two</span>(<span class='ident'>capacity</span>);
+        <span class='ident'>slots</span> <span class='op'>=</span> <span class='ident'>slots</span>.<span class='ident'>next_power_of_two</span>();
+        <span class='ident'>capacity</span> <span class='op'>=</span> <span class='ident'>capacity</span>.<span class='ident'>next_power_of_two</span>();
 
         <span class='ident'>Timer</span> {
             <span class='ident'>tick_ms</span>: <span class='ident'>tick_ms</span>,

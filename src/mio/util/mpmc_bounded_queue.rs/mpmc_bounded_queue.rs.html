@@ -264,7 +264,6 @@
 <span id="222">222</span>
 <span id="223">223</span>
 <span id="224">224</span>
-<span id="225">225</span>
 </pre><pre class='rust '>
 <span class='comment'>/* Copyright (c) 2010-2011 Dmitry Vyukov. All rights reserved.
  * Redistribution and use in source and binary forms, with or without
@@ -300,7 +299,6 @@
 <span class='comment'>// This queue is copy pasted from old rust stdlib.</span>
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>Arc</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>num</span>::<span class='ident'>UnsignedInt</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>UnsafeCell</span>;
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>atomic</span>::<span class='ident'>AtomicUsize</span>;
@@ -344,7 +342,7 @@
         } <span class='kw'>else</span> {
             <span class='ident'>capacity</span>
         };
-        <span class='kw'>let</span> <span class='ident'>buffer</span> <span class='op'>=</span> <span class='ident'>range</span>(<span class='number'>0</span>, <span class='ident'>capacity</span>).<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>i</span><span class='op'>|</span> {
+        <span class='kw'>let</span> <span class='ident'>buffer</span> <span class='op'>=</span> (<span class='number'>0</span>..<span class='ident'>capacity</span>).<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>i</span><span class='op'>|</span> {
             <span class='ident'>UnsafeCell</span>::<span class='ident'>new</span>(<span class='ident'>Node</span> { <span class='ident'>sequence</span>:<span class='ident'>AtomicUsize</span>::<span class='ident'>new</span>(<span class='ident'>i</span>), <span class='ident'>value</span>: <span class='prelude-val'>None</span> })
         }).<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>();
         <span class='ident'>State</span>{
@@ -359,7 +357,7 @@
         }
     }
 
-    <span class='kw'>fn</span> <span class='ident'>push</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+    <span class='kw'>fn</span> <span class='ident'>push</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>mask</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>mask</span>;
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>pos</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>enqueue_pos</span>.<span class='ident'>load</span>(<span class='ident'>Relaxed</span>);
         <span class='kw'>loop</span> {
@@ -379,12 +377,12 @@
                     <span class='ident'>pos</span> <span class='op'>=</span> <span class='ident'>enqueue_pos</span>;
                 }
             } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>diff</span> <span class='op'>&lt;</span> <span class='number'>0</span> {
-                <span class='kw'>return</span> <span class='boolval'>false</span>
+                <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>value</span>);
             } <span class='kw'>else</span> {
                 <span class='ident'>pos</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>enqueue_pos</span>.<span class='ident'>load</span>(<span class='ident'>Relaxed</span>);
             }
         }
-        <span class='boolval'>true</span>
+        <span class='prelude-val'>Ok</span>(())
     }
 
     <span class='kw'>fn</span> <span class='ident'>pop</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
@@ -421,7 +419,7 @@
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>push</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>push</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>state</span>.<span class='ident'>push</span>(<span class='ident'>value</span>)
     }
 
@@ -450,20 +448,20 @@
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='prelude-val'>None</span>, <span class='ident'>q</span>.<span class='ident'>pop</span>());
         <span class='kw'>let</span> (<span class='ident'>tx</span>, <span class='ident'>rx</span>) <span class='op'>=</span> <span class='ident'>channel</span>();
 
-        <span class='kw'>for</span> _ <span class='kw'>in</span> <span class='ident'>range</span>(<span class='number'>0</span>, <span class='ident'>nthreads</span>) {
+        <span class='kw'>for</span> _ <span class='kw'>in</span> (<span class='number'>0</span>..<span class='ident'>nthreads</span>) {
             <span class='kw'>let</span> <span class='ident'>q</span> <span class='op'>=</span> <span class='ident'>q</span>.<span class='ident'>clone</span>();
             <span class='kw'>let</span> <span class='ident'>tx</span> <span class='op'>=</span> <span class='ident'>tx</span>.<span class='ident'>clone</span>();
             <span class='ident'>thread</span>::<span class='ident'>spawn</span>(<span class='kw'>move</span> <span class='op'>||</span> {
                 <span class='kw'>let</span> <span class='ident'>q</span> <span class='op'>=</span> <span class='ident'>q</span>;
-                <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='ident'>range</span>(<span class='number'>0</span>, <span class='ident'>nmsgs</span>) {
-                    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>q</span>.<span class='ident'>push</span>(<span class='ident'>i</span>));
+                <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> (<span class='number'>0</span>..<span class='ident'>nmsgs</span>) {
+                    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>q</span>.<span class='ident'>push</span>(<span class='ident'>i</span>).<span class='ident'>is_ok</span>());
                 }
                 <span class='ident'>tx</span>.<span class='ident'>send</span>(()).<span class='ident'>unwrap</span>();
             });
         }
 
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>completion_rxs</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[];
-        <span class='kw'>for</span> _ <span class='kw'>in</span> <span class='ident'>range</span>(<span class='number'>0</span>, <span class='ident'>nthreads</span>) {
+        <span class='kw'>for</span> _ <span class='kw'>in</span> (<span class='number'>0</span>..<span class='ident'>nthreads</span>) {
             <span class='kw'>let</span> (<span class='ident'>tx</span>, <span class='ident'>rx</span>) <span class='op'>=</span> <span class='ident'>channel</span>();
             <span class='ident'>completion_rxs</span>.<span class='ident'>push</span>(<span class='ident'>rx</span>);
             <span class='kw'>let</span> <span class='ident'>q</span> <span class='op'>=</span> <span class='ident'>q</span>.<span class='ident'>clone</span>();
@@ -486,7 +484,7 @@
         <span class='kw'>for</span> <span class='ident'>rx</span> <span class='kw'>in</span> <span class='ident'>completion_rxs</span>.<span class='ident'>iter_mut</span>() {
             <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>nmsgs</span>, <span class='ident'>rx</span>.<span class='ident'>recv</span>().<span class='ident'>unwrap</span>());
         }
-        <span class='kw'>for</span> _ <span class='kw'>in</span> <span class='ident'>range</span>(<span class='number'>0</span>, <span class='ident'>nthreads</span>) {
+        <span class='kw'>for</span> _ <span class='kw'>in</span> (<span class='number'>0</span>..<span class='ident'>nthreads</span>) {
             <span class='ident'>rx</span>.<span class='ident'>recv</span>().<span class='ident'>unwrap</span>();
         }
     }
