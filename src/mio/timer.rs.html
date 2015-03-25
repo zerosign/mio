@@ -517,11 +517,9 @@
 <span id="475">475</span>
 <span id="476">476</span>
 <span id="477">477</span>
-<span id="478">478</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::{<span class='ident'>usize</span>, <span class='ident'>iter</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>max</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>time</span>::<span class='ident'>duration</span>::<span class='ident'>Duration</span>;
 <span class='kw'>use</span> <span class='ident'>time</span>::<span class='ident'>precise_time_ns</span>;
 <span class='kw'>use</span> <span class='ident'>os</span>::<span class='ident'>token</span>::<span class='ident'>Token</span>;
 <span class='kw'>use</span> <span class='ident'>util</span>::<span class='ident'>Slab</span>;
@@ -621,8 +619,8 @@
      *
      */</span>
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>timeout</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>token</span>: <span class='ident'>T</span>, <span class='ident'>delay</span>: <span class='ident'>Duration</span>) <span class='op'>-&gt;</span> <span class='ident'>TimerResult</span><span class='op'>&lt;</span><span class='ident'>Timeout</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>at</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>now_ms</span>() <span class='op'>+</span> (<span class='ident'>max</span>(<span class='number'>0</span>, <span class='ident'>delay</span>.<span class='ident'>num_milliseconds</span>()) <span class='kw'>as</span> <span class='ident'>u64</span>);
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>timeout_ms</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>token</span>: <span class='ident'>T</span>, <span class='ident'>delay</span>: <span class='ident'>u64</span>) <span class='op'>-&gt;</span> <span class='ident'>TimerResult</span><span class='op'>&lt;</span><span class='ident'>Timeout</span><span class='op'>&gt;</span> {
+        <span class='kw'>let</span> <span class='ident'>at</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>now_ms</span>() <span class='op'>+</span> <span class='ident'>max</span>(<span class='number'>0</span>, <span class='ident'>delay</span>);
         <span class='self'>self</span>.<span class='ident'>timeout_at_ms</span>(<span class='ident'>token</span>, <span class='ident'>at</span>)
     }
 

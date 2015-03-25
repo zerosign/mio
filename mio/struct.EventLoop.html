@@ -43,7 +43,7 @@
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>mio</a>::<wbr><a class='struct' href=''>EventLoop</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-2424' href='../src/mio/event_loop.rs.html#38-44'>[src]</a></span></h1>
+        </span><a id='src-2423' href='../src/mio/event_loop.rs.html#37-43'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct EventLoop&lt;H: <a class='trait' href='../mio/trait.Handler.html' title='mio::Handler'>Handler</a>&gt; {
     // some fields omitted
 }</pre><div class='docblock'><p>Single threaded IO event loop.</p>
@@ -100,7 +100,7 @@ is used.</p>
 
 <p>The strategy of setting an atomic flag if the event loop is not already
 sleeping allows avoiding an expensive wakeup operation if at all possible.</p>
-</div><h4 id='method.timeout' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.timeout' class='fnname'>timeout</a>(&amp;mut self, token: Timeout, delay: <a class='struct' href='http://doc.rust-lang.org/nightly/std/time/duration/struct.Duration.html' title='std::time::duration::Duration'>Duration</a>) -&gt; <a class='type' href='../mio/type.TimerResult.html' title='mio::TimerResult'>TimerResult</a>&lt;<a class='struct' href='../mio/struct.Timeout.html' title='mio::Timeout'>Timeout</a>&gt;</code></h4>
+</div><h4 id='method.timeout_ms' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.timeout_ms' class='fnname'>timeout_ms</a>(&amp;mut self, token: Timeout, delay: <a href='http://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>) -&gt; <a class='type' href='../mio/type.TimerResult.html' title='mio::TimerResult'>TimerResult</a>&lt;<a class='struct' href='../mio/struct.Timeout.html' title='mio::Timeout'>Timeout</a>&gt;</code></h4>
 <div class='docblock'><p>Schedules a timeout after the requested time interval. When the
 duration has been reached,
 <a href="trait.Handler.html#method.timeout">Handler::timeout</a> will be invoked
@@ -111,10 +111,7 @@ using <a href="#method.clear_timeout">#clear_timeout</a>.</p>
 
 <h1 id="example" class='section-header'><a
                            href="#example">Example</a></h1><pre id='rust-example-rendered' class='rust '>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>std_misc</span>)]</span>
-
 <span class='kw'>use</span> <span class='ident'>mio</span>::{<span class='ident'>EventLoop</span>, <span class='ident'>Handler</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>time</span>::<span class='ident'>Duration</span>;
 
 <span class='kw'>struct</span> <span class='ident'>MyHandler</span>;
 
@@ -130,7 +127,7 @@ using <a href="#method.clear_timeout">#clear_timeout</a>.</p>
 
 
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>event_loop</span> <span class='op'>=</span> <span class='ident'>EventLoop</span>::<span class='ident'>new</span>().<span class='ident'>unwrap</span>();
-<span class='kw'>let</span> <span class='ident'>timeout</span> <span class='op'>=</span> <span class='ident'>event_loop</span>.<span class='ident'>timeout</span>(<span class='number'>123</span>, <span class='ident'>Duration</span>::<span class='ident'>milliseconds</span>(<span class='number'>300</span>)).<span class='ident'>unwrap</span>();
+<span class='kw'>let</span> <span class='ident'>timeout</span> <span class='op'>=</span> <span class='ident'>event_loop</span>.<span class='ident'>timeout_ms</span>(<span class='number'>123</span>, <span class='number'>300</span>).<span class='ident'>unwrap</span>();
 <span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>event_loop</span>.<span class='ident'>run</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>MyHandler</span>);
 </pre>
 </div><h4 id='method.clear_timeout' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.clear_timeout' class='fnname'>clear_timeout</a>(&amp;mut self, timeout: <a class='struct' href='../mio/struct.Timeout.html' title='mio::Timeout'>Timeout</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
