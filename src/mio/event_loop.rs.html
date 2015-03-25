@@ -470,8 +470,6 @@
 <span id="428">428</span>
 <span id="429">429</span>
 <span id="430">430</span>
-<span id="431">431</span>
-<span id="432">432</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> {<span class='ident'>Handler</span>, <span class='ident'>Evented</span>, <span class='ident'>Poll</span>, <span class='ident'>NotifyError</span>, <span class='ident'>Token</span>};
 <span class='kw'>use</span> <span class='ident'>os</span>::<span class='ident'>event</span>::{<span class='ident'>IoEvent</span>, <span class='ident'>Interest</span>, <span class='ident'>PollOpt</span>};
@@ -562,9 +560,7 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// # Example</span>
     <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// #![allow(unstable)]</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// use std::thread::Thread;</span>
+    <span class='doccomment'>/// use std::thread;</span>
     <span class='doccomment'>/// use mio::{EventLoop, Handler};</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// struct MyHandler;</span>
@@ -583,7 +579,7 @@
     <span class='doccomment'>/// let sender = event_loop.channel();</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// // Send the notification from another thread</span>
-    <span class='doccomment'>/// Thread::spawn(move || {</span>
+    <span class='doccomment'>/// thread::spawn(move || {</span>
     <span class='doccomment'>///     let _ = sender.send(123);</span>
     <span class='doccomment'>/// });</span>
     <span class='doccomment'>///</span>
@@ -621,7 +617,7 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// # Example</span>
     <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// #![allow(unstable)]</span>
+    <span class='doccomment'>/// #![feature(std_misc)]</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// use mio::{EventLoop, Handler};</span>
     <span class='doccomment'>/// use std::time::Duration;</span>

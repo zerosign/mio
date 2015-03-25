@@ -215,8 +215,6 @@
 <span id="173">173</span>
 <span id="174">174</span>
 <span id="175">175</span>
-<span id="176">176</span>
-<span id="177">177</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! A fast, low-level IO library for Rust focusing on non-blocking APIs, event</span>
 <span class='doccomment'>//! notification, and other useful utilities for building high performance IO</span>
@@ -241,15 +239,13 @@
 <span class='doccomment'>//! ```</span>
 <span class='doccomment'>//! use mio::*;</span>
 <span class='doccomment'>//! use mio::tcp::TcpListener;</span>
-<span class='doccomment'>//! use std::net::SocketAddr;</span>
-<span class='doccomment'>//! use std::str::FromStr;</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! // Setup some tokens to allow us to identify which event is</span>
 <span class='doccomment'>//! // for which socket.</span>
 <span class='doccomment'>//! const SERVER: Token = Token(0);</span>
 <span class='doccomment'>//! const CLIENT: Token = Token(1);</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//! let addr = FromStr::from_str(&quot;127.0.0.1:13265&quot;).unwrap();</span>
+<span class='doccomment'>//! let addr = &quot;127.0.0.1:13265&quot;.parse().unwrap();</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! // Setup the server socket</span>
 <span class='doccomment'>//! let server = tcp::listen(&amp;addr).unwrap();</span>
@@ -301,7 +297,7 @@
 <span class='comment'>// mio is still in rapid development</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>unstable</span>]</span>
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>alloc</span>, <span class='ident'>core</span>, <span class='ident'>io</span>, <span class='ident'>io_ext</span>, <span class='ident'>libc</span>, <span class='ident'>std_misc</span>, <span class='ident'>unsafe_destructor</span>)]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>alloc</span>, <span class='ident'>convert</span>, <span class='ident'>core</span>, <span class='ident'>io</span>, <span class='ident'>io_ext</span>, <span class='ident'>libc</span>, <span class='ident'>std_misc</span>, <span class='ident'>unsafe_destructor</span>)]</span>
 
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>alloc</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>bytes</span>;

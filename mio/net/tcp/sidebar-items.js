@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["TcpListener","A structure representing a socket server."],["TcpSocket",""],["TcpStream","A structure which represents a TCP stream between a local socket and a remote socket."]],"fn":[["connect",""],["listen",""],["v4",""],["v6",""]]});
+initSidebarItems({"fn":[["connect",""],["listen",""],["v4",""],["v6",""]],"struct":[["TcpListener","A structure representing a socket server."],["TcpSocket",""],["TcpStream","A structure which represents a TCP stream between a local socket and a remote socket."]]});

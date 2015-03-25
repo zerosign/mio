@@ -350,7 +350,7 @@
 <span class='kw'>mod</span> <span class='ident'>nix</span> {
     <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>nix</span>::{
         <span class='ident'>c_int</span>,
-        <span class='ident'>NixError</span>,
+        <span class='ident'>Error</span>,
     };
     <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>nix</span>::<span class='ident'>errno</span>::{<span class='ident'>EINPROGRESS</span>, <span class='ident'>EAGAIN</span>};
     <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>nix</span>::<span class='ident'>fcntl</span>::{<span class='ident'>fcntl</span>, <span class='ident'>FcntlArg</span>, <span class='ident'>O_NONBLOCK</span>};
@@ -402,7 +402,7 @@
         <span class='prelude-val'>Ok</span>(_) <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(<span class='boolval'>true</span>),
         <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> {
             <span class='kw'>match</span> <span class='ident'>e</span> {
-                <span class='ident'>nix</span>::<span class='ident'>NixError</span>::<span class='ident'>Sys</span>(<span class='ident'>nix</span>::<span class='ident'>EINPROGRESS</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(<span class='boolval'>false</span>),
+                <span class='ident'>nix</span>::<span class='ident'>Error</span>::<span class='ident'>Sys</span>(<span class='ident'>nix</span>::<span class='ident'>EINPROGRESS</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(<span class='boolval'>false</span>),
                 _ <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>io</span>::<span class='ident'>from_nix_error</span>(<span class='ident'>e</span>))
             }
         }

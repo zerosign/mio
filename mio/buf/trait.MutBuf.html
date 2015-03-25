@@ -78,14 +78,13 @@ request (aka <code>dst.len()</code> &gt; self.remaining()<code>), then
     <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='number'>1</span>, <span class='ident'>buf</span>.<span class='ident'>remaining</span>());
 }
 
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='string'>b&quot;hello\0&quot;</span>, <span class='ident'>dst</span>);
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='string'>b&quot;hello\0&quot;</span>, <span class='kw-2'>&amp;</span><span class='ident'>dst</span>);
 </pre>
 </div><h3 id='tymethod.write_byte' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.write_byte' class='fnname'>write_byte</a>(&amp;mut self, byte: <a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>Write a single byte to the <code>MuBuf</code></p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
     <li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../mio/buf/trait.MutBuf.html' title='mio::buf::MutBuf'>MutBuf</a> for <a class='struct' href='../../mio/buf/struct.MutByteBuf.html' title='mio::buf::MutByteBuf'>MutByteBuf</a></code></li>
-<li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../mio/buf/trait.MutBuf.html' title='mio::buf::MutBuf'>MutBuf</a> for <a class='struct' href='../../mio/buf/struct.RingBuf.html' title='mio::buf::RingBuf'>RingBuf</a></code></li>
 <li><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a&gt; <a class='trait' href='../../mio/buf/trait.MutBuf.html' title='mio::buf::MutBuf'>MutBuf</a> for <a class='struct' href='../../mio/buf/struct.MutSliceBuf.html' title='mio::buf::MutSliceBuf'>MutSliceBuf</a>&lt;'a&gt;</code></li>
 </ul><script type="text/javascript" async
                               src="../../implementors/bytes/trait.MutBuf.js">

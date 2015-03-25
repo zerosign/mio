@@ -887,7 +887,7 @@
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='prelude-val'>None</span>, <span class='ident'>t</span>.<span class='ident'>tick_to</span>(<span class='ident'>tick</span>));
 
         <span class='ident'>rcv</span>.<span class='ident'>sort</span>();
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>rcv</span>.<span class='ident'>as_slice</span>() <span class='op'>==</span> [<span class='string'>&quot;a&quot;</span>, <span class='string'>&quot;b&quot;</span>].<span class='ident'>as_slice</span>(), <span class='string'>&quot;actual={:?}&quot;</span>, <span class='ident'>rcv</span>.<span class='ident'>as_slice</span>());
+        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>rcv</span> <span class='op'>==</span> [<span class='string'>&quot;a&quot;</span>, <span class='string'>&quot;b&quot;</span>], <span class='string'>&quot;actual={:?}&quot;</span>, <span class='ident'>rcv</span>);
 
         <span class='ident'>tick</span> <span class='op'>=</span> <span class='ident'>t</span>.<span class='ident'>ms_to_tick</span>(<span class='number'>200</span>);
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='prelude-val'>None</span>, <span class='ident'>t</span>.<span class='ident'>tick_to</span>(<span class='ident'>tick</span>));

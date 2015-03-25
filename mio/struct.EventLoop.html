@@ -43,7 +43,7 @@
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>mio</a>::<wbr><a class='struct' href=''>EventLoop</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-2428' href='../src/mio/event_loop.rs.html#38-44'>[src]</a></span></h1>
+        </span><a id='src-2424' href='../src/mio/event_loop.rs.html#38-44'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct EventLoop&lt;H: <a class='trait' href='../mio/trait.Handler.html' title='mio::Handler'>Handler</a>&gt; {
     // some fields omitted
 }</pre><div class='docblock'><p>Single threaded IO event loop.</p>
@@ -57,9 +57,7 @@ thread-safe way, waking up the event loop if needed.</p>
 
 <h1 id="example" class='section-header'><a
                            href="#example">Example</a></h1><pre id='rust-example-rendered' class='rust '>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>unstable</span>)]</span>
-
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>thread</span>::<span class='ident'>Thread</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>thread</span>;
 <span class='kw'>use</span> <span class='ident'>mio</span>::{<span class='ident'>EventLoop</span>, <span class='ident'>Handler</span>};
 
 <span class='kw'>struct</span> <span class='ident'>MyHandler</span>;
@@ -78,7 +76,7 @@ thread-safe way, waking up the event loop if needed.</p>
 <span class='kw'>let</span> <span class='ident'>sender</span> <span class='op'>=</span> <span class='ident'>event_loop</span>.<span class='ident'>channel</span>();
 
 <span class='comment'>// Send the notification from another thread</span>
-<span class='ident'>Thread</span>::<span class='ident'>spawn</span>(<span class='kw'>move</span> <span class='op'>||</span> {
+<span class='ident'>thread</span>::<span class='ident'>spawn</span>(<span class='kw'>move</span> <span class='op'>||</span> {
     <span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>sender</span>.<span class='ident'>send</span>(<span class='number'>123</span>);
 });
 
@@ -113,7 +111,7 @@ using <a href="#method.clear_timeout">#clear_timeout</a>.</p>
 
 <h1 id="example" class='section-header'><a
                            href="#example">Example</a></h1><pre id='rust-example-rendered' class='rust '>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>unstable</span>)]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>std_misc</span>)]</span>
 
 <span class='kw'>use</span> <span class='ident'>mio</span>::{<span class='ident'>EventLoop</span>, <span class='ident'>Handler</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>time</span>::<span class='ident'>Duration</span>;
