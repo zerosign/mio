@@ -51,7 +51,7 @@
 <div class='docblock'><p>Initializes a new event loop using default configuration settings. The
 event loop will not be running yet.</p>
 </div><h4 id='method.configured' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.configured' class='fnname'>configured</a>(config: <a class='struct' href='../mio/struct.EventLoopConfig.html' title='mio::EventLoopConfig'>EventLoopConfig</a>) -&gt; <a class='type' href='../std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='struct' href='../mio/struct.EventLoop.html' title='mio::EventLoop'>EventLoop</a>&lt;H&gt;&gt;</code></h4>
-<h4 id='method.channel' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.channel' class='fnname'>channel</a>(&amp;self) -&gt; <a class='struct' href='../mio/struct.EventLoopSender.html' title='mio::EventLoopSender'>EventLoopSender</a>&lt;Message&gt;</code></h4>
+<h4 id='method.channel' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.channel' class='fnname'>channel</a>(&amp;self) -&gt; <a class='struct' href='../mio/struct.Sender.html' title='mio::Sender'>Sender</a>&lt;Message&gt;</code></h4>
 <div class='docblock'><p>Returns a sender that allows sending messages to the event loop in a
 thread-safe way, waking up the event loop if needed.</p>
 

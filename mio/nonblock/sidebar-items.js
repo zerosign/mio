@@ -1,1 +1,1 @@
-initSidebarItems({"trait":[["IntoNonBlock",""]],"struct":[["NonBlock",""]]});
+initSidebarItems({"struct":[["NonBlock",""]],"trait":[["IntoNonBlock",""]]});
