@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["event",""],["token",""]]});
+initSidebarItems({});

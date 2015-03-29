@@ -215,6 +215,8 @@
 <span id="173">173</span>
 <span id="174">174</span>
 <span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! A fast, low-level IO library for Rust focusing on non-blocking APIs, event</span>
 <span class='doccomment'>//! notification, and other useful utilities for building high performance IO</span>
@@ -309,6 +311,7 @@
 
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>util</span>;
 
+<span class='kw'>mod</span> <span class='ident'>event</span>;
 <span class='kw'>mod</span> <span class='ident'>event_loop</span>;
 <span class='kw'>mod</span> <span class='ident'>handler</span>;
 <span class='kw'>mod</span> <span class='ident'>io</span>;
@@ -318,10 +321,16 @@
 <span class='kw'>mod</span> <span class='ident'>os</span>;
 <span class='kw'>mod</span> <span class='ident'>poll</span>;
 <span class='kw'>mod</span> <span class='ident'>timer</span>;
+<span class='kw'>mod</span> <span class='ident'>token</span>;
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>buf</span>::{
     <span class='ident'>Buf</span>,
     <span class='ident'>MutBuf</span>,
+};
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>event</span>::{
+    <span class='ident'>PollOpt</span>,
+    <span class='ident'>Interest</span>,
+    <span class='ident'>ReadHint</span>,
 };
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>event_loop</span>::{
     <span class='ident'>EventLoop</span>,
@@ -354,14 +363,6 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>notify</span>::{
     <span class='ident'>NotifyError</span>,
 };
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>os</span>::<span class='ident'>token</span>::{
-    <span class='ident'>Token</span>,
-};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>os</span>::<span class='ident'>event</span>::{
-    <span class='ident'>PollOpt</span>,
-    <span class='ident'>Interest</span>,
-    <span class='ident'>ReadHint</span>,
-};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>poll</span>::{
     <span class='ident'>Poll</span>
 };
@@ -369,6 +370,9 @@
     <span class='ident'>Timeout</span>,
     <span class='ident'>TimerError</span>,
     <span class='ident'>TimerResult</span>
+};
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>token</span>::{
+    <span class='ident'>Token</span>,
 };
 
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>prelude</span> {

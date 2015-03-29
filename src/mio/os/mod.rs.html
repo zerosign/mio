@@ -63,10 +63,6 @@
 <span id="21">21</span>
 <span id="22">22</span>
 <span id="23">23</span>
-<span id="24">24</span>
-<span id="25">25</span>
-<span id="26">26</span>
-<span id="27">27</span>
 </pre><pre class='rust '>
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;linux&quot;</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>epoll</span>::{<span class='ident'>Events</span>, <span class='ident'>Selector</span>};
@@ -91,10 +87,6 @@
 
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;linux&quot;</span>))]</span>
 <span class='kw'>mod</span> <span class='ident'>posix</span>;
-
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>event</span>;
-
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>token</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>
