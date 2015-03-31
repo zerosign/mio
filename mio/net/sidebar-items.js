@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["tcp",""],["udp",""],["unix",""]],"trait":[["Socket",""]]});
+initSidebarItems({"trait":[["Socket",""]],"mod":[["tcp",""],["udp",""],["unix",""]]});
