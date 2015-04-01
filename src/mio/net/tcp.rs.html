@@ -218,6 +218,10 @@
 <span id="176">176</span>
 <span id="177">177</span>
 <span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> {<span class='ident'>NonBlock</span>};
 <span class='kw'>use</span> <span class='ident'>io</span>::{<span class='self'>self</span>, <span class='ident'>Evented</span>, <span class='ident'>FromFd</span>, <span class='ident'>Io</span>};
@@ -372,6 +376,10 @@
 }
 
 <span class='kw'>impl</span> <span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>TcpListener</span><span class='op'>&gt;</span> {
+    <span class='doccomment'>/// Accepts a new `TcpStream`.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Returns a `Ok(None)` when the socket `WOULDBLOCK`, this means the stream will be ready at</span>
+    <span class='doccomment'>/// a later point.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>accept</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>NonBlock</span><span class='op'>&lt;</span><span class='ident'>TcpStream</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span> {
         <span class='ident'>net</span>::<span class='ident'>accept</span>(<span class='ident'>as_io</span>(<span class='self'>self</span>), <span class='boolval'>true</span>)
             .<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>fd</span><span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='ident'>FromFd</span>::<span class='ident'>from_fd</span>(<span class='ident'>fd</span>)))
