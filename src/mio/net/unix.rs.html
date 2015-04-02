@@ -305,8 +305,8 @@
 <span class='kw'>use</span> <span class='ident'>buf</span>::{<span class='ident'>Buf</span>, <span class='ident'>MutBuf</span>};
 <span class='kw'>use</span> <span class='ident'>io</span>::{<span class='self'>self</span>, <span class='ident'>Evented</span>, <span class='ident'>FromFd</span>, <span class='ident'>Io</span>};
 <span class='kw'>use</span> <span class='ident'>net</span>::{<span class='self'>self</span>, <span class='ident'>nix</span>, <span class='ident'>Socket</span>};
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>usize</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>iter</span>::<span class='ident'>IntoIterator</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>num</span>::<span class='ident'>Int</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>Path</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>unix</span>::<span class='ident'>io</span>::{<span class='ident'>Fd</span>, <span class='ident'>AsRawFd</span>};
 
@@ -485,7 +485,7 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>size_hint</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> (<span class='ident'>usize</span>, <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>) {
-        (<span class='ident'>Int</span>::<span class='ident'>max_value</span>(), <span class='prelude-val'>None</span>)
+        (<span class='ident'>usize</span>::<span class='ident'>MAX</span>, <span class='prelude-val'>None</span>)
     }
 }
 
