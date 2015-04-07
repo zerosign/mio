@@ -1,6 +1,6 @@
 use {io, Io, TryRead, TryWrite};
 use std::mem;
-use std::os::unix::io::{Fd, AsRawFd};
+use std::os::unix::io::{RawFd, AsRawFd};
 
 const MARK: &'static [u8] = b"0x000x000x000x000x000x000x000x01";
 
@@ -28,7 +28,7 @@ impl Awakener {
         }
     }
 
-    pub fn as_raw_fd(&self) -> Fd {
+    pub fn as_raw_fd(&self) -> RawFd {
         self.io.as_raw_fd()
     }
 
@@ -49,7 +49,7 @@ impl Awakener {
     }
 }
 
-fn eventfd() -> io::Result<Fd> {
+fn eventfd() -> io::Result<RawFd> {
     nix::eventfd(0, nix::EFD_CLOEXEC | nix::EFD_NONBLOCK)
         .map_err(io::from_nix_error)
 }
